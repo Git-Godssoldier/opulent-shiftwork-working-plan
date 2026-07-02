@@ -1,0 +1,61 @@
+{
+  "scenarioId": "SHIFTWORK-INTAKE-VQA-FULFILLMENT-03",
+  "shortId": "SW-VQA-FULFILLMENT-03",
+  "name": "Fulfillment Visual QA",
+  "track": "Fulfillment",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelLock": {
+    "opulent-preferred-model-v32": "deepseek/deepseek-v4-flash",
+    "opulentia-coordinator-model-v7": "deepseek/deepseek-v4-flash",
+    "opulentia-worker-model-v6": "deepseek/deepseek-v4-flash",
+    "opulentia-active-role-v1": "coordinator"
+  },
+  "startTime": "2026-07-01T11:43:43.216Z",
+  "verdict": "PASS",
+  "marker": "SHIFTWORK_INTAKE_VQA_FULFILLMENT_COMPLETE",
+  "screenshots": [
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/SW-VQA-FULFILLMENT-03-prompt-typed.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/SW-VQA-FULFILLMENT-03-check-1.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/SW-VQA-FULFILLMENT-03-final.png"
+  ],
+  "consoleErrors": [],
+  "verification": {
+    "bodyChars": 19458,
+    "promptBaselineChars": 16589,
+    "evidenceChars": 4644,
+    "markerOccurrencesTotal": 3,
+    "markerInPrompt": 2,
+    "markerOccurrencesAfterPrompt": 1,
+    "autosDoneInPrompt": 3,
+    "autosDoneOccurrencesAfterPrompt": 1,
+    "blockerMatches": [],
+    "evidenceBriefTerms": [
+      "claim checked",
+      "data/tool source",
+      "artifact",
+      "blockers",
+      "next action"
+    ],
+    "missingEvidenceBriefTerms": [],
+    "requiredTerms": [
+      "workspace",
+      "writer thread",
+      "reader thread",
+      "fileid",
+      "owner_confirmed",
+      "draft_from_research_unconfirmed",
+      "visual qa",
+      "acceptance inputs",
+      "build plan",
+      "validation_check"
+    ],
+    "missingRequiredTerms": [],
+    "evidenceSnippet": " original thread contextProduce build plan from retrieved intake onlyRun validation_checkWrite evidence brief and autos_done with SHIFTWORK_INTAKE_VQA_FULFILLMENT_COMPLETETo-do list createdWorkspace ManagecreateRan commandmkdir -p /opulent/workspace/uploads/driveCreate uploads/drive directory structuremkdir -p /opulent/workspace/uploads/driveWorkspace ManagecreateGood — workspace ws_84aea4cde7124c6696b206b398 exists. Now let me extract the Fulfillment 03 fixture, write it to the drive path, create the writer thread, and persist the file.Extract only the 03_Fulfillment fixture to a dedicated intake filecd /opulent/workspace && node -e \" const fs = require('fs'); const fixtures = J…Ran commandcd /opulent/workspace && node -e \" const fs = require('fs'); const fixtures = J…Intake extracted and persisted to drive path. Now creating the writer thread and savingWorkspace Managecreate_threadthe file to the workspace drive.Workspace ManageUpload intake JSON to persistent drive storageWorkspace ManageWorkspace Manage failedlist_filesRecord Expected workspace Drive file not found after sync settle: shiftwork-fulfillment-intake-03.jsonShow details1m 39sDeepSeek V4 FlashOpulentDeepSeek V4 Flash"
+  },
+  "notes": "Completion marker 'SHIFTWORK_INTAKE_VQA_FULFILLMENT_COMPLETE' found after submitted prompt with required intake evidence and evidence brief present",
+  "threadUrl": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57c4m90nz6c9pxzeecpmb4z2589pe2c?bootstrap=1",
+  "pageTextSnippet": "cd /opulent/workspace && node -e \" const fs = require('fs'); const fixtures = J…Intake extracted and persisted to drive path. Now creating the writer thread and savingWorkspace Managecreate_threadthe file to the workspace drive.Workspace ManageUpload intake JSON to persistent drive storageWorkspace ManageWorkspace Manage failedlist_filesRecord Expected workspace Drive file not found after sync settle: shiftwork-fulfillment-intake-03.jsonShow details1m 39sDeepSeek V4 FlashOpulentDeepSeek V4 Flash",
+  "promptBaselineTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/prompt-baseline-text.txt",
+  "pageTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/page-text-retest.txt",
+  "endTime": "2026-07-01T11:45:31.964Z"
+}

@@ -1,0 +1,83 @@
+{
+  "scenarioId": "SHIFTWORK-INTAKE-VQA-FULFILLMENT-03",
+  "shortId": "SW-VQA-FULFILLMENT-03",
+  "name": "Fulfillment Visual QA",
+  "track": "Fulfillment",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelLock": {
+    "opulent-preferred-model-v32": "deepseek/deepseek-v4-flash",
+    "opulentia-coordinator-model-v7": "deepseek/deepseek-v4-flash",
+    "opulentia-worker-model-v6": "deepseek/deepseek-v4-flash",
+    "opulentia-active-role-v1": "coordinator"
+  },
+  "startTime": "2026-07-01T12:06:36.647Z",
+  "verdict": "INCONCLUSIVE",
+  "marker": "SHIFTWORK_INTAKE_VQA_FULFILLMENT_COMPLETE",
+  "screenshots": [
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/SW-VQA-FULFILLMENT-03-prompt-typed.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/SW-VQA-FULFILLMENT-03-check-1.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/SW-VQA-FULFILLMENT-03-check-2.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/SW-VQA-FULFILLMENT-03-check-3.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/SW-VQA-FULFILLMENT-03-check-4.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/SW-VQA-FULFILLMENT-03-check-5.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/SW-VQA-FULFILLMENT-03-check-6.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/SW-VQA-FULFILLMENT-03-final.png"
+  ],
+  "consoleErrors": [
+    {
+      "text": "[LONG_TASK] CRITICAL 594 ms {count: 40, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57f3wb1dk8w298km5a3xv3p1s89qxje?bootstrap=1",
+      "time": "2026-07-01T12:09:24.469Z"
+    },
+    {
+      "text": "[LONG_TASK] CRITICAL 1183 ms {count: 80, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57f3wb1dk8w298km5a3xv3p1s89qxje?bootstrap=1",
+      "time": "2026-07-01T12:10:25.069Z"
+    },
+    {
+      "text": "[LONG_TASK] CRITICAL 1580 ms {count: 44, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57f3wb1dk8w298km5a3xv3p1s89qxje?bootstrap=1",
+      "time": "2026-07-01T12:12:49.862Z"
+    }
+  ],
+  "verification": {
+    "bodyChars": 31115,
+    "promptBaselineChars": 16567,
+    "evidenceChars": 16184,
+    "markerOccurrencesTotal": 2,
+    "markerInPrompt": 2,
+    "markerOccurrencesAfterPrompt": 0,
+    "autosDoneInPrompt": 3,
+    "autosDoneOccurrencesAfterPrompt": 6,
+    "blockerMatches": [],
+    "evidenceBriefTerms": [
+      "claim checked",
+      "data/tool source",
+      "artifact",
+      "blockers",
+      "next action"
+    ],
+    "missingEvidenceBriefTerms": [],
+    "requiredTerms": [
+      "workspace",
+      "writer thread",
+      "reader thread",
+      "fileid",
+      "owner_confirmed",
+      "draft_from_research_unconfirmed",
+      "visual qa",
+      "acceptance inputs",
+      "build plan",
+      "validation_check"
+    ],
+    "missingRequiredTerms": [],
+    "evidenceSnippet": "ired\": true\n            },\n            {\n              \"id\": \"AC-INPUT-04\",\n              \"name\": \"Customer Welcome Email Config\",\n              \"description\": \"HTML email templates and trigger rules for order-confirmed, shipped, out-for-delivery, delayed notifications\",\n              \"schema_type\": \"email-config-bundle\",\n              \"required\": true\n            },\n            {\n              \"id\": \"AC-INPUT-05\",\n              \"name\": \"Warehouse Zone Map & SLA Config\",\n              \"description\": \"JSON config mapping warehouse locations to shipping zones, SLA tiers (standard/premium), cutoff times\",\n              \"schema_type\": \"json-config\",\n              \"required\": true\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"track_id\": \"TRACK-04\",\n      \"name\": \"Payment Processing\",\n      \"intake_runs\": [\n        {\n          \"run_id\": \"SHIFTWORK-INTAKE-VQA-PAYMENT-04\",\n          \"status\": \"pending\"\n        }\n      ]\n    },\n    {\n      \"track_id\": \"TRACK-05\",\n      \"name\": \"Analytics Integration\",\n      \"intake_runs\": [\n        {\n          \"run_id\": \"SHIFTWORK-INTAKE-VQA-ANALYTICS-05\",\n          \"status\": \"pending\"\n        }\n      ]\n    }\n  ]\n}\nOpulentDeepSeek V4 Flash"
+  },
+  "notes": "Completion marker only appeared in submitted prompt echo; no post-prompt completion evidence",
+  "threadUrl": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57f3wb1dk8w298km5a3xv3p1s89qxje?bootstrap=1",
+  "pageTextSnippet": "         ]\n        }\n      ]\n    },\n    {\n      \"track_id\": \"TRACK-04\",\n      \"name\": \"Payment Processing\",\n      \"intake_runs\": [\n        {\n          \"run_id\": \"SHIFTWORK-INTAKE-VQA-PAYMENT-04\",\n          \"status\": \"pending\"\n        }\n      ]\n    },\n    {\n      \"track_id\": \"TRACK-05\",\n      \"name\": \"Analytics Integration\",\n      \"intake_runs\": [\n        {\n          \"run_id\": \"SHIFTWORK-INTAKE-VQA-ANALYTICS-05\",\n          \"status\": \"pending\"\n        }\n      ]\n    }\n  ]\n}\nOpulentDeepSeek V4 Flash",
+  "promptBaselineTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/prompt-baseline-text.txt",
+  "markerFoundDuringWait": false,
+  "pageTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-FULFILLMENT-03/page-text-retest.txt",
+  "endTime": "2026-07-01T12:16:50.810Z"
+}

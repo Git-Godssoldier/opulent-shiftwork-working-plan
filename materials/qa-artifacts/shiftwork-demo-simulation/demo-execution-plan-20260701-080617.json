@@ -1,0 +1,913 @@
+{
+  "runStamp": "20260701-080617",
+  "marker": "SHIFTWORK_DEMO_SIMULATION_TOKEN_20260701-080617",
+  "target": "staging",
+  "timeoutMinutes": 45,
+  "startTime": "2026-07-01T13:06:17.841Z",
+  "mode": "browser-driven-human-demoer",
+  "scenario": {
+    "schema": "opulent.shiftwork.demo_scenario.v1",
+    "scenarioId": "SHIFTWORK-DEMO-SIMULATION-01",
+    "marker": "SHIFTWORK_DEMO_SIMULATION_TOKEN_20260701-080617",
+    "completionMarker": "SHIFTWORK_DEMO_SIMULATION_COMPLETE",
+    "label": "ShiftWork doc-to-deploy demo simulation — human demoer browser drive with video recording",
+    "version": "2.0.0",
+    "createdAt": "2026-07-01",
+    "description": "A cloud agent simulates the human demoer: logs into the Opulent platform through the browser with demo credentials, uploads the training doc via the UI, types the build instruction into the chat composer, watches the full build run live (streaming transcript, tool calls, document panel, screenshots), records video of the entire session with ffmpeg, gives feedback on the demoer experience, and returns a findings report with PASS/PARTIAL/FAIL verdict.",
+    "mode": "browser-driven-human-demoer",
+    "notMode": "This is NOT API orchestration. The cloud agent drives the browser UI exactly as a human demoer would. Every action goes through the rendered page — login form, file upload, chat composer, thread transcript, document panel, workspace files.",
+    "scope": {
+      "opulentOwns": [
+        "Receive training doc from shared workspace",
+        "Build agent from training doc (automation modeler flow)",
+        "Acceptance test (5 random pages, screenshots, report)",
+        "Deliver agent on Opulent platform (cron + on-demand)",
+        "Expose agent run logs"
+      ],
+      "shiftworkOwns": [
+        "Research, questionnaire, Q&A, call script (Steps 5-9)",
+        "Onboarding call (crew on Google Meet, not VAPI)",
+        "Gap review",
+        "ROI check-in at day 14",
+        "Runtime payer assignment (business decision)"
+      ],
+      "deferredForPOC": [
+        "Customer account provisioning",
+        "Runtime payer enforcement",
+        "Dreams in memory / knowledge aggregation",
+        "Live email send (draft-only mode)"
+      ]
+    },
+    "demoCredentials": {
+      "note": "The cloud agent uses demo credentials to log in as the human demoer. These are test credentials for the staging or production Opulent platform. The cloud agent should ask the user for credentials if not provided in env vars.",
+      "envVars": {
+        "OPULENT_DEMO_EMAIL": "Demo account email (or DEMO_EMAIL)",
+        "OPULENT_DEMO_PASSWORD": "Demo account password (or DEMO_PASSWORD)",
+        "OPULENT_PLATFORM_URL": "Platform URL (default: https://platform.opulentia.ai)"
+      },
+      "fallback": "If credentials are not in env vars, the cloud agent should ask the user to provide them before starting."
+    },
+    "videoRecording": {
+      "tool": "ffmpeg",
+      "method": "Screen capture of the browser viewport for the entire session",
+      "format": "H.264/AAC MP4, yuv420p pixel format, +faststart moov atom",
+      "outputDir": "frontend/qa/artifacts/shiftwork-demo-simulation/recordings/",
+      "outputFile": "demo-session-20260701-080617.mp4",
+      "command": "ffmpeg -f avfoundation -framerate 30 -i \"<screen_device>\" -c:v libx264 -pix_fmt yuv420p -movflags +faststart -c:a aac {{outputDir}}{{outputFile}}",
+      "startBefore": "Start recording BEFORE navigating to the platform. The video should capture the full session from login to completion.",
+      "stopAfter": "Stop recording AFTER the findings report is produced and autos_done is called.",
+      "maxDuration": "45 minutes",
+      "note": "Follow the monitor skill pattern: capture the browser viewport, encode to web-safe H.264/AAC MP4. Use cua-driver recording for trajectory capture if on macOS. See .agent/skills/cua-driver/RECORDING.md and .agent/skills/monitor/SKILL.md."
+    },
+    "screenshotCapture": {
+      "tool": "browser screenshot or cua-driver screenshot",
+      "moments": [
+        "After login — dashboard loaded",
+        "After workspace creation — workspace visible",
+        "After training doc upload — file in workspace",
+        "After build instruction sent — message in thread",
+        "During build — automation modeler running (transcript visible)",
+        "During build — Verified Automation Report appears in document panel",
+        "During build — cron schedule created (tool call visible)",
+        "During acceptance — screenshots appearing in workspace",
+        "After acceptance — test result visible",
+        "After how-to — guide in workspace",
+        "Final — completed thread with autos_done"
+      ],
+      "outputDir": "frontend/qa/artifacts/shiftwork-demo-simulation/screenshots/",
+      "naming": "step-{{N}}-{{description}}-20260701-080617.png"
+    },
+    "fixture": {
+      "path": "frontend/qa/artifacts/shiftwork-intake-drive-anywhere-interop/fixtures/training-doc.post-call.json",
+      "schema": "opulent.shiftwork.training_doc.v1",
+      "leadId": "SW-20260701-001",
+      "businessName": "ShiftWork Studio",
+      "ownerName": "Dan Cruden",
+      "ownerEmail": "dan@shiftworkstudio.ai",
+      "targetUrl": "https://shiftworkstudio.ai",
+      "fallbackUrl": "https://example.com",
+      "buildTarget": "Visual quality monitoring agent for the public landing page",
+      "buildCriticalAnswers": [
+        "OP09",
+        "VQ01",
+        "VQ02",
+        "VQ03",
+        "VQ04",
+        "VQ05",
+        "VQ06",
+        "VQ07"
+      ],
+      "unconfirmedAnswers": [
+        "R01"
+      ],
+      "callType": "crew",
+      "gapReviewReviewer": "shiftwork_crew",
+      "storageLocation": "shared_workspace",
+      "note": "Fixture is a believable payload from ShiftWork after crew call + gap review. URL targets Dan's actual dummy app. Fallback URL is used if shiftworkstudio.ai is down."
+    },
+    "instructionSet": {
+      "summary": "You are a cloud agent simulating the human demoer for the ShiftWork doc-to-deploy pipeline. You drive the Opulent platform through the browser — login, upload, chat, watch, record video, evaluate, and report. You are NOT using API calls. Every action goes through the rendered UI.",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Load Ostack discipline and monitor skill",
+          "action": "Call skill_manage action=invoke for opulentia-engineering-discipline. This is mandatory before any work. Also load the monitor skill pattern for video capture guidance.",
+          "tool": "skill_manage",
+          "expectedResult": "Both skills loaded successfully",
+          "passCriteria": "skill_manage result includes 'opulentia-engineering-discipline' with status completed",
+          "onFail": "STOP. Cannot proceed without Ostack discipline."
+        },
+        {
+          "step": 2,
+          "name": "Start video recording",
+          "action": "Start ffmpeg screen capture of the browser viewport BEFORE navigating to the platform. Record at 30fps, H.264/AAC MP4, yuv420p, +faststart. Output to frontend/qa/artifacts/shiftwork-demo-simulation/recordings/demo-session-20260701-080617.mp4. If on macOS, also enable cua-driver trajectory recording to frontend/qa/artifacts/shiftwork-demo-simulation/recordings/trajectory-20260701-080617/. The video must capture the full session from login to completion.",
+          "tool": "ffmpeg (shell) or cua-driver set_recording",
+          "expectedResult": "Recording started, ffmpeg process running",
+          "passCriteria": "ffmpeg process is running and writing to the output file, or cua-driver recording state is enabled",
+          "onFail": "STOP. A demo without video evidence is a fail. If ffmpeg is not available, use cua-driver screenshot capture at every step as fallback."
+        },
+        {
+          "step": 3,
+          "name": "Navigate to Opulent platform",
+          "action": "Open a browser and navigate to the Opulent platform URL (from OPULENT_PLATFORM_URL env var, default https://platform.opulentia.ai). Wait for the login page to fully load. Take a screenshot.",
+          "tool": "browser automation (agent-browser / Playwright / cua-driver launch_app with urls)",
+          "expectedResult": "Login page is visible and loaded",
+          "passCriteria": "Login page rendered with email and password fields visible",
+          "onFail": "STOP. Cannot proceed if the platform is unreachable.",
+          "screenshot": true,
+          "screenshotName": "step-03-login-page"
+        },
+        {
+          "step": 4,
+          "name": "Log in with demo credentials",
+          "action": "Enter the demo email and password into the login form. Click the login/submit button. Wait for the dashboard to load. Take a screenshot.",
+          "tool": "browser automation — type into email field, type into password field, click submit",
+          "expectedResult": "Dashboard is visible after login",
+          "passCriteria": "Dashboard rendered with workspace list, agent list, or main UI visible. No error messages. No React #185 crash.",
+          "onFail": "If login fails, check credentials. If React #185 crash appears, record it as a MUST-PASS failure and continue if possible.",
+          "screenshot": true,
+          "screenshotName": "step-04-dashboard-after-login"
+        },
+        {
+          "step": 5,
+          "name": "Create demo workspace",
+          "action": "Create a new workspace named 'ShiftWork Demo Simulation 20260701-080617' through the UI. Use the workspace creation button or menu. Wait for the workspace to appear. Take a screenshot.",
+          "tool": "browser automation — click new workspace button, type workspace name, confirm",
+          "expectedResult": "Workspace created and visible in workspace list",
+          "passCriteria": "Workspace named 'ShiftWork Demo Simulation 20260701-080617' is visible",
+          "onFail": "If workspace creation fails through the UI, note the failure and attempt to continue with an existing workspace.",
+          "screenshot": true,
+          "screenshotName": "step-05-workspace-created"
+        },
+        {
+          "step": 6,
+          "name": "Upload training doc to workspace",
+          "action": "Upload the training doc fixture to the workspace through the UI. Use the file upload feature in the workspace. The file is at frontend/qa/artifacts/shiftwork-intake-drive-anywhere-interop/fixtures/training-doc.post-call.json. After upload, verify the file appears in the workspace file list. Take a screenshot.",
+          "tool": "browser automation — use file upload UI element, select the fixture file, wait for upload confirmation",
+          "expectedResult": "Training doc file visible in workspace file list",
+          "passCriteria": "File named 'training-doc.post-call.json' appears in workspace files",
+          "onFail": "If file upload through the UI fails, note the failure. Try alternative upload methods (drag-and-drop, file picker). If all fail, record as a UI failure.",
+          "screenshot": true,
+          "screenshotName": "step-06-training-doc-uploaded"
+        },
+        {
+          "step": 7,
+          "name": "Open a new thread and type the build instruction",
+          "action": "Open a new chat thread in the workspace. Type the full build instruction into the chat composer (the unified chat input). The build instruction is the same as the build prompt from the previous version — it tells the build agent to find the doc, validate it, run the automation modeler, build the visual QA agent, create cron, run 5 test pages, acceptance test, how-to guide, autos_done. Press Enter or click Send. Take a screenshot of the typed prompt before sending, and after sending.",
+          "tool": "browser automation — click new thread, type into chat composer, press Enter or click send",
+          "buildPrompt": "You are a build agent in the Opulent platform. A ShiftWork training doc has been placed in your workspace. Your job is to find it, validate it, build a visual QA agent from it, create a cron schedule, and run acceptance tests.\n\nSTEP A: Find the training doc. Search the workspace for a file with schema marker 'opulent.shiftwork.training_doc.v1' and leadId 'SW-20260701-001'. Use list_files and read_file to find and read it.\n\nSTEP B: Validate the doc minimally. Check that: (1) buildTarget is present and non-empty, (2) acceptance test inputs are present (VQ07 answer exists), (3) targetUrl is present in VQ01. If any are missing, stop and report 'cannot build: missing required fields'.\n\nSTEP C: Run the full automation modeler flow. Call skill_manage action=invoke for opulentia-automation-modeler. Follow the skill's intake flow: desired automation, connected apps, tools, memory, knowledge, workflow, dry-run evals, and produce a Verified Automation Report. The automation is: 'Screenshot https://shiftworkstudio.ai at desktop 1280x900 and mobile 390x844 on a weekday schedule at 8 AM Central, compare against baseline, draft an email alert if a visual issue is found.' Use the training doc answers as the spec. If the site is down, use the fallback URL 'https://example.com'.\n\nSTEP D: Build the visual QA agent from the Verified Automation Report. The agent should: (1) screenshot the target URL at desktop and mobile, (2) compare against baseline, (3) if issue found, draft an alert email with subject prefix VISUAL QA ALERT containing screenshots, URL, viewport, severity, issue description, and fix suggestion, (4) store screenshots and a run report in the workspace. Draft-only mode — do not send emails. R01 email connector is unconfirmed.\n\nSTEP E: Create the cron schedule. Call cron_manage action=create with cron='0 8 * * 1-5', timezone='America/Chicago', prompt describing the visual QA run, recurring=true. Record the schedule ID. Also note that manual on-demand trigger should be available.\n\nSTEP F: Run the agent against 5 random pages on shiftworkstudio.ai. For each page: screenshot at desktop and mobile, store screenshots in workspace, produce a report entry. If the site is down, use the fallback URL 'https://example.com'. All 5 must complete without crashing. If any crash, attempt auto-fix (up to 3 tries). After 3 failed fixes, stop and report the error.\n\nSTEP G: Run the acceptance test. Check that: (1) at least 4 of 5 pages were screenshotted successfully, (2) screenshots are stored in the workspace, (3) a report was produced. The must-pass case is: at least one screenshot + report produced. If 4/5 pass with must-pass OK, mark acceptance as PASS. Otherwise mark as FAIL.\n\nSTEP H: If acceptance passes, produce a how-to guide as a markdown document in the workspace. Title: 'How to use your Visual QA Agent'. Cover: how to log in, see your agent, read alerts, trigger a manual run, understand the schedule. Keep it to 1-2 pages.\n\nSTEP I: Call autos_done with a summary of what was built, the schedule ID, the acceptance test result, and the workspace artifact locations. Include the marker SHIFTWORK_DEMO_SIMULATION_TOKEN_20260701-080617 in the autos_done summary.",
+          "expectedResult": "Build instruction message appears in the thread. Build agent starts processing.",
+          "passCriteria": "Message is visible in the thread and the agent begins responding (streaming text or tool calls appear)",
+          "onFail": "If the chat composer does not accept the message, record the UI failure. Try alternative input methods.",
+          "screenshot": true,
+          "screenshotName": "step-07-build-instruction-sent"
+        },
+        {
+          "step": 8,
+          "name": "Watch the build agent work in real-time",
+          "action": "Monitor the thread as the build agent works. Watch for: (1) streaming text responses, (2) tool call chips appearing (skill_manage, list_files, read_file, document_create, cron_manage, write_file), (3) document panel showing the Verified Automation Report, (4) screenshot artifacts appearing in workspace, (5) any error messages or crashes. Take screenshots at each key moment. Note any UX issues: slow rendering, missing tool chips, broken streaming, layout issues, React #185 crash. Wait up to 30 minutes for the build agent to complete (autos_done call).",
+          "tool": "browser automation — periodic screenshots, read thread content, check for errors",
+          "expectedResult": "Build agent completes all steps A-I and calls autos_done with the marker",
+          "passCriteria": "autos_done visible in thread with marker SHIFTWORK_DEMO_SIMULATION_TOKEN_20260701-080617",
+          "onFail": "If agent does not complete within 30 minutes, record what steps were visible and what failed. Note any UI issues observed during the wait.",
+          "timeout": "30 minutes",
+          "screenshots": [
+            "step-08a-build-agent-started",
+            "step-08b-automation-modeler-running",
+            "step-08c-verified-automation-report",
+            "step-08d-cron-schedule-created",
+            "step-08e-screenshots-appearing",
+            "step-08f-acceptance-test-result",
+            "step-08g-how-to-guide",
+            "step-08h-autos-done"
+          ]
+        },
+        {
+          "step": 9,
+          "name": "Verify workspace artifacts through the UI",
+          "action": "Navigate to the workspace file list in the UI. Verify that: (1) training doc is present, (2) Verified Automation Report is present, (3) screenshots are present (at least 4), (4) run report is present, (5) how-to guide is present. Open each artifact to confirm it is readable. Take screenshots of the file list and at least one opened artifact.",
+          "tool": "browser automation — navigate workspace files, open documents",
+          "expectedResult": "All artifacts visible and readable through the UI",
+          "passCriteria": "At least: training doc, Verified Automation Report, screenshots (>=4), run report, how-to guide are visible in the workspace UI",
+          "onFail": "Record which artifacts are missing or unreadable through the UI.",
+          "screenshot": true,
+          "screenshotName": "step-09-workspace-artifacts"
+        },
+        {
+          "step": 10,
+          "name": "Verify cron schedule through the UI",
+          "action": "Navigate to the agent's schedule settings or trigger management UI. Verify that the cron schedule (weekday 8 AM Central) is visible and active. Check that manual on-demand trigger is available. Take a screenshot.",
+          "tool": "browser automation — navigate to schedule/trigger settings",
+          "expectedResult": "Cron schedule visible with correct expression and timezone. On-demand trigger available.",
+          "passCriteria": "Schedule shows '0 8 * * 1-5' or 'Weekday 8:00 AM' in America/Chicago. Manual trigger button or option is visible.",
+          "onFail": "If schedule is not visible through the UI, note the failure. The schedule may exist in the backend but not be surfaced in the UI.",
+          "screenshot": true,
+          "screenshotName": "step-10-cron-schedule-ui"
+        },
+        {
+          "step": 11,
+          "name": "Evaluate against pass/fail criteria",
+          "action": "Compare the observed behavior and artifacts against all criteria in demo-pass-fail-criteria.json. For each criterion, mark PASS, FAIL, PARTIAL, or SKIP with evidence (screenshots, video timestamps, transcript excerpts). Pay special attention to demoer-experience criteria: was the UI responsive, did streaming work, were tool chips visible, did the document panel render, were there any crashes.",
+          "tool": "validation_check",
+          "expectedResult": "All criteria evaluated with evidence",
+          "passCriteria": "All criteria scored with evidence from the browser session",
+          "onFail": "Record which criteria could not be evaluated and why."
+        },
+        {
+          "step": 12,
+          "name": "Write feedback and recommendations",
+          "action": "Write a feedback section for the demoer experience. Cover: (1) What worked well in the UI, (2) What was confusing or broken, (3) Any performance issues (slow rendering, streaming gaps), (4) Any crashes (React #185 or other), (5) Suggestions for improving the demo experience. This is qualitative feedback from the perspective of someone watching the demo live.",
+          "tool": "document_create or write_file",
+          "expectedResult": "Feedback section written with actionable observations",
+          "passCriteria": "Feedback covers all 5 areas with specific examples from the session"
+        },
+        {
+          "step": 13,
+          "name": "Produce findings report",
+          "action": "Generate a findings report in JSON format using the demo-findings-template.json structure. Include: scenario ID, run stamp, overall verdict (PASS/FAIL/PARTIAL), per-criterion results with evidence, workspace artifact list, video file path, screenshot paths, demoer feedback, errors encountered, and recommendations. Write it to frontend/qa/artifacts/shiftwork-demo-simulation/demo-findings-20260701-080617.json.",
+          "tool": "write_file",
+          "expectedResult": "Findings report written to disk",
+          "passCriteria": "Findings report is valid JSON with all fields populated including video path and feedback",
+          "onFail": "Record the failure to produce the report itself as a finding."
+        },
+        {
+          "step": 14,
+          "name": "Stop video recording",
+          "action": "Stop the ffmpeg screen capture. Verify the video file exists and is playable (ffprobe check). If cua-driver trajectory recording was enabled, stop it too. Verify the trajectory directory has turn folders.",
+          "tool": "ffmpeg (kill process) or cua-driver set_recording enabled=false",
+          "expectedResult": "Video file exists, is valid MP4, and is playable",
+          "passCriteria": "ffprobe confirms valid H.264/AAC MP4 with yuv420p and +faststart. File size > 0. Duration > 60 seconds.",
+          "onFail": "If video is corrupt or missing, note it as a critical failure. Screenshots may serve as fallback evidence."
+        },
+        {
+          "step": 15,
+          "name": "Call autos_done with completion marker",
+          "action": "Call autos_done with the completion marker SHIFTWORK_DEMO_SIMULATION_COMPLETE and a summary of the findings, including the video path and overall verdict.",
+          "tool": "autos_done",
+          "expectedResult": "autos_done accepted",
+          "passCriteria": "autos_done result includes SHIFTWORK_DEMO_SIMULATION_COMPLETE",
+          "onFail": "Record failure to call autos_done as a finding."
+        }
+      ]
+    },
+    "requestedTools": [
+      "skill_manage",
+      "browser automation (agent-browser / Playwright / cua-driver)",
+      "ffmpeg (video capture)",
+      "ffprobe (video validation)",
+      "write_file",
+      "read_file",
+      "list_files",
+      "document_create",
+      "document_read",
+      "validation_check",
+      "autos_done"
+    ],
+    "verificationSignals": [
+      {
+        "id": "VS01",
+        "step": 1,
+        "toolName": "skill_manage",
+        "argIncludes": "opulentia-engineering-discipline",
+        "status": "completed",
+        "description": "Ostack discipline loaded"
+      },
+      {
+        "id": "VS02",
+        "step": 2,
+        "toolName": "ffmpeg",
+        "argIncludes": "recording",
+        "status": "completed",
+        "description": "Video recording started"
+      },
+      {
+        "id": "VS03",
+        "step": 3,
+        "toolName": "browser",
+        "resultIncludes": "login",
+        "status": "completed",
+        "description": "Platform login page loaded"
+      },
+      {
+        "id": "VS04",
+        "step": 4,
+        "toolName": "browser",
+        "resultIncludes": "dashboard",
+        "status": "completed",
+        "description": "Logged in, dashboard visible"
+      },
+      {
+        "id": "VS05",
+        "step": 5,
+        "toolName": "browser",
+        "resultIncludes": "workspace",
+        "status": "completed",
+        "description": "Demo workspace created through UI"
+      },
+      {
+        "id": "VS06",
+        "step": 6,
+        "toolName": "browser",
+        "resultIncludes": "training-doc",
+        "status": "completed",
+        "description": "Training doc uploaded through UI"
+      },
+      {
+        "id": "VS07",
+        "step": 7,
+        "toolName": "browser",
+        "resultIncludes": "build instruction",
+        "status": "completed",
+        "description": "Build instruction typed and sent through chat composer"
+      },
+      {
+        "id": "VS08",
+        "step": 8,
+        "toolName": "browser",
+        "resultIncludes": "automation modeler",
+        "status": "completed",
+        "description": "Build agent started automation modeler flow (visible in transcript)"
+      },
+      {
+        "id": "VS09",
+        "step": 8,
+        "toolName": "browser",
+        "resultIncludes": "Verified Automation Report",
+        "status": "completed",
+        "description": "Verified Automation Report visible in document panel"
+      },
+      {
+        "id": "VS10",
+        "step": 8,
+        "toolName": "browser",
+        "resultIncludes": "cron",
+        "status": "completed",
+        "description": "Cron schedule creation visible in transcript (tool chip)"
+      },
+      {
+        "id": "VS11",
+        "step": 8,
+        "toolName": "browser",
+        "resultIncludes": "screenshot",
+        "status": "completed",
+        "description": "Screenshots appearing in workspace during acceptance test"
+      },
+      {
+        "id": "VS12",
+        "step": 8,
+        "toolName": "browser",
+        "resultIncludes": "autos_done",
+        "status": "completed",
+        "description": "Build agent completed with autos_done (visible in transcript)"
+      },
+      {
+        "id": "VS13",
+        "step": 9,
+        "toolName": "browser",
+        "resultIncludes": "artifacts",
+        "status": "completed",
+        "description": "Workspace artifacts verified through UI"
+      },
+      {
+        "id": "VS14",
+        "step": 10,
+        "toolName": "browser",
+        "resultIncludes": "schedule",
+        "status": "completed",
+        "description": "Cron schedule verified through UI"
+      },
+      {
+        "id": "VS15",
+        "step": 13,
+        "toolName": "write_file",
+        "resultIncludes": "findings",
+        "status": "completed",
+        "description": "Findings report written to disk"
+      },
+      {
+        "id": "VS16",
+        "step": 14,
+        "toolName": "ffmpeg",
+        "resultIncludes": "valid",
+        "status": "completed",
+        "description": "Video recording stopped and validated"
+      },
+      {
+        "id": "VS17",
+        "step": 15,
+        "toolName": "autos_done",
+        "resultIncludes": "SHIFTWORK_DEMO_SIMULATION_COMPLETE",
+        "status": "completed",
+        "description": "Demo simulation completed with marker"
+      }
+    ],
+    "minimumVerificationMatches": 13,
+    "expectations": {
+      "requireOstackDiscipline": true,
+      "requireVideoRecording": true,
+      "requireBrowserLogin": true,
+      "requireWorkspaceCreatedViaUI": true,
+      "requireTrainingDocUploadedViaUI": true,
+      "requireBuildInstructionTypedInComposer": true,
+      "requireBuildAgentStreamingVisible": true,
+      "requireAutomationModelerVisibleInTranscript": true,
+      "requireVerifiedAutomationReportInDocumentPanel": true,
+      "requireCronScheduleVisibleInTranscript": true,
+      "requireScreenshotsInWorkspace": true,
+      "requireAutosDoneVisibleInThread": true,
+      "requireArtifactsVerifiedViaUI": true,
+      "requireFindingsReport": true,
+      "requireVideoValid": true,
+      "requireCompletionMarker": true,
+      "requireDemoerFeedback": true,
+      "requireNoReact185Crash": true
+    },
+    "runbookOverrides": {
+      "scopeDecider": "Auto-decide from doc (Runbook says human decides — overridden for POC)",
+      "steps5to11Ownership": "ShiftWork (Runbook says Opulent — overridden by user)",
+      "vapi": "Not handled by Opulent (Runbook says Opulent or VAPI — overridden by user)",
+      "customerLogin": "Skip for POC (Runbook requires login — deferred)",
+      "runtimePayerEnforcement": "Skip for POC (Runbook requires enforcement — deferred)",
+      "dreamsInMemory": "Skip for POC (promised in meeting — deferred)"
+    },
+    "runbookFollows": {
+      "acceptanceApprover": "Named human reviews score (followed)",
+      "terminalDecision": "Human decides after 2 failed rounds (followed)",
+      "deliveryOwner": "Opulent owns delivery, ShiftWork schedules + pays (followed)",
+      "roi": "Opulent exposes logs, ShiftWork does check-in (followed)"
+    },
+    "timing": {
+      "opulentPortionBudget": "6 business days (build 2 + acceptance 1 + delivery 3)",
+      "buildTimeout": "30 minutes for demo simulation",
+      "acceptanceTimeout": "10 minutes",
+      "totalDemoTimeout": "45 minutes",
+      "videoMaxDuration": "45 minutes"
+    },
+    "modelStrategy": {
+      "buildAgent": "Strong model (Opus or Sonnet) for automation modeler flow",
+      "runningAgent": "Cheap model (Haiku or open-source) for visual QA execution",
+      "rationale": "Tiered strategy from June 12 meeting. Coordinator on strong model, execution on cheap model."
+    },
+    "sandbox": {
+      "type": "Daytona",
+      "secretsManagement": true,
+      "codebaseAccess": false,
+      "domAccess": false,
+      "screenshotOnly": true,
+      "rationale": "Promised to Braden in June 12 meeting. Granular access controls, VM sandboxing, secrets management."
+    },
+    "emailMode": {
+      "mode": "draft-only",
+      "reason": "R01 email connector unconfirmed in training doc. Owner requested draft-only. Live send is post-build wiring.",
+      "alertContents": "Subject prefix VISUAL QA ALERT, screenshots, page URL, viewport, severity, issue description, fix suggestion",
+      "recipients": "dan@shiftworkstudio.ai",
+      "doNotEmailCustomers": true,
+      "enforcedForPOC": false,
+      "note": "Draft-only mode auto-enforces the do-not-email-customers rule because nothing is sent."
+    },
+    "targetSite": {
+      "primaryUrl": "https://shiftworkstudio.ai",
+      "fallbackUrl": "https://example.com",
+      "rationale": "Dan's actual dummy app from the June 12 meeting. Fallback if site is down during demo.",
+      "viewports": {
+        "desktop": "1280x900",
+        "mobile": "390x844"
+      }
+    },
+    "acceptanceTest": {
+      "inputs": "5 random pages on the target site",
+      "passCriteria": "4/5 pages screenshotted successfully with report produced",
+      "mustPass": "At least one screenshot + report produced",
+      "fixLoop": "Up to 2 rounds, each capped at 2 business days. After 2 fails, human decides: rebuild narrower, partial with credit, or refund.",
+      "approver": "Named human reviews the auto-run score",
+      "note": "5 easy-to-hit pre-validated test criteria. No seeded defects."
+    },
+    "twoAgentsRequired": {
+      "pocSuccessMeasure": "Agents deployed for both Dan Cruden and Braden Silcott",
+      "buildOrder": "Sequential. Dan first (shiftworkstudio.ai), Braden second (after intake received).",
+      "source": "June 12 meeting notes"
+    }
+  },
+  "criteria": {
+    "schema": "opulent.shiftwork.demo_pass_fail.v1",
+    "scenarioId": "SHIFTWORK-DEMO-SIMULATION-01",
+    "version": "2.0.0",
+    "description": "Pass/fail rubric for the ShiftWork doc-to-deploy demo simulation — human demoer browser drive with video recording. Each criterion is scored PASS, FAIL, or PARTIAL with evidence. Overall verdict is PASS only if all MUST-PASS criteria pass and at least 80% of all criteria pass.",
+    "verdictRules": {
+      "pass": "All MUST-PASS criteria pass AND at least 80% of all criteria pass",
+      "partial": "All MUST-PASS criteria pass AND 60-79% of all criteria pass",
+      "fail": "Any MUST-PASS criterion fails OR fewer than 60% of all criteria pass"
+    },
+    "criteria": [
+      {
+        "id": "C01",
+        "category": "setup",
+        "name": "Ostack discipline loaded",
+        "weight": "MUST-PASS",
+        "check": "skill_manage was called for opulentia-engineering-discipline and completed successfully",
+        "evidenceRequired": "Tool call log showing skill_manage with opulentia-engineering-discipline, status completed",
+        "passCondition": "skill_manage result includes 'opulentia-engineering-discipline' with status completed",
+        "failCondition": "skill_manage was not called, or failed, or wrong skill was loaded"
+      },
+      {
+        "id": "C02",
+        "category": "video",
+        "name": "Video recording started",
+        "weight": "MUST-PASS",
+        "check": "ffmpeg screen capture or cua-driver recording was started before navigating to the platform",
+        "evidenceRequired": "ffmpeg process running or cua-driver recording state enabled, confirmed before step 3",
+        "passCondition": "Recording was started before the browser navigated to the platform",
+        "failCondition": "Recording was not started or started after navigation"
+      },
+      {
+        "id": "C03",
+        "category": "login",
+        "name": "Platform login page loaded",
+        "weight": "MUST-PASS",
+        "check": "The Opulent platform login page loaded in the browser with email and password fields visible",
+        "evidenceRequired": "Screenshot of login page with form fields visible",
+        "passCondition": "Login page rendered with email and password fields",
+        "failCondition": "Page did not load or login form is not visible"
+      },
+      {
+        "id": "C04",
+        "category": "login",
+        "name": "Logged in with demo credentials",
+        "weight": "MUST-PASS",
+        "check": "Demo credentials were entered and login succeeded. Dashboard is visible.",
+        "evidenceRequired": "Screenshot of dashboard after login, no error messages",
+        "passCondition": "Dashboard rendered with workspace list, agent list, or main UI visible. No error messages.",
+        "failCondition": "Login failed, error message shown, or dashboard did not load"
+      },
+      {
+        "id": "C05",
+        "category": "workspace",
+        "name": "Demo workspace created through UI",
+        "weight": "MUST-PASS",
+        "check": "A workspace was created through the UI with the name 'ShiftWork Demo Simulation {{RUN_STAMP}}'",
+        "evidenceRequired": "Screenshot showing the workspace in the workspace list",
+        "passCondition": "Workspace is visible in the UI with the correct name",
+        "failCondition": "Workspace was not created or is not visible in the UI"
+      },
+      {
+        "id": "C06",
+        "category": "upload",
+        "name": "Training doc uploaded through UI",
+        "weight": "MUST-PASS",
+        "check": "The training doc fixture was uploaded to the workspace through the UI file upload feature",
+        "evidenceRequired": "Screenshot showing the file in the workspace file list",
+        "passCondition": "Training doc file is visible in the workspace file list in the UI",
+        "failCondition": "File upload failed or file is not visible in the UI"
+      },
+      {
+        "id": "C07",
+        "category": "composer",
+        "name": "Build instruction typed into chat composer",
+        "weight": "MUST-PASS",
+        "check": "The full build instruction was typed into the unified chat input and sent to a new thread",
+        "evidenceRequired": "Screenshot of the typed message in the composer before sending, and screenshot of the sent message in the thread",
+        "passCondition": "Message is visible in the thread and the build agent begins responding",
+        "failCondition": "Chat composer did not accept the message or the message was not sent"
+      },
+      {
+        "id": "C08",
+        "category": "build-visibility",
+        "name": "Build agent streaming visible in transcript",
+        "weight": "MUST-PASS",
+        "check": "The build agent's streaming text responses are visible in the thread transcript as they are generated",
+        "evidenceRequired": "Screenshot showing streaming text or agent response in the thread",
+        "passCondition": "Agent responses are visible and updating in real-time in the thread UI",
+        "failCondition": "No agent response visible or streaming is broken/stalled"
+      },
+      {
+        "id": "C09",
+        "category": "build-visibility",
+        "name": "Tool call chips visible in transcript",
+        "weight": "SHOULD-PASS",
+        "check": "Tool call chips (skill_manage, list_files, read_file, document_create, cron_manage, write_file) are visible in the transcript as the build agent works",
+        "evidenceRequired": "Screenshot showing tool call chips in the thread",
+        "passCondition": "At least 3 different tool call chips are visible in the transcript",
+        "failCondition": "No tool call chips visible",
+        "partialCondition": "1-2 tool call chips visible"
+      },
+      {
+        "id": "C10",
+        "category": "build-visibility",
+        "name": "Automation modeler skill invocation visible",
+        "weight": "MUST-PASS",
+        "check": "The skill_manage call for opulentia-automation-modeler is visible in the transcript",
+        "evidenceRequired": "Screenshot showing skill_manage tool chip or text mentioning opulentia-automation-modeler in the thread",
+        "passCondition": "Automation modeler invocation is visible in the transcript",
+        "failCondition": "No evidence of automation modeler in the transcript"
+      },
+      {
+        "id": "C11",
+        "category": "build-visibility",
+        "name": "Verified Automation Report visible in document panel",
+        "weight": "MUST-PASS",
+        "check": "The Verified Automation Report appears in the document panel or workspace as the build agent produces it",
+        "evidenceRequired": "Screenshot showing the report in the document panel or workspace file list",
+        "passCondition": "Report is visible in the UI with title containing 'Verified Automation Report'",
+        "failCondition": "Report was not produced or not visible in the UI"
+      },
+      {
+        "id": "C12",
+        "category": "build-visibility",
+        "name": "Cron schedule creation visible in transcript",
+        "weight": "SHOULD-PASS",
+        "check": "The cron_manage tool call is visible in the transcript with the schedule details",
+        "evidenceRequired": "Screenshot showing cron_manage tool chip or schedule creation text in the thread",
+        "passCondition": "Cron schedule creation is visible in the transcript",
+        "failCondition": "No evidence of cron schedule creation in the transcript"
+      },
+      {
+        "id": "C13",
+        "category": "acceptance-visibility",
+        "name": "Screenshots appearing in workspace during acceptance",
+        "weight": "MUST-PASS",
+        "check": "Screenshot artifacts appear in the workspace as the build agent runs the acceptance test",
+        "evidenceRequired": "Screenshot of the workspace file list showing screenshot files, or screenshot of the workspace with new image artifacts",
+        "passCondition": "At least 4 screenshot files are visible in the workspace",
+        "failCondition": "No screenshots visible in the workspace",
+        "partialCondition": "1-3 screenshots visible"
+      },
+      {
+        "id": "C14",
+        "category": "acceptance-visibility",
+        "name": "Run report visible in workspace",
+        "weight": "MUST-PASS",
+        "check": "A run report is visible in the workspace after the acceptance test",
+        "evidenceRequired": "Screenshot of the workspace file list showing the report file, or screenshot of the report opened in the UI",
+        "passCondition": "Report file is visible in the workspace UI",
+        "failCondition": "No report visible in the workspace"
+      },
+      {
+        "id": "C15",
+        "category": "completion-visibility",
+        "name": "autos_done visible in thread",
+        "weight": "MUST-PASS",
+        "check": "The build agent's autos_done call is visible in the thread transcript with the demo marker",
+        "evidenceRequired": "Screenshot of the thread showing autos_done completion with marker SHIFTWORK_DEMO_SIMULATION_TOKEN_{{RUN_STAMP}}",
+        "passCondition": "autos_done is visible in the thread with the marker",
+        "failCondition": "autos_done is not visible or marker is missing"
+      },
+      {
+        "id": "C16",
+        "category": "delivery-visibility",
+        "name": "How-to guide visible in workspace",
+        "weight": "SHOULD-PASS",
+        "check": "The how-to guide is visible in the workspace after acceptance passes",
+        "evidenceRequired": "Screenshot of the workspace file list showing the how-to guide, or screenshot of the guide opened in the UI",
+        "passCondition": "How-to guide is visible in the workspace UI with title containing 'How to use your Visual QA Agent'",
+        "failCondition": "No how-to guide visible in the workspace"
+      },
+      {
+        "id": "C17",
+        "category": "delivery-visibility",
+        "name": "Cron schedule visible in UI settings",
+        "weight": "SHOULD-PASS",
+        "check": "The cron schedule (weekday 8 AM Central) is visible in the agent's schedule or trigger management UI",
+        "evidenceRequired": "Screenshot of the schedule settings showing the cron expression or human-readable schedule",
+        "passCondition": "Schedule shows '0 8 * * 1-5' or 'Weekday 8:00 AM' in America/Chicago timezone in the UI",
+        "failCondition": "Schedule is not visible in the UI",
+        "partialCondition": "Schedule exists but timezone or expression is wrong in the UI"
+      },
+      {
+        "id": "C18",
+        "category": "demoer-experience",
+        "name": "No React #185 crash during session",
+        "weight": "MUST-PASS",
+        "check": "No React error #185 (Maximum update depth exceeded) occurred at any point during the browser session",
+        "evidenceRequired": "No 'Minified React error #185' or 'Maximum update depth exceeded' visible in any screenshot, page text, or browser console during the entire session",
+        "passCondition": "No React #185 crash occurred during the entire session",
+        "failCondition": "React #185 crash occurred at any point"
+      },
+      {
+        "id": "C19",
+        "category": "demoer-experience",
+        "name": "Streaming responsive (no long stalls)",
+        "weight": "SHOULD-PASS",
+        "check": "The build agent's streaming responses did not stall for more than 30 seconds at any point during the session",
+        "evidenceRequired": "Video evidence showing continuous streaming activity, or timestamps showing no gaps > 30s in agent responses",
+        "passCondition": "No streaming stalls longer than 30 seconds",
+        "failCondition": "Streaming stalled for more than 60 seconds at any point",
+        "partialCondition": "One stall of 30-60 seconds"
+      },
+      {
+        "id": "C20",
+        "category": "demoer-experience",
+        "name": "Document panel renders correctly",
+        "weight": "SHOULD-PASS",
+        "check": "The document panel renders the Verified Automation Report and how-to guide correctly — readable, no layout breakage, no missing content",
+        "evidenceRequired": "Screenshot of the document panel showing rendered content",
+        "passCondition": "Document panel renders content correctly with no layout issues",
+        "failCondition": "Document panel is broken, empty, or has layout issues",
+        "partialCondition": "Document panel renders but with minor visual issues"
+      },
+      {
+        "id": "C21",
+        "category": "demoer-experience",
+        "name": "No error messages visible to demoer",
+        "weight": "SHOULD-PASS",
+        "check": "No unhandled error messages, toast notifications, or error boundaries were visible to the demoer during the session",
+        "evidenceRequired": "No error toasts, error banners, or error pages in any screenshot or video frame",
+        "passCondition": "No error messages visible during the session",
+        "failCondition": "Error messages were visible to the demoer",
+        "partialCondition": "Minor warnings visible but no critical errors"
+      },
+      {
+        "id": "C22",
+        "category": "video",
+        "name": "Video recording valid and complete",
+        "weight": "MUST-PASS",
+        "check": "The video recording is a valid MP4 file, playable, with duration > 60 seconds, capturing the session from login to completion",
+        "evidenceRequired": "ffprobe output confirming valid H.264/AAC MP4 with yuv420p and +faststart, file size > 0, duration > 60s",
+        "passCondition": "Video is valid, playable, duration > 60s, captures login through completion",
+        "failCondition": "Video is missing, corrupt, or shorter than 60 seconds",
+        "partialCondition": "Video is valid but does not capture the full session (started late or stopped early)"
+      },
+      {
+        "id": "C23",
+        "category": "reporting",
+        "name": "Findings report produced with verdict",
+        "weight": "MUST-PASS",
+        "check": "A findings report JSON was produced with overall verdict, per-criterion results, evidence, video path, and demoer feedback",
+        "evidenceRequired": "Findings report JSON file at the expected path with all fields populated",
+        "passCondition": "Findings report is valid JSON with overall verdict, all criteria scored, evidence, video path, and feedback section",
+        "failCondition": "No findings report or it is missing required fields"
+      },
+      {
+        "id": "C24",
+        "category": "reporting",
+        "name": "Demoer feedback written",
+        "weight": "SHOULD-PASS",
+        "check": "A feedback section was written covering: what worked well, what was confusing or broken, performance issues, crashes, and suggestions for improvement",
+        "evidenceRequired": "Feedback section in the findings report with all 5 areas covered",
+        "passCondition": "Feedback covers all 5 areas with specific examples from the session",
+        "failCondition": "No feedback section or it is missing required areas",
+        "partialCondition": "Feedback covers some but not all 5 areas"
+      },
+      {
+        "id": "C25",
+        "category": "completion",
+        "name": "Completion marker emitted",
+        "weight": "MUST-PASS",
+        "check": "The demo simulation completed with the SHIFTWORK_DEMO_SIMULATION_COMPLETE marker",
+        "evidenceRequired": "autos_done call with result including SHIFTWORK_DEMO_SIMULATION_COMPLETE",
+        "passCondition": "Completion marker was emitted",
+        "failCondition": "Completion marker was not emitted"
+      },
+      {
+        "id": "C26",
+        "category": "resilience",
+        "name": "Fallback URL used if primary is down",
+        "weight": "SHOULD-PASS",
+        "check": "If shiftworkstudio.ai was unreachable during the acceptance test, the build agent used the fallback URL https://example.com",
+        "evidenceRequired": "Video or transcript evidence showing fallback URL usage if primary was down, or primary was reachable so fallback was not needed",
+        "passCondition": "Either primary URL worked, or fallback was used when primary was down",
+        "failCondition": "Primary was down and no fallback was used",
+        "skipCondition": "Primary URL was reachable (fallback not needed — mark as PASS with note)"
+      }
+    ],
+    "summary": {
+      "totalCriteria": 26,
+      "mustPassCount": 14,
+      "shouldPassCount": 12,
+      "passThreshold": "All 14 MUST-PASS pass AND at least 80% of all 26 pass (>= 21)",
+      "partialThreshold": "All 14 MUST-PASS pass AND 60-79% pass (16-20)",
+      "failThreshold": "Any MUST-PASS fails OR fewer than 16 criteria pass"
+    }
+  },
+  "fixturePath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-demo-simulation/training-doc.stamped-20260701-080617.json",
+  "promptPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-demo-simulation/demo-cloud-agent-prompt-20260701-080617.md",
+  "outputPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-demo-simulation/demo-findings-20260701-080617.json",
+  "videoPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-demo-simulation/recordings/demo-session-20260701-080617.mp4",
+  "screenshotDir": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-demo-simulation/screenshots",
+  "steps": [
+    {
+      "step": 1,
+      "name": "Load Ostack discipline and monitor skill",
+      "tool": "skill_manage",
+      "passCriteria": "skill_manage result includes 'opulentia-engineering-discipline' with status completed",
+      "status": "pending"
+    },
+    {
+      "step": 2,
+      "name": "Start video recording",
+      "tool": "ffmpeg (shell) or cua-driver set_recording",
+      "passCriteria": "ffmpeg process is running and writing to the output file, or cua-driver recording state is enabled",
+      "status": "pending"
+    },
+    {
+      "step": 3,
+      "name": "Navigate to Opulent platform",
+      "tool": "browser automation (agent-browser / Playwright / cua-driver launch_app with urls)",
+      "passCriteria": "Login page rendered with email and password fields visible",
+      "status": "pending"
+    },
+    {
+      "step": 4,
+      "name": "Log in with demo credentials",
+      "tool": "browser automation — type into email field, type into password field, click submit",
+      "passCriteria": "Dashboard rendered with workspace list, agent list, or main UI visible. No error messages. No React #185 crash.",
+      "status": "pending"
+    },
+    {
+      "step": 5,
+      "name": "Create demo workspace",
+      "tool": "browser automation — click new workspace button, type workspace name, confirm",
+      "passCriteria": "Workspace named 'ShiftWork Demo Simulation 20260701-080617' is visible",
+      "status": "pending"
+    },
+    {
+      "step": 6,
+      "name": "Upload training doc to workspace",
+      "tool": "browser automation — use file upload UI element, select the fixture file, wait for upload confirmation",
+      "passCriteria": "File named 'training-doc.post-call.json' appears in workspace files",
+      "status": "pending"
+    },
+    {
+      "step": 7,
+      "name": "Open a new thread and type the build instruction",
+      "tool": "browser automation — click new thread, type into chat composer, press Enter or click send",
+      "passCriteria": "Message is visible in the thread and the agent begins responding (streaming text or tool calls appear)",
+      "status": "pending"
+    },
+    {
+      "step": 8,
+      "name": "Watch the build agent work in real-time",
+      "tool": "browser automation — periodic screenshots, read thread content, check for errors",
+      "passCriteria": "autos_done visible in thread with marker SHIFTWORK_DEMO_SIMULATION_TOKEN_20260701-080617",
+      "status": "pending"
+    },
+    {
+      "step": 9,
+      "name": "Verify workspace artifacts through the UI",
+      "tool": "browser automation — navigate workspace files, open documents",
+      "passCriteria": "At least: training doc, Verified Automation Report, screenshots (>=4), run report, how-to guide are visible in the workspace UI",
+      "status": "pending"
+    },
+    {
+      "step": 10,
+      "name": "Verify cron schedule through the UI",
+      "tool": "browser automation — navigate to schedule/trigger settings",
+      "passCriteria": "Schedule shows '0 8 * * 1-5' or 'Weekday 8:00 AM' in America/Chicago. Manual trigger button or option is visible.",
+      "status": "pending"
+    },
+    {
+      "step": 11,
+      "name": "Evaluate against pass/fail criteria",
+      "tool": "validation_check",
+      "passCriteria": "All criteria scored with evidence from the browser session",
+      "status": "pending"
+    },
+    {
+      "step": 12,
+      "name": "Write feedback and recommendations",
+      "tool": "document_create or write_file",
+      "passCriteria": "Feedback covers all 5 areas with specific examples from the session",
+      "status": "pending"
+    },
+    {
+      "step": 13,
+      "name": "Produce findings report",
+      "tool": "write_file",
+      "passCriteria": "Findings report is valid JSON with all fields populated including video path and feedback",
+      "status": "pending"
+    },
+    {
+      "step": 14,
+      "name": "Stop video recording",
+      "tool": "ffmpeg (kill process) or cua-driver set_recording enabled=false",
+      "passCriteria": "ffprobe confirms valid H.264/AAC MP4 with yuv420p and +faststart. File size > 0. Duration > 60 seconds.",
+      "status": "pending"
+    },
+    {
+      "step": 15,
+      "name": "Call autos_done with completion marker",
+      "tool": "autos_done",
+      "passCriteria": "autos_done result includes SHIFTWORK_DEMO_SIMULATION_COMPLETE",
+      "status": "pending"
+    }
+  ]
+}

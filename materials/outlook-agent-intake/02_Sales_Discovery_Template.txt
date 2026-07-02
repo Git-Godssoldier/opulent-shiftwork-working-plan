@@ -1,0 +1,50 @@
+SHIFTWORK.
+AI LABORER ONBOARDING TEMPLATE
+02  —  SALES
+Discovery Questions
+AREA
+Sales  —  the agents that close revenue
+BUILDS
+Lead follow-up, quotes & estimates, appointment booking
+HOW TO USE
+This is a template. The system fills the brackets, then a business owner answers in plain words.
+Answer in plain language. Bullet points are fine. The honest, messy parts make the agents smarter.
+HOW THE BRACKETS WORK
+[Business Name]  A capitalized item is a value the system drops in. Swap it for the real detail.
+[list the channels they use]  An instruction tells the system to write custom examples for this business. Replace it.
+Plain text with no brackets  stays the same for every business.
+A
+YOUR SALES PROCESS
+S01   Walk me through your sales process, from first contact to a closed deal.
+[name what a closed deal is called in their world, like a bound policy, a signed contract, or a booked job]. List each stage, who is involved, and roughly how long each one takes.
+S02   When a new lead comes in, what's supposed to happen, and what actually happens?
+The gap between those two answers is exactly what we automate. Be honest about where it breaks down.
+B
+LEAD FOLLOW-UP  —  feeds the Lead Follow-up agent
+S03   How fast does a new lead get a first response today, and how fast should it?
+Be honest. If it is sometimes days, say days. [note the channels leads come in on for their business, like web form, phone, or referral].
+S04   How many leads slip through the cracks in a typical week?
+A rough guess is fine. This number sizes the prize for the Lead Follow-up agent.
+S05   What does your follow-up look like when a lead goes quiet?
+How many touches, which channels, over how many days, and when do you give up? [list the channels they use, like text, email, or call].
+S06   What are the most common objections you hear, and how do you answer them?
+[list the objections common in their industry]. Feed us your best rebuttals. The sales agent will use your words, not generic ones.
+C
+QUOTES & ESTIMATES  —  feeds the Quotes agent
+S07   How do you build and send a quote today?
+Walk us through it. [name where their pricing lives, like a rate sheet, a calculator, or a carrier portal]. What is the source of truth for pricing?
+S08   What slows a quote down or makes it come out inconsistent?
+Waiting on info, manual math, copy-paste errors? This is the gap the Quotes agent closes.
+D
+APPOINTMENT BOOKING  —  feeds the Booking agent
+S09   How do prospects book time with you today, and what goes wrong?
+Back-and-forth scheduling, wrong time zones, double-bookings. [name the scheduling tool they use, if known]. Name the friction.
+S10   How often do booked appointments turn into no-shows, and what do you do about it?
+A rough percent is fine. Reminders, confirmations, or nothing yet?
+E
+HANDOFF & DEAL SIZE
+S11   What makes a lead worth a human's time versus something the agent can handle?
+This is the handoff line. The more specific you are, the cleaner the agent hands off to you.
+S12   What is a typical sale worth to you?
+[swap in how they earn, like commission per policy, project price, or contract value]. Rough averages are fine. This helps size the prize for every Sales agent.
+Every answer here trains a Sales agent. The clearer the answer, the less guessing build day needs.

@@ -1,0 +1,42 @@
+SHIFTWORK.
+AI LABORER ONBOARDING TEMPLATE
+04  —  SERVICE
+Discovery Questions
+AREA
+Service  —  the agents that take care of customers
+BUILDS
+Call answering, customer questions, reminders
+HOW TO USE
+This is a template. The system fills the brackets, then a business owner answers in plain words.
+Answer in plain language. Bullet points are fine. The honest, messy parts make the agents smarter.
+HOW THE BRACKETS WORK
+[Business Name]  A capitalized item is a value the system drops in. Swap it for the real detail.
+[list the channels they use]  An instruction tells the system to write custom examples for this business. Replace it.
+Plain text with no brackets  stays the same for every business.
+A
+ANSWERING  —  feeds the Call Answering agent
+SV01   What happens when someone calls and you can't pick up?
+Voicemail, a missed call, a callback later? Be honest. This is where the Call Answering agent steps in.
+SV02   How many calls slip to voicemail or go missed in a week, after hours included?
+A rough guess is fine. Every missed call is a customer left waiting, and it sizes the prize.
+B
+COMMON QUESTIONS  —  feeds the Customer Questions agent
+SV03   What questions do customers ask you over and over?
+Hours, pricing, status, how-to. [list the questions common in their business]. These are the first ones the agent should own.
+SV04   Where do those questions come in today?
+[name the channels customers reach them on, like phone, text, email, or website chat]. Name the busiest one.
+SV05   Where do the answers live today, so the agent can learn them?
+[name where their answers live, like a FAQ page, a binder, or in your head]. If it is in your head, that is the most important thing for us to capture.
+C
+REMINDERS  —  feeds the Reminders agent
+SV06   How do you remind customers about what's coming up today?
+[name what they remind customers about, like appointments, renewals, or payments due]. By text, call, email, or not at all?
+SV07   What gets forgotten that costs you, like no-shows or lapses?
+Be honest. The Reminders agent nudges people before it becomes a problem.
+D
+TONE & ESCALATION
+SV08   How should the agent sound when it talks to your customers?
+Pick the feeling. [suggest 2-3 voice traits that fit their business, like friendly, calm, or professional]. It should sound like you, not a robot.
+SV09   When should the agent stop and hand a customer to a real person?
+An upset customer, a complaint, anything sensitive. This is the safety line. The more specific, the better.
+Every answer here trains a Service agent. The clearer the answer, the less guessing build day needs.

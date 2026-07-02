@@ -1,0 +1,157 @@
+OPERATING RUNBOOK
+Agent Build Pipeline. Version 2, clarified.
+Supersedes the draft pipeline. Every step has one owner, one trigger, a done-when that can fail, one fail path, and a clock. If a done-when cannot fail, it is a label, not a step.
+How to read a step
+Owner. One role. Never two names sharing a job.
+Starts when. The exact trigger that begins the step.
+Done when. A test that can fail. Existence of output is never a pass.
+If it fails. Where the work goes when the test fails. No dead ends.
+Clock. A time limit. Nothing waits forever.
+Stage 1. Intake (ShiftWork)
+Step 1. Select use case and agent task   SHIFTWORK · auto
+Starts when:  A visitor begins the onboarding flow.
+Needs:  Use-case menu and agent-task options.
+Produces:  A use case and a task held in the session.
+Done when:  Both a use case and a task are selected and stored. A partial selection blocks the next step.
+If it fails:  The visitor cannot proceed. No lead is created yet.
+Clock:  None. Instant.
+Step 2. Enter contact details and create the lead   SHIFTWORK · auto
+Starts when:  Use case and task are selected.
+Needs:  Name, business name, email.
+Produces:  A lead record with a unique ID, plus a usable domain or a clear no-domain flag.
+Done when:  All three fields validate AND a domain is resolved. If the email is a free provider (gmail, icloud, outlook, yahoo and the like), the system marks no business domain and asks for the company website. The lead is not complete until a real domain or a confirmed no-website answer is captured. This is where the lead starts, not at page load.
+If it fails:  Prompt for a business website. If none exists, set research mode to name and business only, and flag it.
+Clock:  None. Instant.
+Step 3. Pay the $29 application fee   SHIFTWORK · auto
+Starts when:  The lead record is complete.
+Needs:  Card payment via Stripe.
+Produces:  A paid lead record and a handoff job queued to Opulent.
+Done when:  Stripe confirms payment AND Opulent acknowledges the handoff. Payment alone does not clear this step.
+If it fails:  Card declines: stay unpaid, prompt retry. Payment succeeds but no ack: retry the handoff up to three times over fifteen minutes, then alert a named on-call owner and hold the lead in a paid, handoff-pending state. Never silent.
+Clock:  Handoff acknowledged within fifteen minutes, or an alert fires.
+Stage 2. Handoff
+Step 4. Validate and accept the payload   OPULENT · auto
+Starts when:  A handoff job arrives.
+Needs:  The payload: lead ID, name, business, email, domain or no-domain flag, use case, agent task, build request, payment status.
+Produces:  An accepted lead in Opulent, or a rejection with a reason.
+Done when:  Every required field is present and well-formed. Required: lead ID, name, business name, email, use case, agent task, payment equals paid. Build request may be blank but is then flagged for the call. Domain may be none. A missing required field rejects the payload and returns an ack only on acceptance.
+If it fails:  Reject with the missing-field list. ShiftWork retry logic catches it. If a field truly cannot be supplied, route to manual review.
+Clock:  Validated within two minutes of arrival.
+Stage 3. Research and prep (Opulent)
+Step 5. Research agent   OPULENT · agent
+Starts when:  The payload is accepted.
+Needs:  The accepted lead.
+Produces:  A research brief on business, industry, and likely core problem, with a confidence rating and a list of what could not be verified.
+Done when:  The brief carries a confidence rating (high, medium, low) AND an explicit assumed-or-unverified list. A brief with neither is not done. Low confidence, or a lead with no business domain, auto-routes to the human gate with a warning. This tests quality, not that a brief exists.
+If it fails:  Low confidence flags for human review before the target is set.
+Clock:  One business hour.
+Step 6. Confirm the provisional build target   HUMAN GATE · Opulent lead
+Starts when:  The research brief is ready.
+Needs:  The brief, the customer pick, the agent recommendation, the confidence rating.
+Produces:  A provisional build target on the lead, with a one-line reason.
+Done when:  A named person reviews and logs a provisional target. This gate always needs a human action, whether or not the agent flagged a difference, so a confidently wrong brief cannot walk through unchecked. The target is provisional because the call can still change it.
+If it fails:  If the brief is too thin to pick a target, request more research or hold the choice for the call.
+Clock:  Same business day.
+Step 7. Select the questionnaire   OPULENT · agent
+Starts when:  A provisional target is logged.
+Needs:  The brief, the provisional target, the five questionnaire sets.
+Produces:  One selected questionnaire with a reason.
+Done when:  Exactly one questionnaire is chosen and the reason names the target it serves. If the target is low-confidence, the broadest fitting set is chosen so the call can go wide.
+If it fails:  Default to the broadest set.
+Clock:  Fifteen minutes. Automated.
+Step 8. Build the Q and A document   OPULENT · agent
+Starts when:  The questionnaire is selected.
+Needs:  The questionnaire and the research brief.
+Produces:  A draft Q and A doc where every line is tagged.
+Done when:  Every question has either a draft answer tagged draft from research, unconfirmed, or an open-gap marker. No untagged lines. The tag is what stops a research guess being mistaken for an owner answer later.
+If it fails:  Any untagged line blocks completion.
+Clock:  Fifteen minutes.
+Step 9. Prepare the call script   OPULENT · agent
+Starts when:  The Q and A doc is ready.
+Needs:  The Q and A doc.
+Produces:  A call script where draft answers appear only as prompts.
+Done when:  Every example answer is visibly marked as a prompt, and the script tells the interviewer to capture the owner's own words. A script that presents a draft as the answer is not done.
+If it fails:  Re-mark and re-check.
+Clock:  Fifteen minutes.
+Stage 4. The call (the real input)
+Step 10. Onboarding call   SHIFTWORK or VAPI · named per build
+Starts when:  The script is ready AND the owner books a slot.
+Needs:  The script and the owner, who must be the real decision-maker, not a stand-in.
+Produces:  A completed training doc with each answer tagged, a recording, and a confirmed or corrected build target.
+Done when:  All three are true. The owner is verified as the decision-maker at the start of the call. Each draft is confirmed, corrected, or marked unanswered, in the owner's own words. The owner states the build target out loud. If the call reveals a different target, log the new one and route back to Step 6 for a quick re-confirm before any build.
+If it fails:  Owner does not book within three business days: go to the async fallback. Wrong person on the call: reschedule, do not proceed on a stand-in's answers.
+Clock:  Call held within five business days of Step 9, or escalate.
+Step 10b. Async fallback (only if the call cannot happen)   SHIFTWORK · crew
+Starts when:  The owner has not booked within three business days.
+Needs:  A short, prioritized set of the eight to ten questions that actually drive the build, sent as a voice-note or form task.
+Produces:  The owner's recorded or written answers to the priority questions, tagged confirmed by owner.
+Done when:  The priority questions are answered in the owner's words. The build never starts on agent guesses alone. If the owner ignores the fallback too, the lead moves to stalled and the refund clock starts.
+If it fails:  After ten business days total with no usable owner input, refund and close. Never leave a paid lead open forever.
+Clock:  Three days to respond. Ten business days total before refund-and-close.
+Stage 5. Validate and build
+Step 11. Gap review   OPULENT · gap agents + human spot-check
+Starts when:  The training doc returns from the call or the fallback.
+Needs:  The training doc with tagged answers.
+Produces:  A training doc where every gap is owner-confirmed or clearly marked filled by research, unconfirmed.
+Done when:  No answer is untagged, AND every build-critical question is owner-confirmed. Gap agents may research and propose, but research answers stay tagged unconfirmed and cannot fill a build-critical question. A human signs that the critical questions are owner-confirmed.
+If it fails:  If a build-critical question has no owner answer, go back to the owner with a quick async ask. If still unanswered, re-scope the target or refund.
+Clock:  Same business day the doc returns.
+Step 12. Build the first agent   OPULENT · automate engine or named builder
+Starts when:  The training doc passes gap review.
+Needs:  The validated training doc.
+Produces:  A working agent. Single if one covers the top problem, or a manager plus task agents if the job needs it.
+Done when:  The agent runs end to end on a test input without crashing and produces output for the owner's top problem. This is it runs, not it is good. A named person decides single versus orchestrated from the doc before the build runs, for cost control.
+If it fails:  Automate command not yet shipped: use the manual build path with a named builder. Do not block the proof of concept on an unreleased feature. Build errors: fix and re-run.
+Clock:  Two business days.
+Stage 6. Accept, deliver, measure
+Step 13. Acceptance test   HUMAN GATE · named approver
+Starts when:  The agent runs.
+Needs:  The agent, plus a fixed test set written before the build: five real inputs and the expected behavior for each, from the owner's actual use case.
+Produces:  A pass, or a fix list.
+Done when:  The agent handles at least four of five test inputs as expected, including the owner's single most important case, which is mandatory. Anything less is a fail. Works is never a gut call, it is this test.
+If it fails:  Fix loop, up to two rounds. After two failed rounds, a terminal decision: rebuild with a narrower scope, deliver a partial with a credit, or refund and close. The approver picks one and logs it. No build stays in limbo.
+Clock:  Reviewed within one business day. Each fix round capped at two business days.
+Step 14. Deliver and set up hosting   SHIFTWORK + Opulent on handoff
+Starts when:  The agent passes acceptance.
+Needs:  The approved agent, a decided home for it, and a decided owner of the runtime cost.
+Produces:  The agent live where the customer uses it, access shared, and a short how-to plus one walkthrough.
+Done when:  All true. The agent runs in its production home (Opulent platform, an embed, or the customer site, decided per build). The customer has access and has logged in once. The monthly runtime and hosting cost is assigned to a payer and written on the record. A delivered build with no assigned runtime payer is not done. That is a margin leak.
+If it fails:  If no hosting home or payer is decided, delivery is blocked until it is. This is a business decision, not a technical one.
+Clock:  Delivered within three business days of acceptance.
+Step 15. Confirm in production and capture ROI   SHIFTWORK · crew
+Starts when:  The agent is delivered.
+Needs:  A scheduled check-in at day fourteen after delivery. A calendar task, not hope.
+Produces:  A production sign-off and two logged numbers: labor hours saved per week and new sales attributed, each with its source.
+Done when:  Either the customer confirms at the day-fourteen check-in and both numbers are logged with how they were measured, OR the customer does not respond by day twenty-one and the build is marked deemed accepted so the loop closes. Where possible, pull usage from the agent's own logs so labor-saved is not pure self-report. Someone typed a number does not count.
+If it fails:  An unresponsive customer triggers deemed accepted at day twenty-one, not an open loop forever. Low or negative ROI flags a save call.
+Clock:  Check-in at day fourteen. Deemed accepted at day twenty-one.
+Read this before the first run
+Build customer one is ShiftWork's own sales agent. Steps 1 to 4, where a stranger pays and the handoff fires, do not run for that build. So before you trust the pipeline, push one real outside lead through Steps 1 to 4 on its own. That is the half the first build skips, and the half most likely to break.
+Clocks at a glance
+Step
+Time limit
+3. Pay and hand off
+Ack within 15 minutes, or alert
+4. Validate payload
+2 minutes
+5. Research
+1 business hour
+6. Confirm target
+Same business day
+7 to 9. Prep
+About 45 minutes, automated
+10. Call
+Within 5 business days of prep
+10b. Fallback
+3 days to respond, 10 business days before refund
+11. Gap review
+Same business day
+12. Build
+2 business days
+13. Acceptance test
+1 day, fix rounds capped at 2 days each
+14. Deliver and host
+3 business days
+15. ROI
+Check-in day 14, deemed accepted day 21
+The followable rule. Every step has one owner, one trigger, a done-when that can fail, one fail path, and a clock. If you cannot make a step's done-when fail, you do not have a step. You have a label.

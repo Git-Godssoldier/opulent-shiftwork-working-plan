@@ -1,0 +1,74 @@
+{
+  "scenarioId": "SHIFTWORK-INTAKE-VQA-MARKETING-01",
+  "shortId": "SW-VQA-MARKETING-01",
+  "name": "Marketing Visual QA",
+  "track": "Marketing",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelLock": {
+    "opulent-preferred-model-v32": "deepseek/deepseek-v4-flash",
+    "opulentia-coordinator-model-v7": "deepseek/deepseek-v4-flash",
+    "opulentia-worker-model-v6": "deepseek/deepseek-v4-flash",
+    "opulentia-active-role-v1": "coordinator"
+  },
+  "startTime": "2026-07-01T11:59:29.821Z",
+  "verdict": "INCONCLUSIVE",
+  "marker": "SHIFTWORK_INTAKE_VQA_MARKETING_COMPLETE",
+  "screenshots": [
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-MARKETING-01/SW-VQA-MARKETING-01-prompt-typed.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-MARKETING-01/SW-VQA-MARKETING-01-check-1.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-MARKETING-01/SW-VQA-MARKETING-01-post-marker.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-MARKETING-01/SW-VQA-MARKETING-01-final.png"
+  ],
+  "consoleErrors": [
+    {
+      "text": "[LONG_TASK] CRITICAL 610 ms {count: 29, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57b02mc4fhh9f5d1yf1z4rehh89q77c",
+      "time": "2026-07-01T12:01:53.045Z"
+    },
+    {
+      "text": "[LONG_TASK] CRITICAL 649 ms {count: 67, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57b02mc4fhh9f5d1yf1z4rehh89q77c",
+      "time": "2026-07-01T12:02:53.282Z"
+    }
+  ],
+  "verification": {
+    "bodyChars": 20950,
+    "promptBaselineChars": 16563,
+    "evidenceChars": 6136,
+    "markerOccurrencesTotal": 4,
+    "markerInPrompt": 2,
+    "markerOccurrencesAfterPrompt": 2,
+    "autosDoneInPrompt": 3,
+    "autosDoneOccurrencesAfterPrompt": 2,
+    "blockerMatches": [],
+    "evidenceBriefTerms": [
+      "claim checked",
+      "data/tool source",
+      "artifact",
+      "blockers",
+      "next action"
+    ],
+    "missingEvidenceBriefTerms": [],
+    "requiredTerms": [
+      "workspace",
+      "writer thread",
+      "reader thread",
+      "fileid",
+      "owner_confirmed",
+      "draft_from_research_unconfirmed",
+      "visual qa",
+      "acceptance inputs",
+      "build plan",
+      "validation_check"
+    ],
+    "missingRequiredTerms": [],
+    "evidenceSnippet": "t synced to AI Drive yet. Let me use upload_attachment to get it into the workspace Drive, then save the snapshot.Upload AttachmentUploaded to storage. Now saving the snapshot to push it to the workspace AI Drive and re-listing files.Save snapshot toList workspace files to get intake fileIdlist_filesList workspace files to get intake fileIdlist_filesCheck workspace changelog for intake file entrylist_changelogCheck workspace changelog for intake file entrylist_changelogCheck Mesa workspace paths for the intake filels -la /opulent/workspace/uploads/drive/Ran commandls -la /opulent/workspace/uploads/drive/Check Mesa workspace repo for tracked filesls -la /opulent/workspace/workspace/uploads/ 2>/dev/null && ls -la /opulent/wor…Ran commandls -la /opulent/workspace/workspace/uploads/ 2>/dev/null && ls -la /opulent/wor…Let me re-write the intake file throughRan commandcd /opulent/workspace && python3 -c \" import json with open('shiftwork-five-tra…Ran commandcd /opulent/workspace && python3 -c \" import json with open('shiftworkOutput the intake JSON for write_filecd /opulent/workspace && python3 -c \" import json with open('shiftwork-five-tra…3m 13sDeepSeek V4 FlashOpulentDeepSeek V4 Flash"
+  },
+  "notes": "Completion marker found but structural proof missing (workspaceId=true, threadId=false, validationResult=false) — may be checklist text, not final evidence",
+  "threadUrl": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57b02mc4fhh9f5d1yf1z4rehh89q77c",
+  "pageTextSnippet": ">/dev/null && ls -la /opulent/wor…Ran commandls -la /opulent/workspace/workspace/uploads/ 2>/dev/null && ls -la /opulent/wor…Let me re-write the intake file throughRan commandcd /opulent/workspace && python3 -c \" import json with open('shiftwork-five-tra…Ran commandcd /opulent/workspace && python3 -c \" import json with open('shiftworkOutput the intake JSON for write_filecd /opulent/workspace && python3 -c \" import json with open('shiftwork-five-tra…3m 13sDeepSeek V4 FlashOpulentDeepSeek V4 Flash",
+  "promptBaselineTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-MARKETING-01/prompt-baseline-text.txt",
+  "markerFoundDuringWait": true,
+  "pageTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-MARKETING-01/page-text-retest.txt",
+  "endTime": "2026-07-01T12:02:58.970Z"
+}

@@ -1,0 +1,44 @@
+SHIFTWORK.
+AI LABORER ONBOARDING TEMPLATE
+05  —  OPS
+Admin · Finance · Talent
+AREA
+Ops  —  the agents that run admin, finance, and talent
+BUILDS
+Invoicing, inbox management, crew scheduling, hiring help
+HOW TO USE
+This is a template. The system fills the brackets, then a business owner answers in plain words.
+Answer in plain language. Bullet points are fine. The honest, messy parts make the agents smarter.
+HOW THE BRACKETS WORK
+[Business Name]  A capitalized item is a value the system drops in. Swap it for the real detail.
+[list the channels they use]  An instruction tells the system to write custom examples for this business. Replace it.
+Plain text with no brackets  stays the same for every business.
+A
+INVOICING & GETTING PAID  —  feeds the Invoicing agent
+OP01   How do invoices go out today, and how do you chase a late payment?
+[name how they invoice now, like QuickBooks, paper, or by hand]. Walk us through what happens when someone doesn't pay on time.
+OP02   How much money sits unpaid past due in a normal month?
+A rough number is fine. This is cash you already earned, and it sizes the prize for the Invoicing agent.
+B
+INBOX & ADMIN  —  feeds the Inbox Management agent
+OP03   What lands in your inbox that you wish you didn't have to sort?
+The noise, the repeats, the stuff that buries the important emails. Name the worst offenders.
+OP04   Which emails actually need you, and which could be filed or handled for you?
+This is the line the Inbox agent learns. The clearer you draw it, the more it takes off your plate.
+C
+SCHEDULING THE TEAM  —  feeds the Crew Scheduling agent
+OP05   How do you schedule your team and your work today?
+[name what they schedule, like crews, jobs, shifts, or appointments]. [name the tool they use, like a calendar, a whiteboard, or texts].
+OP06   What goes wrong with scheduling in a normal week?
+Gaps, double-books, last-minute changes, no-shows. This is the gap we automate.
+D
+HIRING  —  feeds the Hiring Help agent
+OP07   How do you hire today, and where does it bog down?
+[name where they post jobs or find people, like Indeed, referrals, or walk-ins]. Where does it stall, screening, scheduling, or follow-up?
+OP08   What makes someone a good fit, and what's a quick no?
+[name the role they hire for most]. Give us your gut-check list. The agent screens against it.
+E
+WHERE TIME GOES
+OP09   What admin task eats the most of your time each week?
+The one you dread, the repetitive one. If we automated a single back-office task, what should it be?
+Every answer here trains an Ops agent. The clearer the answer, the less guessing build day needs.

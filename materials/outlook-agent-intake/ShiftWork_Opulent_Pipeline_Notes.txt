@@ -1,0 +1,67 @@
+AGENT BUILD PIPELINE
+Shared notes for the sprint.
+Heads up.
+We put this together fast with AI to capture what we talked through. It is not a spec you have to follow. Your team knows the build side better than we do. Treat the build steps as notes on what each piece could look like, and what we would call done. Build it however you see fit. If a step is named clumsily or sits in the wrong spot, that is the draft's fault, not yours. The parts we run are on our side. The how is yours.
+Our side. Intake
+1. Pick use case and task   SHIFTWORK
+The customer picks the use case and the agent task they want built.
+Done when: Both are saved on the lead.
+2. Enter contact, create lead   SHIFTWORK
+The customer adds name, business, and email. We read a business domain for research.
+Done when: The fields validate and we have a real domain, or a clear flag that there is none.
+Note: Free emails like gmail count as no business domain. We then ask for the website.
+3. Pay the $29 fee   SHIFTWORK
+The $29 application fee is the trigger that closes intake and starts the handoff.
+Done when: Payment clears and the lead reaches Opulent.
+Note: If payment clears but the handoff does not land, we catch it and retry on our side.
+The handoff
+4. Send the lead to Opulent   SHIFTWORK → OPULENT
+We pass the full lead as a payload. Fields are listed in the appendix. No codebase access needed.
+Done when: Opulent has every field it needs to start. Payload only.
+Your side. The build
+Notes only. These are what each piece could look like to us, not how to build it. Names and order are a starting point. Change them as you see fit.
+5. Research the lead   OPULENT
+Look into the person, business, and industry, then read the use case and task. Flag when the real need looks different from what they picked.
+Done when: There is a brief on business, industry, and likely core problem, with some signal of how confident it is.
+6. Pick the build target   OPULENT
+A person confirms what we are building, since research can be wrong.
+Done when: One target is logged with a reason. It can still change on the call.
+7. Pick the questionnaire   OPULENT
+Choose the one of five sets that fits the target.
+Done when: One set is chosen.
+8. Draft the Q and A doc   OPULENT
+Seed likely answers from research so the call moves fast.
+Done when: Every question has a draft answer or a marked gap, and draft answers are marked as unconfirmed.
+9. Prep the call script   OPULENT
+Turn the Q and A into a call script. Draft answers are prompts to help the owner answer, not the answer itself.
+Done when: The script is ready and example answers are clearly marked as aids.
+10. Run the onboarding call   SHIFTWORK or VAPI
+A crew member or VAPI voice agent talks to the owner. It is recorded. The owner's real answers fill the doc.
+Done when: The owner gives their own answers and the build target is confirmed out loud.
+Note: If the owner will not get on a call, we will sort an async way to get the answers. The build should not run on guesses.
+11. Gap review   OPULENT
+Agents check the doc for holes and fill them before any build starts.
+Done when: No answer is left untagged, and the answers that drive the build come from the owner, not from guesses.
+12. Build the first agent   OPULENT
+Build to the owner's top problem. One agent if that covers it, or a manager plus task agents if the job needs more.
+Done when: The agent runs against the top problem and passes review.
+Accept, deliver, measure
+13. Acceptance test   SHIFTWORK + OPULENT
+Check the agent against a few real inputs we agree up front, including the owner's most important case.
+Done when: It handles the agreed inputs, including the must-pass case.
+14. Deliver and host   SHIFTWORK
+Put the agent where the customer will use it. Decide where it lives and who pays to run it.
+Done when: It is live, the customer has access, and the monthly runtime cost has a payer on record.
+15. Confirm and capture ROI   SHIFTWORK
+Check in after delivery. Log labor saved and new sales, and where each number came from.
+Done when: The customer confirms, or we mark it accepted after a set wait, and both numbers are logged.
+One thing to flag. Build customer one is our own sales agent, so steps 1 to 4 do not run for it. We will push one real outside lead through intake and payment on its own, since that is the half the first build skips.
+Appendix. What we send at handoff
+The payload from our form to Opulent at step 4.
+Lead ID and timestamp.
+Name, business name, email.
+Business domain, or a no-domain flag.
+Use case and agent task.
+The build request.
+Payment status.
+Sent by webhook from Supabase, hosted on Vercel. Payload only. No GitHub or codebase access needed.

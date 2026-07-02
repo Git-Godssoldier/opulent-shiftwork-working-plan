@@ -1,0 +1,117 @@
+{
+  "schema": "opulent.shiftwork.demo_findings.v1",
+  "scenarioId": "SHIFTWORK-DEMO-SIMULATION-01",
+  "runStamp": "{{RUN_STAMP}}",
+  "createdAt": "{{TIMESTAMP}}",
+  "overallVerdict": "PASS | PARTIAL | FAIL",
+  "verdictReason": "One-line explanation of the verdict",
+  "passCount": 0,
+  "failCount": 0,
+  "partialCount": 0,
+  "skipCount": 0,
+  "totalCriteria": 26,
+  "mustPassAllPassed": true,
+
+  "criteriaResults": [
+    {
+      "id": "C01",
+      "name": "Ostack discipline loaded",
+      "weight": "MUST-PASS",
+      "result": "PASS | FAIL | PARTIAL | SKIP",
+      "evidence": "Tool call log or transcript excerpt",
+      "screenshotPath": null,
+      "videoTimestamp": null,
+      "notes": "Any additional context"
+    }
+  ],
+
+  "workspaceArtifacts": {
+    "workspaceId": null,
+    "workspaceName": null,
+    "buildAgentThreadId": null,
+    "threadUrl": null,
+    "artifacts": [
+      {
+        "path": "path/in/workspace",
+        "type": "training_doc | verified_automation_report | screenshot | run_report | how_to_guide | findings_report",
+        "exists": true,
+        "visibleInUI": true,
+        "notes": ""
+      }
+    ]
+  },
+
+  "buildAgentSummary": {
+    "stepsCompleted": [],
+    "stepsFailed": [],
+    "autosDoneCalled": false,
+    "autosDoneMarker": null,
+    "cronScheduleId": null,
+    "cronScheduleVisibleInUI": false,
+    "agentConfigId": null,
+    "acceptanceTestResult": "PASS | FAIL | NOT_RUN",
+    "acceptanceTestScore": "X/5",
+    "mustPassResult": "PASS | FAIL"
+  },
+
+  "demoerExperience": {
+    "whatWorkedWell": "What looked good during the demo from the demoer's perspective",
+    "whatWasConfusingOrBroken": "What was confusing, broken, or unexpected in the UI",
+    "performanceIssues": "Any slow rendering, streaming gaps, or latency issues observed",
+    "crashesObserved": "Any crashes (React #185 or other) observed during the session",
+    "suggestionsForImprovement": "Actionable suggestions to improve the demo experience"
+  },
+
+  "errors": [
+    {
+      "step": 0,
+      "error": "Error description",
+      "recovered": false,
+      "impact": "What this error affected",
+      "screenshotPath": null,
+      "videoTimestamp": null
+    }
+  ],
+
+  "targetSiteStatus": {
+    "primaryUrl": "https://shiftworkstudio.ai",
+    "wasReachable": true,
+    "fallbackUsed": false,
+    "fallbackUrl": "https://example.com"
+  },
+
+  "react185Status": {
+    "crashOccurred": false,
+    "evidence": "No React error #185 found in any screenshot or video frame"
+  },
+
+  "videoEvidence": {
+    "videoFilePath": null,
+    "videoDuration": null,
+    "videoValid": false,
+    "ffprobeOutput": null,
+    "trajectoryDir": null,
+    "trajectoryTurns": 0
+  },
+
+  "screenshotEvidence": [],
+
+  "timing": {
+    "startTime": "{{ISO_TIMESTAMP}}",
+    "endTime": "{{ISO_TIMESTAMP}}",
+    "totalDuration": "X minutes",
+    "buildAgentDuration": "X minutes",
+    "acceptanceTestDuration": "X minutes"
+  },
+
+  "recommendations": [
+    "Actionable recommendation based on findings"
+  ],
+
+  "rawData": {
+    "toolCallLog": "Path to full tool call log if captured",
+    "agentTranscript": "Path to full agent transcript if captured",
+    "browserConsoleLog": "Path to browser console log if captured",
+    "screenshotPaths": []
+  }
+}

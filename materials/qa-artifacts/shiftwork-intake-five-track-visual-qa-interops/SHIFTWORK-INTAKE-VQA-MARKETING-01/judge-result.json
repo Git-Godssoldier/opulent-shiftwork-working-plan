@@ -1,0 +1,61 @@
+{
+  "scenarioId": "SHIFTWORK-INTAKE-VQA-MARKETING-01",
+  "shortId": "SW-VQA-MARKETING-01",
+  "name": "Marketing Visual QA",
+  "track": "Marketing",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelLock": {
+    "opulent-preferred-model-v32": "deepseek/deepseek-v4-flash",
+    "opulentia-coordinator-model-v7": "deepseek/deepseek-v4-flash",
+    "opulentia-worker-model-v6": "deepseek/deepseek-v4-flash",
+    "opulentia-active-role-v1": "coordinator"
+  },
+  "startTime": "2026-07-01T11:25:59.734Z",
+  "verdict": "INCONCLUSIVE",
+  "marker": "SHIFTWORK_INTAKE_VQA_MARKETING_COMPLETE",
+  "screenshots": [
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-MARKETING-01/SW-VQA-MARKETING-01-prompt-typed.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-MARKETING-01/SW-VQA-MARKETING-01-check-1.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-MARKETING-01/SW-VQA-MARKETING-01-final.png"
+  ],
+  "consoleErrors": [],
+  "verification": {
+    "bodyChars": 18806,
+    "promptBaselineChars": 16563,
+    "evidenceChars": 3992,
+    "markerOccurrencesTotal": 2,
+    "markerInPrompt": 2,
+    "markerOccurrencesAfterPrompt": 0,
+    "autosDoneInPrompt": 3,
+    "autosDoneOccurrencesAfterPrompt": 1,
+    "blockerMatches": [],
+    "evidenceBriefTerms": [
+      "claim checked",
+      "data/tool source",
+      "artifact",
+      "blockers",
+      "next action"
+    ],
+    "missingEvidenceBriefTerms": [],
+    "requiredTerms": [
+      "workspace",
+      "writer thread",
+      "reader thread",
+      "fileid",
+      "owner_confirmed",
+      "draft_from_research_unconfirmed",
+      "visual qa",
+      "acceptance inputs",
+      "build plan",
+      "validation_check"
+    ],
+    "missingRequiredTerms": [],
+    "evidenceSnippet": "n commandfind /opulent/workspace/workspace -type f 2>/dev/null | head -30The fixture file doesn't exist yet in the workspace. I need to create it based on the detailed workflow specification. Let me construct the full MarketingEnsure uploads/drive directory existsmkdir -p /opulent/workspace/uploads/drivefixture and proceed.Ran commandmkdir -p /opulent/workspace/uploads/driveCreated/home/daytona/workspace/shiftwork/home/daytona/workspace/shiftwork……-five-track-intake-fixtures.json-five-track-intake-fixtures.jsonFixture created. Nowlet me create the workspace and writer thread.Find and load shiftwork-five-track-intake-fixtures.json for Marketing fixtureCreate workspace and writer threadPersist intake JSON to /opulent/workspace/uploads/drive and verify all fieldsSave/list workspace files and record fileIdCreate reader thread, retrieve file by fileId, verify marker/fieldsProduce build plan from retrieved intake onlyRun validation_checkWrite evidence brief and autos_doneCreate shiftwork intake vqa marketing workspacecreateCreate shiftwork intake vqa marketing workspacecreateWorkspace exists (ws_2a56f0d69797473aa82a859c25). Let me create the1m 39sDeepSeek V4 FlashOpulentDeepSeek V4 Flash"
+  },
+  "notes": "Completion marker only appeared in submitted prompt echo; no post-prompt completion evidence",
+  "threadUrl": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57c1d6v3wj4fk5wmesq3t22dn89q6cz?bootstrap=1",
+  "pageTextSnippet": " intake JSON to /opulent/workspace/uploads/drive and verify all fieldsSave/list workspace files and record fileIdCreate reader thread, retrieve file by fileId, verify marker/fieldsProduce build plan from retrieved intake onlyRun validation_checkWrite evidence brief and autos_doneCreate shiftwork intake vqa marketing workspacecreateCreate shiftwork intake vqa marketing workspacecreateWorkspace exists (ws_2a56f0d69797473aa82a859c25). Let me create the1m 39sDeepSeek V4 FlashOpulentDeepSeek V4 Flash",
+  "promptBaselineTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-MARKETING-01/prompt-baseline-text.txt",
+  "pageTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-MARKETING-01/page-text-retest.txt",
+  "endTime": "2026-07-01T11:27:48.701Z"
+}

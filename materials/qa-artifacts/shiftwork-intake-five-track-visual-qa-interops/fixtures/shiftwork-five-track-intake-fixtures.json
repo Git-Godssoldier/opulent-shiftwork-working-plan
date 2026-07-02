@@ -1,0 +1,635 @@
+[
+  {
+    "schema": "opulent.shiftwork.intake_answer.v1",
+    "scenarioId": "SHIFTWORK-INTAKE-VQA-MARKETING-01",
+    "marker": "SHIFTWORK_INTAKE_VQA_MARKETING_TOKEN_20260701",
+    "drive": {
+      "sourceSystem": "google_drive_simulated",
+      "driveFileId": "gdrive-sim-shiftwork-intake-vqa-marketing-001",
+      "name": "ShiftWork Intake Answer - Northstar Renovations - Marketing Visual QA.json",
+      "shareMode": "anyone_with_link",
+      "webViewLink": "https://drive.google.com/file/d/gdrive-sim-shiftwork-intake-vqa-marketing-001/view"
+    },
+    "handoffPayload": {
+      "leadId": "SW-VQA-MKT-20260701-001",
+      "timestamp": "2026-07-01T21:45:00.000Z",
+      "name": "Mara Ellison",
+      "businessName": "Northstar Renovations",
+      "email": "mara@northstarrenovations.com",
+      "businessDomain": "northstarrenovations.com",
+      "noDomainFlag": false,
+      "useCase": "Marketing",
+      "agentTask": "Landing page visual quality monitoring and email alerts",
+      "buildRequest": "Build a visual quality agent that screenshots our marketing landing page on desktop and mobile, catches visual inconsistencies that hurt conversion, and drafts an email alert when something breaks.",
+      "paymentStatus": "paid",
+      "paymentAmountUsd": 29,
+      "source": "supabase_webhook_simulated",
+      "hostedBy": "vercel_intake_simulated"
+    },
+    "researchBrief": {
+      "business": "Home renovation contractor using a public landing page and reviews to convert homeowners into estimate requests.",
+      "industry": "Home services",
+      "likelyCoreProblem": "Marketing edits can hide the hero image, review proof, offer, or quote CTA on mobile before the owner notices.",
+      "confidence": "medium",
+      "assumedOrUnverified": [
+        "Actual ad landing URL should be confirmed.",
+        "Baseline screenshots are simulated until OAuth Drive or browser capture is wired."
+      ]
+    },
+    "selectedQuestionnaire": {
+      "questionnaireId": "01_Marketing_Discovery_Template",
+      "reason": "The target protects the public marketing funnel: audience message, content proof, offer, reviews, and referral/conversion CTA."
+    },
+    "answers": [
+      {
+        "questionId": "M01",
+        "answer": "Sound warm, expert, and trustworthy. The page should feel like a local renovation specialist, not a national franchise.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "M02",
+        "answer": "Reach homeowners within 30 miles who want kitchen, bath, or basement updates and need a quote without calling first.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "M08",
+        "answer": "Google reviews and before/after photos matter most. If those sections disappear or overlap, leads trust us less.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "VQ-MKT-01",
+        "answer": "Check https://northstarrenovations.com/ at desktop 1280x900 and mobile 390x844. The hero image, headline, offer, reviews, before/after image, and Get a Quote CTA must all be visible.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "R01",
+        "answer": "The company likely uses Google Business reviews, but the review source is unconfirmed.",
+        "tag": "draft_from_research_unconfirmed",
+        "buildCritical": false
+      }
+    ],
+    "visualQualityAgentRequest": {
+      "targetUrl": "https://northstarrenovations.com/",
+      "routes": [
+        {
+          "path": "/",
+          "checks": [
+            "hero image visible",
+            "headline readable",
+            "offer section visible",
+            "review proof visible",
+            "before-after imagery not blank",
+            "Get a Quote CTA visible without horizontal scroll"
+          ]
+        }
+      ],
+      "viewports": [
+        { "name": "desktop", "width": 1280, "height": 900 },
+        { "name": "mobile", "width": 390, "height": 844 }
+      ],
+      "inconsistencyCriteria": [
+        "missing_or_blank_image",
+        "hidden_primary_cta",
+        "overlapping_text",
+        "horizontal_scroll",
+        "blank_section",
+        "console_error"
+      ],
+      "emailAlerts": {
+        "mode": "draft_only",
+        "to": ["mara@northstarrenovations.com"],
+        "cc": ["marketing@northstarrenovations.com"],
+        "subjectPrefix": "VISUAL QA ALERT - MARKETING",
+        "sendOnlyWhen": "One or more inconsistency criteria are detected."
+      },
+      "schedule": {
+        "timezone": "America/Chicago",
+        "cron": "0 8 * * 1-5",
+        "manualRunAllowed": true
+      },
+      "acceptanceInputs": [
+        "desktop homepage screenshot",
+        "mobile homepage screenshot",
+        "seeded missing hero image",
+        "seeded hidden Get a Quote CTA",
+        "no-issue baseline run"
+      ],
+      "mustPassInput": "mobile homepage screenshot with hero, reviews, offer, and Get a Quote CTA visible"
+    },
+    "expectedAgent": {
+      "name": "Marketing Landing Page Visual QA Agent",
+      "mode": "single_agent",
+      "hostingRuntimePayerGate": "must be assigned before delivery",
+      "roiFollowUp": "day_14"
+    }
+  },
+  {
+    "schema": "opulent.shiftwork.intake_answer.v1",
+    "scenarioId": "SHIFTWORK-INTAKE-VQA-SALES-02",
+    "marker": "SHIFTWORK_INTAKE_VQA_SALES_TOKEN_20260701",
+    "drive": {
+      "sourceSystem": "google_drive_simulated",
+      "driveFileId": "gdrive-sim-shiftwork-intake-vqa-sales-002",
+      "name": "ShiftWork Intake Answer - Northstar Renovations - Sales Visual QA.json",
+      "shareMode": "anyone_with_link",
+      "webViewLink": "https://drive.google.com/file/d/gdrive-sim-shiftwork-intake-vqa-sales-002/view"
+    },
+    "handoffPayload": {
+      "leadId": "SW-VQA-SALES-20260701-002",
+      "timestamp": "2026-07-01T21:46:00.000Z",
+      "name": "Mara Ellison",
+      "businessName": "Northstar Renovations",
+      "email": "mara@northstarrenovations.com",
+      "businessDomain": "northstarrenovations.com",
+      "noDomainFlag": false,
+      "useCase": "Sales",
+      "agentTask": "Quote and booking page visual quality monitoring",
+      "buildRequest": "Build a visual QA agent that checks our quote form and booking page screenshots, then drafts an alert if a lead cannot request an estimate.",
+      "paymentStatus": "paid",
+      "paymentAmountUsd": 29,
+      "source": "supabase_webhook_simulated",
+      "hostedBy": "vercel_intake_simulated"
+    },
+    "researchBrief": {
+      "business": "Home renovation contractor where booked estimates and quote requests drive revenue.",
+      "industry": "Home services sales",
+      "likelyCoreProblem": "A broken quote form, hidden phone number, or unusable booking CTA can silently drop sales leads.",
+      "confidence": "medium",
+      "assumedOrUnverified": [
+        "Booking tool and quote form provider need owner confirmation."
+      ]
+    },
+    "selectedQuestionnaire": {
+      "questionnaireId": "02_Sales_Discovery_Template",
+      "reason": "The target protects lead follow-up, quotes, estimates, and appointment booking."
+    },
+    "answers": [
+      {
+        "questionId": "S02",
+        "answer": "A web lead should get to the quote form or booking CTA immediately. What actually happens is sometimes the button moves below the fold or the form is cut off on phones.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "S03",
+        "answer": "New web leads should be able to request an estimate immediately, especially on mobile.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "S09",
+        "answer": "Prospects book through the website form first. The agent should check that the form, phone number, and Book Estimate CTA are visible.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "VQ-SALES-01",
+        "answer": "Check /quote and /book if present; otherwise check the homepage quote form section. Desktop 1280x900 and mobile 390x844 are required.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "R01",
+        "answer": "Calendly may be used for booking, but the scheduling tool is unconfirmed.",
+        "tag": "draft_from_research_unconfirmed",
+        "buildCritical": false
+      }
+    ],
+    "visualQualityAgentRequest": {
+      "targetUrl": "https://northstarrenovations.com/",
+      "routes": [
+        {
+          "path": "/quote",
+          "fallbackPath": "/",
+          "checks": [
+            "quote form visible",
+            "Book Estimate CTA visible",
+            "phone number readable",
+            "required fields not cut off",
+            "submit button reachable",
+            "no form overlap on mobile"
+          ]
+        }
+      ],
+      "viewports": [
+        { "name": "desktop", "width": 1280, "height": 900 },
+        { "name": "mobile", "width": 390, "height": 844 }
+      ],
+      "inconsistencyCriteria": [
+        "form_cut_off",
+        "hidden_primary_cta",
+        "unreachable_button_or_link",
+        "horizontal_scroll",
+        "console_error"
+      ],
+      "emailAlerts": {
+        "mode": "draft_only",
+        "to": ["mara@northstarrenovations.com"],
+        "cc": ["sales@northstarrenovations.com"],
+        "subjectPrefix": "VISUAL QA ALERT - SALES",
+        "sendOnlyWhen": "A quote or booking path is visually broken."
+      },
+      "schedule": {
+        "timezone": "America/Chicago",
+        "cron": "0 8 * * 1-5",
+        "manualRunAllowed": true
+      },
+      "acceptanceInputs": [
+        "desktop quote route screenshot",
+        "mobile quote route screenshot",
+        "seeded hidden submit button",
+        "seeded cut-off required field",
+        "no-issue baseline run"
+      ],
+      "mustPassInput": "mobile quote form screenshot with form fields and CTA visible"
+    },
+    "expectedAgent": {
+      "name": "Sales Quote Page Visual QA Agent",
+      "mode": "single_agent",
+      "hostingRuntimePayerGate": "must be assigned before delivery",
+      "roiFollowUp": "day_14"
+    }
+  },
+  {
+    "schema": "opulent.shiftwork.intake_answer.v1",
+    "scenarioId": "SHIFTWORK-INTAKE-VQA-FULFILLMENT-03",
+    "marker": "SHIFTWORK_INTAKE_VQA_FULFILLMENT_TOKEN_20260701",
+    "drive": {
+      "sourceSystem": "google_drive_simulated",
+      "driveFileId": "gdrive-sim-shiftwork-intake-vqa-fulfillment-003",
+      "name": "ShiftWork Intake Answer - Northstar Renovations - Fulfillment Visual QA.json",
+      "shareMode": "anyone_with_link",
+      "webViewLink": "https://drive.google.com/file/d/gdrive-sim-shiftwork-intake-vqa-fulfillment-003/view"
+    },
+    "handoffPayload": {
+      "leadId": "SW-VQA-FUL-20260701-003",
+      "timestamp": "2026-07-01T21:47:00.000Z",
+      "name": "Mara Ellison",
+      "businessName": "Northstar Renovations",
+      "email": "mara@northstarrenovations.com",
+      "businessDomain": "northstarrenovations.com",
+      "noDomainFlag": false,
+      "useCase": "Fulfillment",
+      "agentTask": "Customer welcome and job-status page visual monitoring",
+      "buildRequest": "Build a visual QA agent that screenshots our customer welcome/status page and drafts an email if the project timeline, checklist, or document links are visually broken.",
+      "paymentStatus": "paid",
+      "paymentAmountUsd": 29,
+      "source": "supabase_webhook_simulated",
+      "hostedBy": "vercel_intake_simulated"
+    },
+    "researchBrief": {
+      "business": "Renovation contractor coordinating customers after estimate acceptance.",
+      "industry": "Home services fulfillment",
+      "likelyCoreProblem": "Customers lose trust when welcome steps, project timelines, or document upload links are visually broken.",
+      "confidence": "medium",
+      "assumedOrUnverified": [
+        "Customer portal URL is simulated and must be confirmed."
+      ]
+    },
+    "selectedQuestionnaire": {
+      "questionnaireId": "03_Fulfillment_Discovery_Template",
+      "reason": "The target protects new-customer welcome, job updates, job tracking, and paperwork flows."
+    },
+    "answers": [
+      {
+        "questionId": "F01",
+        "answer": "After a deal closes, the customer should see what happens next, what we need from them, and when the job starts.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "F03",
+        "answer": "Customers should not have to chase us for status. The project timeline and next step should be readable on the status page.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "F07",
+        "answer": "Every job needs contract, deposit invoice, selections checklist, and project update documents to be reachable.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "VQ-FUL-01",
+        "answer": "Check the customer welcome/status page at desktop 1280x900 and mobile 390x844. Timeline, checklist, upload link, and document CTA must render.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "R01",
+        "answer": "The portal may be in Jobber or a custom page, but the system of record is unconfirmed.",
+        "tag": "draft_from_research_unconfirmed",
+        "buildCritical": false
+      }
+    ],
+    "visualQualityAgentRequest": {
+      "targetUrl": "https://northstarrenovations.com/customer-welcome",
+      "routes": [
+        {
+          "path": "/customer-welcome",
+          "fallbackPath": "/",
+          "checks": [
+            "welcome checklist visible",
+            "project timeline visible",
+            "document upload link reachable",
+            "contract/deposit document CTA visible",
+            "status update section not blank"
+          ]
+        }
+      ],
+      "viewports": [
+        { "name": "desktop", "width": 1280, "height": 900 },
+        { "name": "mobile", "width": 390, "height": 844 }
+      ],
+      "inconsistencyCriteria": [
+        "blank_section",
+        "unreachable_button_or_link",
+        "overlapping_text",
+        "hidden_primary_cta",
+        "console_error"
+      ],
+      "emailAlerts": {
+        "mode": "draft_only",
+        "to": ["mara@northstarrenovations.com"],
+        "cc": ["projects@northstarrenovations.com"],
+        "subjectPrefix": "VISUAL QA ALERT - FULFILLMENT",
+        "sendOnlyWhen": "A customer handoff or project-update visual path is broken."
+      },
+      "schedule": {
+        "timezone": "America/Chicago",
+        "cron": "0 8 * * 1-5",
+        "manualRunAllowed": true
+      },
+      "acceptanceInputs": [
+        "desktop customer welcome screenshot",
+        "mobile customer welcome screenshot",
+        "seeded missing timeline block",
+        "seeded broken document CTA",
+        "no-issue baseline run"
+      ],
+      "mustPassInput": "customer welcome page screenshot with checklist, timeline, and document link visible"
+    },
+    "expectedAgent": {
+      "name": "Fulfillment Status Page Visual QA Agent",
+      "mode": "single_agent",
+      "hostingRuntimePayerGate": "must be assigned before delivery",
+      "roiFollowUp": "day_14"
+    }
+  },
+  {
+    "schema": "opulent.shiftwork.intake_answer.v1",
+    "scenarioId": "SHIFTWORK-INTAKE-VQA-SERVICE-04",
+    "marker": "SHIFTWORK_INTAKE_VQA_SERVICE_TOKEN_20260701",
+    "drive": {
+      "sourceSystem": "google_drive_simulated",
+      "driveFileId": "gdrive-sim-shiftwork-intake-vqa-service-004",
+      "name": "ShiftWork Intake Answer - Northstar Renovations - Service Visual QA.json",
+      "shareMode": "anyone_with_link",
+      "webViewLink": "https://drive.google.com/file/d/gdrive-sim-shiftwork-intake-vqa-service-004/view"
+    },
+    "handoffPayload": {
+      "leadId": "SW-VQA-SVC-20260701-004",
+      "timestamp": "2026-07-01T21:48:00.000Z",
+      "name": "Mara Ellison",
+      "businessName": "Northstar Renovations",
+      "email": "mara@northstarrenovations.com",
+      "businessDomain": "northstarrenovations.com",
+      "noDomainFlag": false,
+      "useCase": "Service",
+      "agentTask": "Support and contact page visual monitoring",
+      "buildRequest": "Build a visual QA agent that screenshots our contact and FAQ page and drafts an alert if customers cannot find phone, contact form, FAQ answers, or escalation instructions.",
+      "paymentStatus": "paid",
+      "paymentAmountUsd": 29,
+      "source": "supabase_webhook_simulated",
+      "hostedBy": "vercel_intake_simulated"
+    },
+    "researchBrief": {
+      "business": "Renovation contractor receiving customer questions through phone, web form, and email.",
+      "industry": "Home services customer service",
+      "likelyCoreProblem": "Missed calls and repeat questions get worse if contact, FAQ, or escalation information is hidden on mobile.",
+      "confidence": "medium",
+      "assumedOrUnverified": [
+        "Exact after-hours call handling process needs owner confirmation."
+      ]
+    },
+    "selectedQuestionnaire": {
+      "questionnaireId": "04_Service_Discovery_Template",
+      "reason": "The target protects call answering, customer questions, reminders, tone, and escalation paths."
+    },
+    "answers": [
+      {
+        "questionId": "SV01",
+        "answer": "If we cannot pick up, customers should still see the phone number, contact form, and what to expect next.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "SV03",
+        "answer": "Customers ask about estimate timing, project status, deposits, and what happens if weather delays the job.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "SV09",
+        "answer": "Escalate complaints, urgent safety issues, and angry customers. The page should make that handoff clear.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "VQ-SVC-01",
+        "answer": "Check /contact and /faq if present; otherwise check the contact section on the homepage. Desktop and mobile screenshots are required.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "R01",
+        "answer": "The company may use a website form plus phone, but live chat availability is unconfirmed.",
+        "tag": "draft_from_research_unconfirmed",
+        "buildCritical": false
+      }
+    ],
+    "visualQualityAgentRequest": {
+      "targetUrl": "https://northstarrenovations.com/contact",
+      "routes": [
+        {
+          "path": "/contact",
+          "fallbackPath": "/",
+          "checks": [
+            "phone number readable",
+            "contact form visible",
+            "FAQ block visible",
+            "hours or response-time copy visible",
+            "escalation instructions not obscured"
+          ]
+        }
+      ],
+      "viewports": [
+        { "name": "desktop", "width": 1280, "height": 900 },
+        { "name": "mobile", "width": 390, "height": 844 }
+      ],
+      "inconsistencyCriteria": [
+        "hidden_primary_cta",
+        "form_cut_off",
+        "overlapping_text",
+        "blank_section",
+        "console_error"
+      ],
+      "emailAlerts": {
+        "mode": "draft_only",
+        "to": ["mara@northstarrenovations.com"],
+        "cc": ["service@northstarrenovations.com"],
+        "subjectPrefix": "VISUAL QA ALERT - SERVICE",
+        "sendOnlyWhen": "A contact, FAQ, or escalation visual path is broken."
+      },
+      "schedule": {
+        "timezone": "America/Chicago",
+        "cron": "0 8 * * 1-5",
+        "manualRunAllowed": true
+      },
+      "acceptanceInputs": [
+        "desktop contact page screenshot",
+        "mobile contact page screenshot",
+        "seeded hidden phone number",
+        "seeded cut-off contact form",
+        "no-issue baseline run"
+      ],
+      "mustPassInput": "mobile contact screenshot with phone, form, FAQ, and escalation copy visible"
+    },
+    "expectedAgent": {
+      "name": "Service Contact Page Visual QA Agent",
+      "mode": "single_agent",
+      "hostingRuntimePayerGate": "must be assigned before delivery",
+      "roiFollowUp": "day_14"
+    }
+  },
+  {
+    "schema": "opulent.shiftwork.intake_answer.v1",
+    "scenarioId": "SHIFTWORK-INTAKE-VQA-OPS-05",
+    "marker": "SHIFTWORK_INTAKE_VQA_OPS_TOKEN_20260701",
+    "drive": {
+      "sourceSystem": "google_drive_simulated",
+      "driveFileId": "gdrive-sim-shiftwork-intake-vqa-ops-005",
+      "name": "ShiftWork Intake Answer - Northstar Renovations - Ops Visual QA.json",
+      "shareMode": "anyone_with_link",
+      "webViewLink": "https://drive.google.com/file/d/gdrive-sim-shiftwork-intake-vqa-ops-005/view"
+    },
+    "handoffPayload": {
+      "leadId": "SW-VQA-OPS-20260701-005",
+      "timestamp": "2026-07-01T21:49:00.000Z",
+      "name": "Mara Ellison",
+      "businessName": "Northstar Renovations",
+      "email": "mara@northstarrenovations.com",
+      "businessDomain": "northstarrenovations.com",
+      "noDomainFlag": false,
+      "useCase": "Ops",
+      "agentTask": "Operations page visual quality monitoring and email alerts",
+      "buildRequest": "Build a visual QA agent that checks our operations/admin page screenshots for crew schedule, invoice status, inbox triage, and hiring blocks, then drafts an alert if something visually breaks.",
+      "paymentStatus": "paid",
+      "paymentAmountUsd": 29,
+      "source": "supabase_webhook_simulated",
+      "hostedBy": "vercel_intake_simulated"
+    },
+    "researchBrief": {
+      "business": "Renovation contractor coordinating crews, invoices, inbox triage, and hiring from simple internal pages.",
+      "industry": "Home services operations",
+      "likelyCoreProblem": "Back-office pages can visually break and hide crew schedule, invoice, inbox, or hiring tasks before the owner notices.",
+      "confidence": "medium",
+      "assumedOrUnverified": [
+        "The real operations URL is internal and should be confirmed before live browser access."
+      ]
+    },
+    "selectedQuestionnaire": {
+      "questionnaireId": "05_Ops_Discovery_Template",
+      "reason": "The target protects admin, finance, crew scheduling, inbox management, and hiring operations."
+    },
+    "answers": [
+      {
+        "questionId": "OP03",
+        "answer": "Inbox noise buries quote requests, invoice questions, and crew schedule changes. The admin page should keep those blocks visible.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "OP05",
+        "answer": "We schedule crews and jobs from a shared calendar and texts. The crew schedule block must not disappear or overlap.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "OP09",
+        "answer": "The admin task that eats the most time is checking invoices, schedule changes, and hiring follow-ups across different places.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "VQ-OPS-01",
+        "answer": "Check /ops or the internal admin landing page at desktop and mobile sizes. Crew schedule, invoice status, inbox triage, and hiring cards must all render.",
+        "tag": "owner_confirmed",
+        "buildCritical": true
+      },
+      {
+        "questionId": "R01",
+        "answer": "QuickBooks, Google Calendar, and Gmail are likely tools, but connector choices are unconfirmed.",
+        "tag": "draft_from_research_unconfirmed",
+        "buildCritical": false
+      }
+    ],
+    "visualQualityAgentRequest": {
+      "targetUrl": "https://northstarrenovations.com/ops",
+      "routes": [
+        {
+          "path": "/ops",
+          "fallbackPath": "/",
+          "checks": [
+            "crew schedule card visible",
+            "invoice status card visible",
+            "inbox triage card visible",
+            "hiring pipeline card visible",
+            "admin CTA visible"
+          ]
+        }
+      ],
+      "viewports": [
+        { "name": "desktop", "width": 1280, "height": 900 },
+        { "name": "mobile", "width": 390, "height": 844 }
+      ],
+      "inconsistencyCriteria": [
+        "blank_section",
+        "hidden_primary_cta",
+        "overlapping_text",
+        "horizontal_scroll",
+        "console_error"
+      ],
+      "emailAlerts": {
+        "mode": "draft_only",
+        "to": ["mara@northstarrenovations.com"],
+        "cc": ["ops@northstarrenovations.com"],
+        "subjectPrefix": "VISUAL QA ALERT - OPS",
+        "sendOnlyWhen": "An operations visual path is broken."
+      },
+      "schedule": {
+        "timezone": "America/Chicago",
+        "cron": "0 8 * * 1-5",
+        "manualRunAllowed": true
+      },
+      "acceptanceInputs": [
+        "desktop ops page screenshot",
+        "mobile ops page screenshot",
+        "seeded missing crew schedule card",
+        "seeded hidden invoice status card",
+        "no-issue baseline run"
+      ],
+      "mustPassInput": "ops page screenshot with crew schedule, invoice status, inbox triage, and hiring cards visible"
+    },
+    "expectedAgent": {
+      "name": "Ops Dashboard Visual QA Agent",
+      "mode": "single_agent",
+      "hostingRuntimePayerGate": "must be assigned before delivery",
+      "roiFollowUp": "day_14"
+    }
+  }
+]

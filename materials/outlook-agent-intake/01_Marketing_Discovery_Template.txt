@@ -1,0 +1,46 @@
+SHIFTWORK.
+AI LABORER ONBOARDING TEMPLATE
+01  —  MARKETING
+Discovery Questions
+AREA
+Marketing  —  the agents that fill the funnel
+BUILDS
+Social posts, email newsletters, review requests, referral activation
+HOW TO USE
+This is a template. The system fills the brackets, then a business owner answers in plain words.
+Answer in plain language. Bullet points are fine. The honest, messy parts make the agents smarter.
+HOW THE BRACKETS WORK
+[Business Name]  A capitalized item is a value the system drops in. Swap it for the real detail.
+[list the channels they use]  An instruction tells the system to write custom examples for this business. Replace it.
+Plain text with no brackets  stays the same for every business.
+A
+BRAND & AUDIENCE
+M01   In a few words, how should [Business Name] sound?
+Pick the feeling, not the exact words. [suggest 2-3 voice traits that fit their industry, like warm, expert, or bold]. If they have a known credential or angle, name it [insert their main differentiator or credential] because it shapes the voice.
+M02   Who are you trying to reach with your marketing?
+Describe them like a real person, not a category. [add a profile hint that fits their business, like life stage, job, or location]. Who do you most want walking in the door?
+M03   What 3 to 5 things should [Business Name] be known for talking about?
+These are your pillars. [list 3-5 content themes common in their industry]. They become the topics the content agent posts about.
+B
+CHANNELS & POSTING  —  feeds the Social Media agent
+M04   Where do you post now, and where do you wish you posted?
+[list the platforms common in their industry, like Facebook, Instagram, LinkedIn, or Google Business]. Give a realistic number of posts per week for each.
+M05   When you go quiet on a channel, what's the reason?
+No time? Not sure what to say? Just forget? This gap is exactly what the Social Media agent fills.
+C
+EMAIL  —  feeds the Email Newsletter agent
+M06   Do you email your customer list today? If so, what do you send and how often?
+Newsletters, tips, promos, or nothing at all. Be honest. [name an email tool they likely use, if known]. The Email agent picks up from here.
+M07   How big is your email list, and how clean is it?
+A rough number is fine. Small or messy is still a useful answer.
+D
+REVIEWS & REFERRALS  —  feeds the Review Request agent
+M08   How and when do you ask happy customers for a review today?
+After the sale? After the job is done? Never? [name the review sites that matter most for their business, like Google, Yelp, or an industry site]. The Review agent asks at the right moment.
+M09   What happens today when someone sends you a referral?
+Is there a process, a thank-you, or a reward? Or does it just happen by luck? [note any referral source that matters to their business].
+E
+OFFERS & HOOKS
+M10   Do you have any free offer, guide, or promo that pulls new people in?
+A quote, a checklist, a discount, a quick consult. If you don't have one, say so. That is a gap worth filling.
+Every answer here trains a Marketing agent. The clearer the answer, the less guessing build day needs.

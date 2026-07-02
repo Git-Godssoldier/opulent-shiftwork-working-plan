@@ -1,0 +1,38 @@
+{
+  "schema": "opulent.shiftwork.intake_interop_scenarios.v1",
+  "modelLock": "openrouter/poolside/laguna-m.1:free",
+  "artifactDir": "frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/",
+  "fixturePath": "frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/fixtures/shiftwork-five-track-intake-fixtures.json",
+  "scenarios": [
+    {
+      "scenarioId": "SHIFTWORK-INTAKE-VQA-MARKETING-01",
+      "track": "Marketing",
+      "completionMarker": "SHIFTWORK_INTAKE_VQA_MARKETING_COMPLETE",
+      "prompt": "Run SHIFTWORK-INTAKE-VQA-MARKETING-01. Load the matching Marketing fixture from shiftwork-five-track-intake-fixtures.json. Create a workspace and writer thread, persist the intake JSON to /opulent/workspace/uploads/drive, verify paid handoff payload, selected questionnaire 01_Marketing_Discovery_Template, marker SHIFTWORK_INTAKE_VQA_MARKETING_TOKEN_20260701, owner_confirmed build-critical answers, draft_from_research_unconfirmed research-only answers, marketing visual QA target URL/routes/viewports/checks/email draft rules, and five acceptance inputs. Save/list workspace files and record fileId. Create a separate reader thread in the same workspace, retrieve the file by fileId, verify the same marker and fields without using original thread context, produce a build plan from the retrieved intake only, run validation_check, then autos_done summary SHIFTWORK_INTAKE_VQA_MARKETING_COMPLETE."
+    },
+    {
+      "scenarioId": "SHIFTWORK-INTAKE-VQA-SALES-02",
+      "track": "Sales",
+      "completionMarker": "SHIFTWORK_INTAKE_VQA_SALES_COMPLETE",
+      "prompt": "Run SHIFTWORK-INTAKE-VQA-SALES-02. Load the matching Sales fixture from shiftwork-five-track-intake-fixtures.json. Create a workspace and writer thread, persist the intake JSON to /opulent/workspace/uploads/drive, verify paid handoff payload, selected questionnaire 02_Sales_Discovery_Template, marker SHIFTWORK_INTAKE_VQA_SALES_TOKEN_20260701, owner_confirmed build-critical answers, draft_from_research_unconfirmed research-only answers, sales quote/booking visual QA target URL/routes/viewports/checks/email draft rules, and five acceptance inputs. Save/list workspace files and record fileId. Create a separate reader thread in the same workspace, retrieve the file by fileId, verify the same marker and fields without using original thread context, produce a build plan from the retrieved intake only, run validation_check, then autos_done summary SHIFTWORK_INTAKE_VQA_SALES_COMPLETE."
+    },
+    {
+      "scenarioId": "SHIFTWORK-INTAKE-VQA-FULFILLMENT-03",
+      "track": "Fulfillment",
+      "completionMarker": "SHIFTWORK_INTAKE_VQA_FULFILLMENT_COMPLETE",
+      "prompt": "Run SHIFTWORK-INTAKE-VQA-FULFILLMENT-03. Load the matching Fulfillment fixture from shiftwork-five-track-intake-fixtures.json. Create a workspace and writer thread, persist the intake JSON to /opulent/workspace/uploads/drive, verify paid handoff payload, selected questionnaire 03_Fulfillment_Discovery_Template, marker SHIFTWORK_INTAKE_VQA_FULFILLMENT_TOKEN_20260701, owner_confirmed build-critical answers, draft_from_research_unconfirmed research-only answers, customer welcome/status visual QA target URL/routes/viewports/checks/email draft rules, and five acceptance inputs. Save/list workspace files and record fileId. Create a separate reader thread in the same workspace, retrieve the file by fileId, verify the same marker and fields without using original thread context, produce a build plan from the retrieved intake only, run validation_check, then autos_done summary SHIFTWORK_INTAKE_VQA_FULFILLMENT_COMPLETE."
+    },
+    {
+      "scenarioId": "SHIFTWORK-INTAKE-VQA-SERVICE-04",
+      "track": "Service",
+      "completionMarker": "SHIFTWORK_INTAKE_VQA_SERVICE_COMPLETE",
+      "prompt": "Run SHIFTWORK-INTAKE-VQA-SERVICE-04. Load the matching Service fixture from shiftwork-five-track-intake-fixtures.json. Create a workspace and writer thread, persist the intake JSON to /opulent/workspace/uploads/drive, verify paid handoff payload, selected questionnaire 04_Service_Discovery_Template, marker SHIFTWORK_INTAKE_VQA_SERVICE_TOKEN_20260701, owner_confirmed build-critical answers, draft_from_research_unconfirmed research-only answers, contact/FAQ visual QA target URL/routes/viewports/checks/email draft rules, and five acceptance inputs. Save/list workspace files and record fileId. Create a separate reader thread in the same workspace, retrieve the file by fileId, verify the same marker and fields without using original thread context, produce a build plan from the retrieved intake only, run validation_check, then autos_done summary SHIFTWORK_INTAKE_VQA_SERVICE_COMPLETE."
+    },
+    {
+      "scenarioId": "SHIFTWORK-INTAKE-VQA-OPS-05",
+      "track": "Ops",
+      "completionMarker": "SHIFTWORK_INTAKE_VQA_OPS_COMPLETE",
+      "prompt": "Run SHIFTWORK-INTAKE-VQA-OPS-05. Load the matching Ops fixture from shiftwork-five-track-intake-fixtures.json. Create a workspace and writer thread, persist the intake JSON to /opulent/workspace/uploads/drive, verify paid handoff payload, selected questionnaire 05_Ops_Discovery_Template, marker SHIFTWORK_INTAKE_VQA_OPS_TOKEN_20260701, owner_confirmed build-critical answers, draft_from_research_unconfirmed research-only answers, operations/admin visual QA target URL/routes/viewports/checks/email draft rules, and five acceptance inputs. Save/list workspace files and record fileId. Create a separate reader thread in the same workspace, retrieve the file by fileId, verify the same marker and fields without using original thread context, produce a build plan from the retrieved intake only, run validation_check, then autos_done summary SHIFTWORK_INTAKE_VQA_OPS_COMPLETE."
+    }
+  ]
+}

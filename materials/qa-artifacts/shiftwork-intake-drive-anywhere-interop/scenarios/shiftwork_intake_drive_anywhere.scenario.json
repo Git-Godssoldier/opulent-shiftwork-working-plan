@@ -1,0 +1,96 @@
+{
+  "key": "shiftwork_intake_drive_anywhere",
+  "label": "ShiftWork Intake Drive Anywhere Visual QA Agent",
+  "prompt": "Run the ShiftWork intake Drive-anywhere visual QA agent interop for {{MODEL_LABEL}}. This is a live workspace durability and intake-to-agent-grounding test, not a prose task. Use the exact marker SHIFTWORK_INTAKE_DRIVE_ANYWHERE_TOKEN_{{RUN_STAMP}} in every persisted artifact. Step 1: call skill_manage action=invoke for opulentia-engineering-discipline. Step 2: create a workspace named 'ShiftWork visual QA intake drive anywhere {{RUN_STAMP}}' and record workspaceId. Step 3: create a writer thread in that workspace and record writerThreadId. Step 4: write the populated intake answer JSON from frontend/qa/artifacts/shiftwork-intake-drive-anywhere-interop/fixtures/shiftwork-intake-answer.google-drive-sim.json to /opulent/workspace/uploads/drive/shiftwork-visual-qa-intake-answer-SW-20260701-001-{{RUN_STAMP}}.json, replacing the marker suffix with {{RUN_STAMP}} while preserving leadId SW-20260701-001, paymentStatus paid, agentTask Website visual quality monitoring and email alerts, and visualQualityAgentRequest. Step 5: read the written file and verify the marker, leadId, paymentStatus paid, selected questionnaire 05_Ops_Discovery_Template, confirmedBuildTarget.tag owner_confirmed, visualQualityAgentRequest.landingPageUrl, desktop viewport 1280x900, mobile viewport 390x844, alert recipient mara@northstarrenovations.com, and expectedAgent.name Landing Page Visual QA Agent. Step 6: save a workspace snapshot. Step 7: list workspace files and capture the fileId for the visual QA intake answer. Step 8: create a second reader thread in the same workspace and record readerThreadId. Step 9: retrieve the file by fileId for the reader thread into /opulent/workspace/uploads/drive/shiftwork-visual-qa-intake-answer-SW-20260701-001-retrieved-{{RUN_STAMP}}.json. Step 10: read the retrieved file and verify the marker, leadId, all required handoffPayload fields, every buildCritical answer has tag owner_confirmed, research-only R01 remains draft_from_research_unconfirmed, route-specific checks include hero image and Get a Quote button visibility, inconsistencyCriteria includes horizontal_scroll and hidden_primary_cta, emailAlerts.subjectPrefix is VISUAL QA ALERT, schedule timezone is America/Chicago, and acceptanceTest requires desktop screenshot, mobile screenshot, and email alert draft for a seeded issue. Step 11: produce a concise build plan for the agent from the retrieved intake only. The plan must name the trigger, screenshot steps, comparison checks, email alert behavior, storage artifacts, and acceptance test. Step 12: call validation_check with waitForCompletion false, objective 'ShiftWork intake Drive-anywhere visual QA agent interop', contract 'A populated ShiftWork intake answer that originated as a Google Drive-like document can be persisted once, retrieved by a later workspace/thread, and used to build a landing-page visual QA agent without original thread context', requirements ['workspace_manage create returned a real workspaceId', 'writer and reader thread IDs are different but use the same workspaceId', 'write_file created the populated visual QA intake JSON under uploads/drive', 'read_file verified SHIFTWORK_INTAKE_DRIVE_ANYWHERE_TOKEN_{{RUN_STAMP}} before persistence', 'save_snapshot completed or returned skipped_no_changes after write', 'list_files returned a fileId for the intake answer', 'retrieve_file staged the same file for the reader thread', 'read_file verified the marker and owner-confirmed build-critical answers after retrieval', 'retrieved intake includes landing page URL, desktop and mobile viewports, route-specific checks, inconsistency criteria, email recipients, schedule, and acceptance test', 'build plan can be generated from the retrieved intake without original thread context', 'autos_done summary is SHIFTWORK_INTAKE_DRIVE_ANYWHERE_COMPLETE'], completedWork 'Populated ShiftWork visual QA intake answer persisted, retrieved across workspace threads, and converted into a build-ready agent plan.', changedFiles ['/opulent/workspace/uploads/drive/shiftwork-visual-qa-intake-answer-SW-20260701-001-{{RUN_STAMP}}.json'], artifacts ['workspace_manage create/create_thread/save_snapshot/list_files/retrieve_file rows', 'write_file and read_file rows', 'visual QA agent build plan', 'validation_check row'], verification ['same workspaceId used for writer and reader', 'reader thread differs from writer thread', 'exact marker and lead ID read before and after retrieval', 'owner-confirmed tags preserved', 'visual QA fields preserved', 'email alert rules preserved'], risks ['If save_snapshot skips due to no changes, list_files must still prove persistence before retrieve_file can pass', 'Email live-send must remain draft-only unless explicitly approved'], and intent 'validate ShiftWork intake answer portability from Drive-like source to a later Opulent workspace context and prove the intake can create a visual quality agent request end to end'. Step 13: call autos_done with summary SHIFTWORK_INTAKE_DRIVE_ANYWHERE_COMPLETE.",
+  "completionMarker": "SHIFTWORK_INTAKE_DRIVE_ANYWHERE_COMPLETE",
+  "metadataSource": "interop_factory_verification",
+  "requestedTools": [
+    "skill_manage",
+    "workspace_manage",
+    "write_file",
+    "read_file",
+    "list_files",
+    "validation_check",
+    "autos_done"
+  ],
+  "expectedCheckpointCount": 0,
+  "allowContinuation": true,
+  "requireAutosDone": true,
+  "requireVerification": true,
+  "minimumVerificationMatches": 11,
+  "verificationSignals": [
+    {
+      "toolName": "skill_manage",
+      "resultIncludes": "opulentia-engineering-discipline",
+      "status": "completed"
+    },
+    {
+      "toolName": "workspace_manage",
+      "argIncludes": "\"action\":\"create\"",
+      "status": "completed"
+    },
+    {
+      "toolName": "workspace_manage",
+      "argIncludes": "\"action\":\"create_thread\"",
+      "status": "completed"
+    },
+    {
+      "toolName": "write_file",
+      "argIncludes": "SHIFTWORK_INTAKE_DRIVE_ANYWHERE_TOKEN",
+      "status": "completed"
+    },
+    {
+      "toolName": "read_file",
+      "resultIncludes": "Website visual quality monitoring and email alerts",
+      "status": "completed"
+    },
+    {
+      "toolName": "read_file",
+      "resultIncludes": "Landing Page Visual QA Agent",
+      "status": "completed"
+    },
+    {
+      "toolName": "workspace_manage",
+      "argIncludes": "\"action\":\"save_snapshot\"",
+      "status": "completed"
+    },
+    {
+      "toolName": "workspace_manage",
+      "argIncludes": "\"action\":\"list_files\"",
+      "status": "completed"
+    },
+    {
+      "toolName": "workspace_manage",
+      "argIncludes": "\"action\":\"retrieve_file\"",
+      "status": "completed"
+    },
+    {
+      "toolName": "read_file",
+      "resultIncludes": "owner_confirmed",
+      "status": "completed"
+    },
+    {
+      "toolName": "read_file",
+      "resultIncludes": "VISUAL QA ALERT",
+      "status": "completed"
+    },
+    {
+      "toolName": "validation_check",
+      "argIncludes": "landing-page visual QA agent",
+      "status": "completed"
+    },
+    {
+      "toolName": "autos_done",
+      "resultIncludes": "SHIFTWORK_INTAKE_DRIVE_ANYWHERE_COMPLETE",
+      "status": "completed"
+    }
+  ],
+  "expectations": {
+    "requireMarker": true,
+    "requireCrossThreadRetrieval": true,
+    "requireOwnerConfirmedBuildCriticalAnswers": true,
+    "requireVisualQaAgentRequest": true,
+    "requireEmailAlertRules": true,
+    "requireBuildPlanFromRetrievedIntake": true
+  }
+}

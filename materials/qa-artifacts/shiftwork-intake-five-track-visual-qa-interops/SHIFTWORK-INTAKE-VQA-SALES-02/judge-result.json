@@ -1,0 +1,61 @@
+{
+  "scenarioId": "SHIFTWORK-INTAKE-VQA-SALES-02",
+  "shortId": "SW-VQA-SALES-02",
+  "name": "Sales Visual QA",
+  "track": "Sales",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelLock": {
+    "opulent-preferred-model-v32": "deepseek/deepseek-v4-flash",
+    "opulentia-coordinator-model-v7": "deepseek/deepseek-v4-flash",
+    "opulentia-worker-model-v6": "deepseek/deepseek-v4-flash",
+    "opulentia-active-role-v1": "coordinator"
+  },
+  "startTime": "2026-07-01T11:27:48.701Z",
+  "verdict": "INCONCLUSIVE",
+  "marker": "SHIFTWORK_INTAKE_VQA_SALES_COMPLETE",
+  "screenshots": [
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-SALES-02/SW-VQA-SALES-02-prompt-typed.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-SALES-02/SW-VQA-SALES-02-check-1.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-SALES-02/SW-VQA-SALES-02-final.png"
+  ],
+  "consoleErrors": [],
+  "verification": {
+    "bodyChars": 19258,
+    "promptBaselineChars": 16527,
+    "evidenceChars": 4322,
+    "markerOccurrencesTotal": 2,
+    "markerInPrompt": 2,
+    "markerOccurrencesAfterPrompt": 0,
+    "autosDoneInPrompt": 3,
+    "autosDoneOccurrencesAfterPrompt": 2,
+    "blockerMatches": [],
+    "evidenceBriefTerms": [
+      "claim checked",
+      "data/tool source",
+      "artifact",
+      "blockers",
+      "next action"
+    ],
+    "missingEvidenceBriefTerms": [],
+    "requiredTerms": [
+      "workspace",
+      "writer thread",
+      "reader thread",
+      "fileid",
+      "owner_confirmed",
+      "draft_from_research_unconfirmed",
+      "visual qa",
+      "acceptance inputs",
+      "build plan",
+      "validation_check"
+    ],
+    "missingRequiredTerms": [],
+    "evidenceSnippet": "der thread, retrieve file by fileId, verify without original contextProduce build plan from retrieved intake onlyRun validation_checkWrite evidence brief and autos_doneNow let me create the Sales fixture JSON file with all required components.Created/home/daytona/workspace/artifacts/shif/home/daytona/workspace/artifacts/shif……twork-five-track-intake-fixtures.jsontwork-five-track-intake-fixtures.jsonFixture created. Now let me create the workspace and proceed.Create the Sales fixture JSON for SHIFTWORK-INTAKE-VQA-SALES-02Create workspace SHIFTWORK-VQA-SALES-02Create writer thread in workspace, persist intake JSON to uploads/driveVerify paid handoff payload, questionnaire, marker, owner_confirmed, draft_from_research_unconfirmedVerify visual QA target details, acceptance inputs, email draft rulesSave/list workspace files and record fileIdCreate separate reader thread, retrieve file by fileId, verify without original contextProduce build plan from retrieved intake onlyRun validation_checkWrite evidence brief and autos_doneNow let me create the workspace and set up the scratchpad document.Create workspace for SHIFTWORK VQA Sales testcreate1m 33sDeepSeek V4 FlashOpulentDeepSeek V4 Flash"
+  },
+  "notes": "Completion marker only appeared in submitted prompt echo; no post-prompt completion evidence",
+  "threadUrl": "https://platform.opulentia.ai/dashboard/projects/default/thread/m572pdq4r1r7z5dnqmmv01m59n89q1qh",
+  "pageTextSnippet": "med, draft_from_research_unconfirmedVerify visual QA target details, acceptance inputs, email draft rulesSave/list workspace files and record fileIdCreate separate reader thread, retrieve file by fileId, verify without original contextProduce build plan from retrieved intake onlyRun validation_checkWrite evidence brief and autos_doneNow let me create the workspace and set up the scratchpad document.Create workspace for SHIFTWORK VQA Sales testcreate1m 33sDeepSeek V4 FlashOpulentDeepSeek V4 Flash",
+  "promptBaselineTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-SALES-02/prompt-baseline-text.txt",
+  "pageTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/SHIFTWORK-INTAKE-VQA-SALES-02/page-text-retest.txt",
+  "endTime": "2026-07-01T11:29:38.980Z"
+}

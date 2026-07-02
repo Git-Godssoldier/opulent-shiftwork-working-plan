@@ -1,0 +1,74 @@
+{
+  "scenarioId": "SHIFTWORK-INTAKE-VQA-SALES-02",
+  "shortId": "SW-VQA-SALES-02",
+  "name": "Sales Visual QA",
+  "track": "Sales",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelLock": {
+    "opulent-preferred-model-v32": "deepseek/deepseek-v4-flash",
+    "opulentia-coordinator-model-v7": "deepseek/deepseek-v4-flash",
+    "opulentia-worker-model-v6": "deepseek/deepseek-v4-flash",
+    "opulentia-active-role-v1": "coordinator"
+  },
+  "startTime": "2026-07-01T12:02:58.971Z",
+  "verdict": "INCONCLUSIVE",
+  "marker": "SHIFTWORK_INTAKE_VQA_SALES_COMPLETE",
+  "screenshots": [
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SALES-02/SW-VQA-SALES-02-prompt-typed.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SALES-02/SW-VQA-SALES-02-check-1.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SALES-02/SW-VQA-SALES-02-post-marker.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SALES-02/SW-VQA-SALES-02-final.png"
+  ],
+  "consoleErrors": [
+    {
+      "text": "[LONG_TASK] CRITICAL 615 ms {count: 82, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57d7w20ayy8848gwj8v658nx189qktt?bootstrap=1",
+      "time": "2026-07-01T12:05:26.514Z"
+    },
+    {
+      "text": "[LONG_TASK] CRITICAL 913 ms {count: 53, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57d7w20ayy8848gwj8v658nx189qktt?bootstrap=1",
+      "time": "2026-07-01T12:06:26.981Z"
+    }
+  ],
+  "verification": {
+    "bodyChars": 34760,
+    "promptBaselineChars": 16527,
+    "evidenceChars": 19829,
+    "markerOccurrencesTotal": 5,
+    "markerInPrompt": 2,
+    "markerOccurrencesAfterPrompt": 3,
+    "autosDoneInPrompt": 3,
+    "autosDoneOccurrencesAfterPrompt": 3,
+    "blockerMatches": [],
+    "evidenceBriefTerms": [
+      "claim checked",
+      "data/tool source",
+      "artifact",
+      "blockers",
+      "next action"
+    ],
+    "missingEvidenceBriefTerms": [],
+    "requiredTerms": [
+      "workspace",
+      "writer thread",
+      "reader thread",
+      "fileid",
+      "owner_confirmed",
+      "draft_from_research_unconfirmed",
+      "visual qa",
+      "acceptance inputs",
+      "build plan",
+      "validation_check"
+    ],
+    "missingRequiredTerms": [],
+    "evidenceSnippet": ",\n          \"target\": \"100% accuracy vs JSON payload\",\n          \"measurement\": \"visual_diff\",\n          \"route\": \"/quotes/QTE-20260701-ALPHA\"\n        },\n        {\n          \"id\": \"acceptance_003\",\n          \"label\": \"Booking form auto-populates from quote data without manual re-entry\",\n          \"type\": \"functional\",\n          \"target\": \"All fields pre-filled\",\n          \"measurement\": \"field_by_field_comparison\",\n          \"route\": \"/bookings/new/quote/QTE-20260701-ALPHA\"\n        },\n        {\n          \"id\": \"acceptance_004\",\n          \"label\": \"Email draft renders correctly with all placeholders replaced\",\n          \"type\": \"visual\",\n          \"target\": \"No placeholder text visible in generated email\",\n          \"measurement\": \"regex_scan + visual_review\",\n          \"route\": \"internal:email_preview\"\n        },\n        {\n          \"id\": \"acceptance_005\",\n          \"label\": \"Sales dashboard KPI numbers match source quote/booking data within 0.5% tolerance\",\n          \"type\": \"data_integrity\",\n          \"target\": \"deviation < 0.5%\",\n          \"measurement\": \"cross_reference_against_payload\",\n          \"route\": \"/dashboard/sales\"\n        }\n      ]\n    }\n  ]\n}OpulentDeepSeek V4 Flash"
+  },
+  "notes": "Completion marker found but structural proof missing (workspaceId=false, threadId=false, validationResult=false) — may be checklist text, not final evidence",
+  "threadUrl": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57d7w20ayy8848gwj8v658nx189qktt?bootstrap=1",
+  "pageTextSnippet": "erated email\",\n          \"measurement\": \"regex_scan + visual_review\",\n          \"route\": \"internal:email_preview\"\n        },\n        {\n          \"id\": \"acceptance_005\",\n          \"label\": \"Sales dashboard KPI numbers match source quote/booking data within 0.5% tolerance\",\n          \"type\": \"data_integrity\",\n          \"target\": \"deviation < 0.5%\",\n          \"measurement\": \"cross_reference_against_payload\",\n          \"route\": \"/dashboard/sales\"\n        }\n      ]\n    }\n  ]\n}OpulentDeepSeek V4 Flash",
+  "promptBaselineTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SALES-02/prompt-baseline-text.txt",
+  "markerFoundDuringWait": true,
+  "pageTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SALES-02/page-text-retest.txt",
+  "endTime": "2026-07-01T12:06:36.646Z"
+}

@@ -1,0 +1,83 @@
+{
+  "scenarioId": "SHIFTWORK-INTAKE-DRIVE-ANYWHERE-INTEROP-01",
+  "sourceCapability": "shiftwork-intake-to-visual-qa-agent-portability",
+  "modelLock": "openrouter/poolside/laguna-m.1:free",
+  "target": "platform.opulentia.ai or staging",
+  "status": "UNTESTED",
+  "writeMode": "handoff-only",
+  "artifactDir": "frontend/qa/artifacts/shiftwork-intake-drive-anywhere-interop/",
+  "buildPlan": "frontend/qa/artifacts/shiftwork-intake-drive-anywhere-interop/agent-build-plan-from-intake.md",
+  "redLoop": "Reader thread must retrieve the populated visual QA intake answer from workspace Drive and verify the exact marker, owner-confirmed landing-page requirements, screenshot checks, email-alert rules, and build-ready agent plan without original thread context.",
+  "assertions": [
+    {
+      "id": "SW-DRIVE-A1",
+      "assertion": "Intake answer fixture has a Drive-like identity and share mode that can be referenced outside the original thread.",
+      "result": "READY",
+      "evidence": "fixtures/shiftwork-intake-answer.google-drive-sim.json.drive"
+    },
+    {
+      "id": "SW-DRIVE-A2",
+      "assertion": "Handoff payload contains every required ShiftWork field.",
+      "result": "READY",
+      "evidence": "fixtures/shiftwork-intake-answer.google-drive-sim.json.handoffPayload"
+    },
+    {
+      "id": "SW-DRIVE-A3",
+      "assertion": "Every build-critical visual QA answer is owner_confirmed and research guesses remain unconfirmed.",
+      "result": "READY",
+      "evidence": "fixtures/shiftwork-intake-answer.google-drive-sim.json.answers"
+    },
+    {
+      "id": "SW-DRIVE-A4",
+      "assertion": "Writer thread persists the populated intake answer to workspace Drive and records a real file ID.",
+      "result": "UNTESTED",
+      "evidence": "Live workspace_manage save_snapshot/list_files evidence required."
+    },
+    {
+      "id": "SW-DRIVE-A5",
+      "assertion": "Reader thread retrieves the same artifact and verifies SHIFTWORK_INTAKE_DRIVE_ANYWHERE_TOKEN_20260701.",
+      "result": "UNTESTED",
+      "evidence": "Live workspace_manage retrieve_file plus read_file evidence required."
+    },
+    {
+      "id": "SW-DRIVE-A6",
+      "assertion": "The retrieved answer is accessible without depending on the original chat context.",
+      "result": "UNTESTED",
+      "evidence": "Reader thread ID must differ from writer thread ID while reading the same file marker."
+    },
+    {
+      "id": "SW-DRIVE-A7",
+      "assertion": "Retrieved intake is build-ready for a visual quality agent: landing page URL, desktop/mobile viewports, route-specific checks, inconsistency criteria, email recipients, schedule, and acceptance test are present.",
+      "result": "READY",
+      "evidence": "fixtures/shiftwork-intake-answer.google-drive-sim.json.visualQualityAgentRequest and expectedAgent"
+    }
+  ],
+  "workspace": {
+    "workspaceId": null,
+    "writerThreadId": null,
+    "readerThreadId": null,
+    "driveFileId": null,
+    "validationCheckId": null,
+    "agentBuildPlanId": null
+  },
+  "sentry": {
+    "writeMode": "handoff-only",
+    "beforeQuery": "is:unresolved environment:production \"workspace_manage\" OR \"retrieve_file\" OR \"drive\"",
+    "afterQuery": "same query constrained to live run window",
+    "status": "not_run"
+  },
+  "linear": {
+    "writeMode": "handoff-only",
+    "issue": null,
+    "handoff": "linear-handoff.md"
+  },
+  "cleanup": {
+    "required": [
+      "Archive test workspace threads",
+      "Remove temporary workspace files if live run writes disposable data",
+      "Revoke real Google Drive share link if fixture is replaced by OAuth-backed Drive file",
+      "Keep email live-send disabled unless explicitly approved"
+    ],
+    "status": "not_run"
+  }
+}

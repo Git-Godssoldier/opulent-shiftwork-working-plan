@@ -1,0 +1,731 @@
+{
+  "runStamp": "20260701-074833",
+  "marker": "SHIFTWORK_DEMO_SIMULATION_TOKEN_20260701-074833",
+  "target": "staging",
+  "timeoutMinutes": 45,
+  "startTime": "2026-07-01T12:48:33.201Z",
+  "scenario": {
+    "schema": "opulent.shiftwork.demo_scenario.v1",
+    "scenarioId": "SHIFTWORK-DEMO-SIMULATION-01",
+    "marker": "SHIFTWORK_DEMO_SIMULATION_TOKEN_20260701-074833",
+    "completionMarker": "SHIFTWORK_DEMO_SIMULATION_COMPLETE",
+    "label": "ShiftWork doc-to-deploy demo simulation",
+    "version": "1.0.0",
+    "createdAt": "2026-07-01",
+    "description": "End-to-end demo simulation of Opulent's doc-to-deploy pipeline. A cloud agent receives a completed training doc from ShiftWork, builds a visual QA agent, runs acceptance tests, and delivers the agent on the Opulent platform. This script contains the full instruction set, pass/fail criteria, and fixture reference for a cloud agent to execute and return findings.",
+    "scope": {
+      "opulentOwns": [
+        "Receive training doc from shared workspace",
+        "Build agent from training doc (automation modeler flow)",
+        "Acceptance test (5 random pages, screenshots, report)",
+        "Deliver agent on Opulent platform (cron + on-demand)",
+        "Expose agent run logs"
+      ],
+      "shiftworkOwns": [
+        "Research, questionnaire, Q&A, call script (Steps 5-9)",
+        "Onboarding call (crew on Google Meet, not VAPI)",
+        "Gap review",
+        "ROI check-in at day 14",
+        "Runtime payer assignment (business decision)"
+      ],
+      "deferredForPOC": [
+        "Customer account provisioning",
+        "Runtime payer enforcement",
+        "Dreams in memory / knowledge aggregation",
+        "Live email send (draft-only mode)"
+      ]
+    },
+    "fixture": {
+      "path": "frontend/qa/artifacts/shiftwork-intake-drive-anywhere-interop/fixtures/training-doc.post-call.json",
+      "schema": "opulent.shiftwork.training_doc.v1",
+      "leadId": "SW-20260701-001",
+      "businessName": "ShiftWork Studio",
+      "ownerName": "Dan Cruden",
+      "ownerEmail": "dan@shiftworkstudio.ai",
+      "targetUrl": "https://shiftworkstudio.ai",
+      "fallbackUrl": "https://example.com",
+      "buildTarget": "Visual quality monitoring agent for the public landing page",
+      "buildCriticalAnswers": [
+        "OP09",
+        "VQ01",
+        "VQ02",
+        "VQ03",
+        "VQ04",
+        "VQ05",
+        "VQ06",
+        "VQ07"
+      ],
+      "unconfirmedAnswers": [
+        "R01"
+      ],
+      "callType": "crew",
+      "gapReviewReviewer": "shiftwork_crew",
+      "storageLocation": "shared_workspace",
+      "note": "Fixture is a believable payload from ShiftWork after crew call + gap review. URL targets Dan's actual dummy app. Fallback URL is used if shiftworkstudio.ai is down."
+    },
+    "instructionSet": {
+      "summary": "You are a cloud agent testing Opulent's doc-to-deploy pipeline end to end. You will: (1) set up a workspace with the training doc, (2) send a build instruction to an Opulent agent thread, (3) monitor the build agent as it finds the doc, validates it, runs the automation modeler flow, builds the visual QA agent, creates a cron schedule, and runs acceptance tests, (4) check results against the pass/fail criteria, (5) return a findings report.",
+      "steps": [
+        {
+          "step": 1,
+          "name": "Load Ostack discipline",
+          "action": "Call skill_manage action=invoke for opulentia-engineering-discipline. This is mandatory before any work.",
+          "tool": "skill_manage",
+          "expectedResult": "skill loaded successfully",
+          "passCriteria": "skill_manage result includes 'opulentia-engineering-discipline' with status completed",
+          "onFail": "STOP. Cannot proceed without Ostack discipline."
+        },
+        {
+          "step": 2,
+          "name": "Create demo workspace",
+          "action": "Create a workspace named 'ShiftWork Demo Simulation 20260701-074833'. Record the workspaceId.",
+          "tool": "workspace_manage",
+          "args": {
+            "action": "create",
+            "name": "ShiftWork Demo Simulation 20260701-074833"
+          },
+          "expectedResult": "workspaceId returned",
+          "passCriteria": "workspace_manage action=create returns a valid workspaceId",
+          "onFail": "STOP. Cannot proceed without a workspace."
+        },
+        {
+          "step": 3,
+          "name": "Create build agent thread",
+          "action": "Create a thread in the demo workspace. This is the build agent thread that will run the full automation modeler flow. Record the threadId.",
+          "tool": "workspace_manage",
+          "args": {
+            "action": "create_thread",
+            "workspaceId": "{{workspaceId}}"
+          },
+          "expectedResult": "threadId returned",
+          "passCriteria": "workspace_manage action=create_thread returns a valid threadId",
+          "onFail": "STOP. Cannot proceed without a build thread."
+        },
+        {
+          "step": 4,
+          "name": "Upload training doc to workspace",
+          "action": "Read the fixture file at frontend/qa/artifacts/shiftwork-intake-drive-anywhere-interop/fixtures/training-doc.post-call.json. Write it to the workspace at /opulent/workspace/uploads/shiftwork-training-doc-SW-20260701-001-20260701-074833.json. Replace the marker value in the JSON with SHIFTWORK_DEMO_SIMULATION_TOKEN_20260701-074833. Preserve all other fields exactly.",
+          "tool": "write_file",
+          "expectedResult": "File written to workspace with marker replaced",
+          "passCriteria": "write_file succeeds and file is listed in workspace files",
+          "onFail": "STOP. The training doc must be in the workspace before the build agent can find it."
+        },
+        {
+          "step": 5,
+          "name": "Send build instruction to agent thread",
+          "action": "Send a message to the build agent thread with the following prompt. This is the core instruction that drives the entire build flow.\n\nPROMPT START ---\nYou are a build agent in the Opulent platform. A ShiftWork training doc has been placed in your workspace. Your job is to find it, validate it, build a visual QA agent from it, create a cron schedule, and run acceptance tests. Follow these steps exactly:\n\nSTEP A: Find the training doc. Search the workspace for a file with schema marker 'opulent.shiftwork.training_doc.v1' and leadId 'SW-20260701-001'. Use list_files and read_file to find and read it.\n\nSTEP B: Validate the doc minimally. Check that: (1) buildTarget is present and non-empty, (2) acceptance test inputs are present (VQ07 answer exists), (3) targetUrl is present in VQ01. If any are missing, stop and report 'cannot build: missing required fields'.\n\nSTEP C: Run the full automation modeler flow. Call skill_manage action=invoke for opulentia-automation-modeler. Follow the skill's intake flow: desired automation, connected apps, tools, memory, knowledge, workflow, dry-run evals, and produce a Verified Automation Report. The automation is: 'Screenshot https://shiftworkstudio.ai at desktop 1280x900 and mobile 390x844 on a weekday schedule at 8 AM Central, compare against baseline, draft an email alert if a visual issue is found.' Use the training doc answers as the spec.\n\nSTEP D: Build the visual QA agent from the Verified Automation Report. The agent should: (1) screenshot the target URL at desktop and mobile, (2) compare against baseline, (3) if issue found, draft an alert email with subject prefix VISUAL QA ALERT containing screenshots, URL, viewport, severity, issue description, and fix suggestion, (4) store screenshots and a run report in the workspace. Draft-only mode — do not send emails. R01 email connector is unconfirmed.\n\nSTEP E: Create the cron schedule. Call cron_manage action=create with cron='0 8 * * 1-5', timezone='America/Chicago', prompt describing the visual QA run, recurring=true. Record the schedule ID. Also note that manual on-demand trigger should be available.\n\nSTEP F: Run the agent against 5 random pages on shiftworkstudio.ai. For each page: screenshot at desktop and mobile, store screenshots in workspace, produce a report entry. If the site is down, use the fallback URL 'https://example.com'. All 5 must complete without crashing. If any crash, attempt auto-fix (up to 3 tries). After 3 failed fixes, stop and report the error.\n\nSTEP G: Run the acceptance test. Check that: (1) at least 4 of 5 pages were screenshotted successfully, (2) screenshots are stored in the workspace, (3) a report was produced. The must-pass case is: at least one screenshot + report produced. If 4/5 pass with must-pass OK, mark acceptance as PASS. Otherwise mark as FAIL.\n\nSTEP H: If acceptance passes, produce a how-to guide as a markdown document in the workspace. Title: 'How to use your Visual QA Agent'. Cover: how to log in, see your agent, read alerts, trigger a manual run, understand the schedule. Keep it to 1-2 pages.\n\nSTEP I: Call autos_done with a summary of what was built, the schedule ID, the acceptance test result, and the workspace artifact locations. Include the marker SHIFTWORK_DEMO_SIMULATION_TOKEN_20260701-074833 in the autos_done summary.\n\nPROMPT END ---",
+          "tool": "chatDb.sendMessage",
+          "expectedResult": "Message sent to build agent thread. Agent begins processing.",
+          "passCriteria": "Message is sent successfully and agent thread starts processing",
+          "onFail": "STOP. The build agent cannot start without the instruction."
+        },
+        {
+          "step": 6,
+          "name": "Monitor build agent progress",
+          "action": "Monitor the build agent thread for completion. Check for: (1) skill_manage call for opulentia-automation-modeler, (2) document_create or write_file calls for the Verified Automation Report, (3) cron_manage action=create call, (4) screenshot artifacts in workspace, (5) report artifact in workspace, (6) autos_done call with the completion marker. Use session_manage action=status to check progress. Wait up to 30 minutes for completion.",
+          "tool": "session_manage",
+          "expectedResult": "Agent completes all steps A-I and calls autos_done",
+          "passCriteria": "autos_done result includes SHIFTWORK_DEMO_SIMULATION_TOKEN_20260701-074833",
+          "onFail": "If agent does not complete within 30 minutes, record what steps were completed and what failed. Continue to step 7 to evaluate partial results.",
+          "timeout": "30 minutes"
+        },
+        {
+          "step": 7,
+          "name": "Collect workspace artifacts",
+          "action": "List all files in the workspace. Read the Verified Automation Report if it exists. Read the acceptance test report if it exists. Read the how-to guide if it exists. Count screenshots. Record all artifact paths.",
+          "tool": "list_files, read_file",
+          "expectedResult": "All artifacts produced by the build agent are catalogued",
+          "passCriteria": "At least: training doc, Verified Automation Report, screenshots (at least 4), run report, how-to guide are present",
+          "onFail": "Record which artifacts are missing. Continue to step 8 to evaluate against criteria."
+        },
+        {
+          "step": 8,
+          "name": "Evaluate against pass/fail criteria",
+          "action": "Compare the collected artifacts and agent behavior against the pass/fail criteria in demo-pass-fail-criteria.json. For each criterion, mark PASS, FAIL, or PARTIAL with evidence.",
+          "tool": "validation_check",
+          "expectedResult": "All criteria evaluated with evidence",
+          "passCriteria": "validation_check completes with all criteria scored",
+          "onFail": "Record which criteria could not be evaluated and why."
+        },
+        {
+          "step": 9,
+          "name": "Produce findings report",
+          "action": "Generate a findings report in JSON format using the demo-findings-template.json structure. Include: scenario ID, run stamp, overall verdict (PASS/FAIL), per-criterion results with evidence, workspace artifact list, agent thread URL, errors encountered, and recommendations.",
+          "tool": "document_create",
+          "expectedResult": "Findings report written to workspace and local filesystem",
+          "passCriteria": "Findings report is valid JSON with all fields populated",
+          "onFail": "Record the failure to produce the report itself as a finding."
+        },
+        {
+          "step": 10,
+          "name": "Call autos_done with completion marker",
+          "action": "Call autos_done with the completion marker SHIFTWORK_DEMO_SIMULATION_COMPLETE and a summary of the findings.",
+          "tool": "autos_done",
+          "expectedResult": "autos_done accepted",
+          "passCriteria": "autos_done result includes SHIFTWORK_DEMO_SIMULATION_COMPLETE",
+          "onFail": "Record failure to call autos_done as a finding."
+        }
+      ]
+    },
+    "requestedTools": [
+      "skill_manage",
+      "workspace_manage",
+      "write_file",
+      "read_file",
+      "list_files",
+      "chatDb.sendMessage",
+      "session_manage",
+      "document_create",
+      "document_read",
+      "document_append",
+      "cron_manage",
+      "validation_check",
+      "autos_done"
+    ],
+    "verificationSignals": [
+      {
+        "id": "VS01",
+        "step": 1,
+        "toolName": "skill_manage",
+        "argIncludes": "opulentia-engineering-discipline",
+        "status": "completed",
+        "description": "Ostack discipline loaded"
+      },
+      {
+        "id": "VS02",
+        "step": 2,
+        "toolName": "workspace_manage",
+        "argIncludes": "\"action\":\"create\"",
+        "status": "completed",
+        "description": "Demo workspace created"
+      },
+      {
+        "id": "VS03",
+        "step": 3,
+        "toolName": "workspace_manage",
+        "argIncludes": "\"action\":\"create_thread\"",
+        "status": "completed",
+        "description": "Build agent thread created"
+      },
+      {
+        "id": "VS04",
+        "step": 4,
+        "toolName": "write_file",
+        "argIncludes": "SHIFTWORK_DEMO_SIMULATION_TOKEN",
+        "status": "completed",
+        "description": "Training doc uploaded to workspace"
+      },
+      {
+        "id": "VS05",
+        "step": 5,
+        "toolName": "chatDb.sendMessage",
+        "argIncludes": "opulent.shiftwork.training_doc.v1",
+        "status": "completed",
+        "description": "Build instruction sent to agent thread"
+      },
+      {
+        "id": "VS06",
+        "step": "A",
+        "toolName": "read_file",
+        "resultIncludes": "opulent.shiftwork.training_doc.v1",
+        "status": "completed",
+        "description": "Build agent found and read the training doc"
+      },
+      {
+        "id": "VS07",
+        "step": "C",
+        "toolName": "skill_manage",
+        "argIncludes": "opulentia-automation-modeler",
+        "status": "completed",
+        "description": "Automation modeler skill invoked"
+      },
+      {
+        "id": "VS08",
+        "step": "C",
+        "toolName": "document_create",
+        "argIncludes": "Verified Automation Report",
+        "status": "completed",
+        "description": "Verified Automation Report produced"
+      },
+      {
+        "id": "VS09",
+        "step": "E",
+        "toolName": "cron_manage",
+        "argIncludes": "\"action\":\"create\"",
+        "status": "completed",
+        "description": "Cron schedule created (weekday 8 AM Central)"
+      },
+      {
+        "id": "VS10",
+        "step": "F",
+        "toolName": "write_file",
+        "argIncludes": "screenshot",
+        "status": "completed",
+        "description": "Screenshots stored in workspace"
+      },
+      {
+        "id": "VS11",
+        "step": "F",
+        "toolName": "write_file",
+        "argIncludes": "report",
+        "status": "completed",
+        "description": "Run report produced"
+      },
+      {
+        "id": "VS12",
+        "step": "G",
+        "toolName": "validation_check",
+        "argIncludes": "acceptance",
+        "status": "completed",
+        "description": "Acceptance test evaluated"
+      },
+      {
+        "id": "VS13",
+        "step": "H",
+        "toolName": "document_create",
+        "argIncludes": "How to use your Visual QA Agent",
+        "status": "completed",
+        "description": "How-to guide produced"
+      },
+      {
+        "id": "VS14",
+        "step": "I",
+        "toolName": "autos_done",
+        "resultIncludes": "SHIFTWORK_DEMO_SIMULATION_TOKEN",
+        "status": "completed",
+        "description": "Build agent called autos_done with marker"
+      },
+      {
+        "id": "VS15",
+        "step": 10,
+        "toolName": "autos_done",
+        "resultIncludes": "SHIFTWORK_DEMO_SIMULATION_COMPLETE",
+        "status": "completed",
+        "description": "Demo simulation completed with marker"
+      }
+    ],
+    "minimumVerificationMatches": 12,
+    "expectations": {
+      "requireOstackDiscipline": true,
+      "requireWorkspaceCreated": true,
+      "requireTrainingDocUploaded": true,
+      "requireBuildInstructionSent": true,
+      "requireDocFoundByBuildAgent": true,
+      "requireAutomationModelerInvoked": true,
+      "requireVerifiedAutomationReport": true,
+      "requireCronScheduleCreated": true,
+      "requireScreenshotsInWorkspace": true,
+      "requireRunReportProduced": true,
+      "requireAcceptanceTestEvaluated": true,
+      "requireHowToGuideProduced": true,
+      "requireAutosDoneWithMarker": true,
+      "requireFindingsReport": true,
+      "requireCompletionMarker": true
+    },
+    "runbookOverrides": {
+      "scopeDecider": "Auto-decide from doc (Runbook says human decides — overridden for POC)",
+      "steps5to11Ownership": "ShiftWork (Runbook says Opulent — overridden by user)",
+      "vapi": "Not handled by Opulent (Runbook says Opulent or VAPI — overridden by user)",
+      "customerLogin": "Skip for POC (Runbook requires login — deferred)",
+      "runtimePayerEnforcement": "Skip for POC (Runbook requires enforcement — deferred)",
+      "dreamsInMemory": "Skip for POC (promised in meeting — deferred)"
+    },
+    "runbookFollows": {
+      "acceptanceApprover": "Named human reviews score (followed)",
+      "terminalDecision": "Human decides after 2 failed rounds (followed)",
+      "deliveryOwner": "Opulent owns delivery, ShiftWork schedules + pays (followed)",
+      "roi": "Opulent exposes logs, ShiftWork does check-in (followed)"
+    },
+    "timing": {
+      "opulentPortionBudget": "6 business days (build 2 + acceptance 1 + delivery 3)",
+      "buildTimeout": "30 minutes for demo simulation",
+      "acceptanceTimeout": "10 minutes",
+      "totalDemoTimeout": "45 minutes"
+    },
+    "modelStrategy": {
+      "buildAgent": "Strong model (Opus or Sonnet) for automation modeler flow",
+      "runningAgent": "Cheap model (Haiku or open-source) for visual QA execution",
+      "rationale": "Tiered strategy from June 12 meeting. Coordinator on strong model, execution on cheap model."
+    },
+    "sandbox": {
+      "type": "Daytona",
+      "secretsManagement": true,
+      "codebaseAccess": false,
+      "domAccess": false,
+      "screenshotOnly": true,
+      "rationale": "Promised to Braden in June 12 meeting. Granular access controls, VM sandboxing, secrets management."
+    },
+    "emailMode": {
+      "mode": "draft-only",
+      "reason": "R01 email connector unconfirmed in training doc. Owner requested draft-only. Live send is post-build wiring.",
+      "alertContents": "Subject prefix VISUAL QA ALERT, screenshots, page URL, viewport, severity, issue description, fix suggestion",
+      "recipients": "dan@shiftworkstudio.ai",
+      "doNotEmailCustomers": true,
+      "enforcedForPOC": false,
+      "note": "Draft-only mode auto-enforces the do-not-email-customers rule because nothing is sent."
+    },
+    "targetSite": {
+      "primaryUrl": "https://shiftworkstudio.ai",
+      "fallbackUrl": "https://example.com",
+      "rationale": "Dan's actual dummy app from the June 12 meeting. Fallback if site is down during demo.",
+      "viewports": {
+        "desktop": "1280x900",
+        "mobile": "390x844"
+      }
+    },
+    "acceptanceTest": {
+      "inputs": "5 random pages on the target site",
+      "passCriteria": "4/5 pages screenshotted successfully with report produced",
+      "mustPass": "At least one screenshot + report produced",
+      "fixLoop": "Up to 2 rounds, each capped at 2 business days. After 2 fails, human decides: rebuild narrower, partial with credit, or refund.",
+      "approver": "Named human reviews the auto-run score",
+      "note": "5 easy-to-hit pre-validated test criteria. No seeded defects."
+    },
+    "twoAgentsRequired": {
+      "pocSuccessMeasure": "Agents deployed for both Dan Cruden and Braden Silcott",
+      "buildOrder": "Sequential. Dan first (shiftworkstudio.ai), Braden second (after intake received).",
+      "source": "June 12 meeting notes"
+    }
+  },
+  "criteria": {
+    "schema": "opulent.shiftwork.demo_pass_fail.v1",
+    "scenarioId": "SHIFTWORK-DEMO-SIMULATION-01",
+    "version": "1.0.0",
+    "description": "Pass/fail rubric for the ShiftWork doc-to-deploy demo simulation. Each criterion is scored PASS, FAIL, or PARTIAL with evidence. Overall verdict is PASS only if all MUST-PASS criteria pass and at least 80% of all criteria pass.",
+    "verdictRules": {
+      "pass": "All MUST-PASS criteria pass AND at least 80% of all criteria pass",
+      "partial": "All MUST-PASS criteria pass AND 60-79% of all criteria pass",
+      "fail": "Any MUST-PASS criterion fails OR fewer than 60% of all criteria pass"
+    },
+    "criteria": [
+      {
+        "id": "C01",
+        "category": "setup",
+        "name": "Ostack discipline loaded",
+        "weight": "MUST-PASS",
+        "check": "skill_manage was called for opulentia-engineering-discipline and completed successfully",
+        "evidenceRequired": "Tool call log showing skill_manage with opulentia-engineering-discipline, status completed",
+        "passCondition": "skill_manage result includes 'opulentia-engineering-discipline' with status completed",
+        "failCondition": "skill_manage was not called, or failed, or wrong skill was loaded"
+      },
+      {
+        "id": "C02",
+        "category": "setup",
+        "name": "Demo workspace created",
+        "weight": "MUST-PASS",
+        "check": "A workspace was created for the demo simulation",
+        "evidenceRequired": "workspace_manage action=create returned a valid workspaceId",
+        "passCondition": "workspaceId is non-null and non-empty",
+        "failCondition": "No workspaceId returned or workspace creation failed"
+      },
+      {
+        "id": "C03",
+        "category": "setup",
+        "name": "Build agent thread created",
+        "weight": "MUST-PASS",
+        "check": "A thread was created in the demo workspace for the build agent",
+        "evidenceRequired": "workspace_manage action=create_thread returned a valid threadId",
+        "passCondition": "threadId is non-null and non-empty",
+        "failCondition": "No threadId returned or thread creation failed"
+      },
+      {
+        "id": "C04",
+        "category": "setup",
+        "name": "Training doc uploaded to workspace",
+        "weight": "MUST-PASS",
+        "check": "The training doc fixture was written to the workspace with the demo marker",
+        "evidenceRequired": "write_file succeeded and file appears in list_files output",
+        "passCondition": "File exists in workspace with SHIFTWORK_DEMO_SIMULATION_TOKEN in content",
+        "failCondition": "File was not written or marker is missing"
+      },
+      {
+        "id": "C05",
+        "category": "build",
+        "name": "Build instruction sent to agent thread",
+        "weight": "MUST-PASS",
+        "check": "A message was sent to the build agent thread with the full build instruction prompt",
+        "evidenceRequired": "chatDb.sendMessage succeeded with the build instruction prompt",
+        "passCondition": "Message sent successfully to the build agent thread",
+        "failCondition": "Message was not sent or thread did not receive it"
+      },
+      {
+        "id": "C06",
+        "category": "build",
+        "name": "Build agent found the training doc",
+        "weight": "MUST-PASS",
+        "check": "The build agent searched the workspace and found the training doc by schema marker + leadId",
+        "evidenceRequired": "read_file or list_files call in the build agent thread that reads the training doc with schema opulent.shiftwork.training_doc.v1",
+        "passCondition": "Build agent read the training doc and the content includes the schema marker and leadId SW-20260701-001",
+        "failCondition": "Build agent did not find or read the training doc"
+      },
+      {
+        "id": "C07",
+        "category": "build",
+        "name": "Build agent validated the doc minimally",
+        "weight": "SHOULD-PASS",
+        "check": "The build agent checked that buildTarget is present, acceptance test inputs (VQ07) are present, and targetUrl is present in VQ01",
+        "evidenceRequired": "Build agent transcript shows validation of buildTarget, VQ07, and VQ01 before proceeding to build",
+        "passCondition": "All three fields validated as present",
+        "failCondition": "Validation was skipped or any required field was not checked",
+        "partialCondition": "Some but not all fields were validated"
+      },
+      {
+        "id": "C08",
+        "category": "build",
+        "name": "Automation modeler skill invoked",
+        "weight": "MUST-PASS",
+        "check": "The build agent called skill_manage for opulentia-automation-modeler",
+        "evidenceRequired": "skill_manage call in build agent thread with opulentia-automation-modeler",
+        "passCondition": "skill_manage was called and completed for opulentia-automation-modeler",
+        "failCondition": "Automation modeler was not invoked"
+      },
+      {
+        "id": "C09",
+        "category": "build",
+        "name": "Verified Automation Report produced",
+        "weight": "MUST-PASS",
+        "check": "The build agent produced a Verified Automation Report as a document or file in the workspace",
+        "evidenceRequired": "document_create or write_file call that creates a document/file containing 'Verified Automation Report'",
+        "passCondition": "Report exists in workspace with title containing 'Verified Automation Report'",
+        "failCondition": "No Verified Automation Report was produced"
+      },
+      {
+        "id": "C10",
+        "category": "build",
+        "name": "Visual QA agent built from report",
+        "weight": "MUST-PASS",
+        "check": "The build agent created a visual QA agent configuration or workflow from the Verified Automation Report",
+        "evidenceRequired": "createAgentConfig or workflow creation call in the build agent thread",
+        "passCondition": "Agent config or workflow was created with visual QA capabilities (screenshot, compare, alert draft)",
+        "failCondition": "No agent was built from the report"
+      },
+      {
+        "id": "C11",
+        "category": "build",
+        "name": "Cron schedule created",
+        "weight": "MUST-PASS",
+        "check": "The build agent created a cron schedule for weekday 8 AM Central",
+        "evidenceRequired": "cron_manage action=create call with cron='0 8 * * 1-5' and timezone='America/Chicago'",
+        "passCondition": "cron_manage returned a schedule ID with the correct cron expression and timezone",
+        "failCondition": "No cron schedule was created or the expression/timezone is wrong"
+      },
+      {
+        "id": "C12",
+        "category": "build",
+        "name": "On-demand trigger available",
+        "weight": "SHOULD-PASS",
+        "check": "The built agent supports manual on-demand trigger from the platform",
+        "evidenceRequired": "Agent configuration or workflow includes a manual trigger type, or the agent can be run on-demand",
+        "passCondition": "Manual on-demand trigger is available",
+        "failCondition": "No on-demand trigger is available",
+        "partialCondition": "On-demand is mentioned but not wired"
+      },
+      {
+        "id": "C13",
+        "category": "build",
+        "name": "Draft-only email mode",
+        "weight": "SHOULD-PASS",
+        "check": "The built agent drafts alert emails but does not send them (R01 unconfirmed)",
+        "evidenceRequired": "Agent configuration or run output shows email drafting without sending, or alert draft artifact in workspace",
+        "passCondition": "Agent produces email drafts without sending, or no live send is configured",
+        "failCondition": "Agent attempts to send live emails"
+      },
+      {
+        "id": "C14",
+        "category": "acceptance",
+        "name": "5 test pages screenshotted",
+        "weight": "MUST-PASS",
+        "check": "The agent ran against 5 random pages on the target site and captured screenshots",
+        "evidenceRequired": "At least 4 screenshot files in the workspace (desktop + mobile for at least 2 pages, or 4 separate page screenshots)",
+        "passCondition": "At least 4 of 5 pages screenshotted successfully",
+        "failCondition": "Fewer than 4 pages screenshotted",
+        "partialCondition": "1-3 pages screenshotted"
+      },
+      {
+        "id": "C15",
+        "category": "acceptance",
+        "name": "Screenshots stored in workspace",
+        "weight": "MUST-PASS",
+        "check": "All captured screenshots are stored as files in the workspace",
+        "evidenceRequired": "Screenshot files appear in list_files output with image file extensions",
+        "passCondition": "Screenshot files exist in workspace",
+        "failCondition": "Screenshots were captured but not stored, or no screenshots exist"
+      },
+      {
+        "id": "C16",
+        "category": "acceptance",
+        "name": "Run report produced",
+        "weight": "MUST-PASS",
+        "check": "A run report was produced describing what was found on each page",
+        "evidenceRequired": "Report file in workspace with content describing page results, timestamps, URLs, viewports, and verdicts",
+        "passCondition": "Report exists with content for at least 4 of 5 pages",
+        "failCondition": "No report was produced"
+      },
+      {
+        "id": "C17",
+        "category": "acceptance",
+        "name": "Acceptance test evaluated (4/5 rule)",
+        "weight": "MUST-PASS",
+        "check": "The acceptance test was evaluated with the 4/5 pass rule and must-pass case",
+        "evidenceRequired": "validation_check call or agent output that explicitly states PASS or FAIL with the 4/5 count and must-pass status",
+        "passCondition": "Acceptance test result is explicitly PASS or FAIL with the count and must-pass evaluation",
+        "failCondition": "Acceptance test was not evaluated or result is ambiguous"
+      },
+      {
+        "id": "C18",
+        "category": "delivery",
+        "name": "How-to guide produced",
+        "weight": "SHOULD-PASS",
+        "check": "A how-to markdown guide was produced in the workspace",
+        "evidenceRequired": "document_create or write_file call that creates a document titled 'How to use your Visual QA Agent'",
+        "passCondition": "How-to guide exists in workspace with title containing 'How to use your Visual QA Agent'",
+        "failCondition": "No how-to guide was produced"
+      },
+      {
+        "id": "C19",
+        "category": "delivery",
+        "name": "Agent run logs exposed",
+        "weight": "SHOULD-PASS",
+        "check": "The agent's run logs (run count, findings, alerts) are accessible from the platform",
+        "evidenceRequired": "Agent run history is visible in the thread or workspace, or a run log artifact exists",
+        "passCondition": "Run logs are accessible",
+        "failCondition": "Run logs are not accessible",
+        "partialCondition": "Some run data is visible but not structured as logs"
+      },
+      {
+        "id": "C20",
+        "category": "completion",
+        "name": "Build agent called autos_done with marker",
+        "weight": "MUST-PASS",
+        "check": "The build agent called autos_done with the demo marker in its summary",
+        "evidenceRequired": "autos_done call in build agent thread with result including SHIFTWORK_DEMO_SIMULATION_TOKEN",
+        "passCondition": "autos_done was called with the marker",
+        "failCondition": "autos_done was not called or marker is missing"
+      },
+      {
+        "id": "C21",
+        "category": "completion",
+        "name": "Findings report produced",
+        "weight": "MUST-PASS",
+        "check": "A findings report was produced with overall verdict, per-criterion results, and evidence",
+        "evidenceRequired": "Findings report JSON file with all fields populated",
+        "passCondition": "Findings report is valid JSON with overall verdict, all criteria scored, and evidence for each",
+        "failCondition": "No findings report was produced or it is incomplete"
+      },
+      {
+        "id": "C22",
+        "category": "completion",
+        "name": "Completion marker emitted",
+        "weight": "MUST-PASS",
+        "check": "The demo simulation completed with the SHIFTWORK_DEMO_SIMULATION_COMPLETE marker",
+        "evidenceRequired": "autos_done call with result including SHIFTWORK_DEMO_SIMULATION_COMPLETE",
+        "passCondition": "Completion marker was emitted",
+        "failCondition": "Completion marker was not emitted"
+      },
+      {
+        "id": "C23",
+        "category": "resilience",
+        "name": "Fallback URL used if primary is down",
+        "weight": "SHOULD-PASS",
+        "check": "If shiftworkstudio.ai was unreachable, the agent used the fallback URL https://example.com",
+        "evidenceRequired": "Agent transcript or report shows fallback URL usage if primary was down, or primary was reachable so fallback was not needed",
+        "passCondition": "Either primary URL worked, or fallback was used when primary was down",
+        "failCondition": "Primary was down and no fallback was used",
+        "skipCondition": "Primary URL was reachable (fallback not needed — mark as PASS with note)"
+      },
+      {
+        "id": "C24",
+        "category": "resilience",
+        "name": "No React #185 crash",
+        "weight": "MUST-PASS",
+        "check": "No React error #185 (Maximum update depth exceeded) occurred during the demo",
+        "evidenceRequired": "No 'Minified React error #185' or 'Maximum update depth exceeded' in any page text, screenshot, or browser console output",
+        "passCondition": "No React #185 crash occurred",
+        "failCondition": "React #185 crash occurred at any point during the demo"
+      }
+    ],
+    "summary": {
+      "totalCriteria": 24,
+      "mustPassCount": 14,
+      "shouldPassCount": 10,
+      "passThreshold": "All 14 MUST-PASS pass AND at least 80% of all 24 pass (>= 20)",
+      "partialThreshold": "All 14 MUST-PASS pass AND 60-79% pass (15-19)",
+      "failThreshold": "Any MUST-PASS fails OR fewer than 15 criteria pass"
+    }
+  },
+  "fixturePath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-demo-simulation/training-doc.stamped-20260701-074833.json",
+  "promptPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-demo-simulation/demo-cloud-agent-prompt-20260701-074833.md",
+  "outputPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-demo-simulation/demo-findings-20260701-074833.json",
+  "steps": [
+    {
+      "step": 1,
+      "name": "Load Ostack discipline",
+      "tool": "skill_manage",
+      "passCriteria": "skill_manage result includes 'opulentia-engineering-discipline' with status completed",
+      "status": "pending"
+    },
+    {
+      "step": 2,
+      "name": "Create demo workspace",
+      "tool": "workspace_manage",
+      "passCriteria": "workspace_manage action=create returns a valid workspaceId",
+      "status": "pending"
+    },
+    {
+      "step": 3,
+      "name": "Create build agent thread",
+      "tool": "workspace_manage",
+      "passCriteria": "workspace_manage action=create_thread returns a valid threadId",
+      "status": "pending"
+    },
+    {
+      "step": 4,
+      "name": "Upload training doc to workspace",
+      "tool": "write_file",
+      "passCriteria": "write_file succeeds and file is listed in workspace files",
+      "status": "pending"
+    },
+    {
+      "step": 5,
+      "name": "Send build instruction to agent thread",
+      "tool": "chatDb.sendMessage",
+      "passCriteria": "Message is sent successfully and agent thread starts processing",
+      "status": "pending"
+    },
+    {
+      "step": 6,
+      "name": "Monitor build agent progress",
+      "tool": "session_manage",
+      "passCriteria": "autos_done result includes SHIFTWORK_DEMO_SIMULATION_TOKEN_20260701-074833",
+      "status": "pending"
+    },
+    {
+      "step": 7,
+      "name": "Collect workspace artifacts",
+      "tool": "list_files, read_file",
+      "passCriteria": "At least: training doc, Verified Automation Report, screenshots (at least 4), run report, how-to guide are present",
+      "status": "pending"
+    },
+    {
+      "step": 8,
+      "name": "Evaluate against pass/fail criteria",
+      "tool": "validation_check",
+      "passCriteria": "validation_check completes with all criteria scored",
+      "status": "pending"
+    },
+    {
+      "step": 9,
+      "name": "Produce findings report",
+      "tool": "document_create",
+      "passCriteria": "Findings report is valid JSON with all fields populated",
+      "status": "pending"
+    },
+    {
+      "step": 10,
+      "name": "Call autos_done with completion marker",
+      "tool": "autos_done",
+      "passCriteria": "autos_done result includes SHIFTWORK_DEMO_SIMULATION_COMPLETE",
+      "status": "pending"
+    }
+  ]
+}

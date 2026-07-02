@@ -1,0 +1,314 @@
+{
+  "schema": "opulent.shiftwork.training_doc.v1",
+  "scenarioId": "SHIFTWORK-INTAKE-DRIVE-ANYWHERE-INTEROP-01",
+  "marker": "SHIFTWORK_INTAKE_DRIVE_ANYWHERE_TOKEN_20260701",
+  "leadId": "SW-20260701-001",
+  "businessName": "ShiftWork Studio",
+  "ownerName": "Dan Cruden",
+  "ownerEmail": "dan@shiftworkstudio.ai",
+  "selectedQuestionnaire": "05_Ops_Discovery_Template",
+  "docState": "post_call_gap_reviewed",
+  "callInfo": {
+    "callType": "crew",
+    "callDate": "2026-07-02T14:00:00.000Z",
+    "callDuration": "42 minutes",
+    "recordingStorageLocation": "unspecified_in_source_materials",
+    "recordingReference": "recording://shiftwork-call-SW-20260701-001-20260702",
+    "ownerVerifiedAsDecisionMaker": true,
+    "ownerStatedBuildTargetOutLoud": true,
+    "callRoutingNote": "Crew call on Google Meet. VAPI is not handled by Opulent. ShiftWork owns the call and recording."
+  },
+  "buildTarget": {
+    "target": "Visual quality monitoring agent for the public landing page",
+    "ownerStatement": "I want an agent to screenshot shiftworkstudio.ai on desktop and mobile and email me when something looks broken.",
+    "tag": "owner_confirmed",
+    "confirmedOnCall": true,
+    "provisionalTargetFromResearch": "Ops admin automation for invoice and inbox triage",
+    "targetChangedOnCall": true,
+    "changeReason": "Owner's top felt problem is catching landing page breakage before customers notice, not invoice chasing. Research brief flagged this as likely core problem. Owner confirmed it out loud."
+  },
+  "answers": [
+    {
+      "questionId": "OP01",
+      "question": "How do invoices go out today, and how do you chase a late payment?",
+      "draftAnswer": "Likely QuickBooks or paper invoices based on industry norms. Chase process unknown.",
+      "ownerAnswer": "I send invoices through QuickBooks after the deposit hits. If someone is late I send an email at 15 days, a text at 30 days, and I call at 45 days. Honestly I hate chasing people.",
+      "tag": "owner_confirmed",
+      "buildCritical": false,
+      "tagHistory": [
+        "draft_from_research_unconfirmed",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Invoicing agent",
+      "gapReviewNote": "Not build-critical for the visual QA agent. Answered on call. No gap."
+    },
+    {
+      "questionId": "OP02",
+      "question": "How much money sits unpaid past due in a normal month?",
+      "draftAnswer": "Unknown. Research could not find public data on accounts receivable.",
+      "ownerAnswer": "Probably 8 to 12 thousand in a normal month. It is usually one or two jobs where the final invoice is sitting unpaid.",
+      "tag": "owner_confirmed",
+      "buildCritical": false,
+      "tagHistory": [
+        "open_gap",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Invoicing agent",
+      "gapReviewNote": "Not build-critical for the visual QA agent. Answered on call. No gap."
+    },
+    {
+      "questionId": "OP03",
+      "question": "What lands in your inbox that you wish you didn't have to sort?",
+      "draftAnswer": "Likely spam, vendor emails, and lead form confirmations based on industry patterns.",
+      "ownerAnswer": "Vendor emails, spam, Google review notifications, and lead form confirmations from the website. The lead confirmations matter but I do not need to read them one by one.",
+      "tag": "owner_confirmed",
+      "buildCritical": false,
+      "tagHistory": [
+        "draft_from_research_unconfirmed",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Inbox Management agent",
+      "gapReviewNote": "Not build-critical for the visual QA agent. Answered on call. No gap."
+    },
+    {
+      "questionId": "OP04",
+      "question": "Which emails actually need you, and which could be filed or handled for you?",
+      "draftAnswer": "Unknown. Needs owner input.",
+      "ownerAnswer": "Customer complaints, estimate requests, and anything from my crew leads needs me. Everything else could be filed or summarized. Vendor emails can be auto-filed.",
+      "tag": "owner_confirmed",
+      "buildCritical": false,
+      "tagHistory": [
+        "open_gap",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Inbox Management agent",
+      "gapReviewNote": "Not build-critical for the visual QA agent. Answered on call. No gap."
+    },
+    {
+      "questionId": "OP05",
+      "question": "How do you schedule your team and your work today?",
+      "draftAnswer": "Likely a mix of text messages and a shared calendar based on industry norms.",
+      "ownerAnswer": "I use a Google Calendar for my own schedule and a group text for the crew. It breaks down when two jobs overlap or someone calls out sick.",
+      "tag": "owner_confirmed",
+      "buildCritical": false,
+      "tagHistory": [
+        "draft_from_research_unconfirmed",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Crew Scheduling agent",
+      "gapReviewNote": "Not build-critical for the visual QA agent. Answered on call. No gap."
+    },
+    {
+      "questionId": "OP06",
+      "question": "What goes wrong with scheduling in a normal week?",
+      "draftAnswer": "Likely double-books, last-minute changes, and no-shows based on industry patterns.",
+      "ownerAnswer": "Double-books when I forget to update the calendar after a text conversation. Last-minute reschedules from customers. Crew no-shows maybe once a month.",
+      "tag": "owner_confirmed",
+      "buildCritical": false,
+      "tagHistory": [
+        "draft_from_research_unconfirmed",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Crew Scheduling agent",
+      "gapReviewNote": "Not build-critical for the visual QA agent. Answered on call. No gap."
+    },
+    {
+      "questionId": "OP07",
+      "question": "How do you hire today, and where does it bog down?",
+      "draftAnswer": "Likely Indeed and referrals based on industry norms.",
+      "ownerAnswer": "Word of mouth and referrals mostly. Sometimes Indeed. It bogs down at screening because I do not have time to call everyone back.",
+      "tag": "owner_confirmed",
+      "buildCritical": false,
+      "tagHistory": [
+        "draft_from_research_unconfirmed",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Hiring Help agent",
+      "gapReviewNote": "Not build-critical for the visual QA agent. Answered on call. No gap."
+    },
+    {
+      "questionId": "OP08",
+      "question": "What makes someone a good fit, and what's a quick no?",
+      "draftAnswer": "Unknown. Needs owner input.",
+      "ownerAnswer": "Good fit is someone who shows up on time, has done residential work before, and does not complain about the drive. Quick no is anyone who no-shows the first interview or lies about experience.",
+      "tag": "owner_confirmed",
+      "buildCritical": false,
+      "tagHistory": [
+        "open_gap",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Hiring Help agent",
+      "gapReviewNote": "Not build-critical for the visual QA agent. Answered on call. No gap."
+    },
+    {
+      "questionId": "OP09",
+      "question": "What admin task eats the most of your time each week?",
+      "draftAnswer": "Likely checking whether the landing page still looks right after edits, based on the build request.",
+      "ownerAnswer": "Checking whether the landing page still looks right after edits. I usually notice problems only after a customer says the quote button is missing or a photo is broken.",
+      "tag": "owner_confirmed",
+      "buildCritical": true,
+      "tagHistory": [
+        "draft_from_research_unconfirmed",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Visual QA agent (primary build target)",
+      "gapReviewNote": "Build-critical. Owner confirmed on call. This is the top felt problem that drives the first build."
+    },
+    {
+      "questionId": "VQ01",
+      "question": "What page should the visual quality agent monitor first?",
+      "draftAnswer": "Monitor https://shiftworkstudio.ai first based on the business domain.",
+      "ownerAnswer": "Monitor https://shiftworkstudio.ai first. The highest priority route is the home landing page at / because that is where paid traffic lands.",
+      "tag": "owner_confirmed",
+      "buildCritical": true,
+      "tagHistory": [
+        "draft_from_research_unconfirmed",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Visual QA agent",
+      "gapReviewNote": "Build-critical. Owner confirmed URL and priority route on call."
+    },
+    {
+      "questionId": "VQ02",
+      "question": "Which viewports matter?",
+      "draftAnswer": "Desktop and mobile based on industry norms. Exact dimensions unknown.",
+      "ownerAnswer": "Check desktop at 1280 by 900 and mobile at 390 by 844. Mobile matters most because most leads come from phones.",
+      "tag": "owner_confirmed",
+      "buildCritical": true,
+      "tagHistory": [
+        "draft_from_research_unconfirmed",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Visual QA agent",
+      "gapReviewNote": "Build-critical. Owner confirmed exact viewport dimensions on call."
+    },
+    {
+      "questionId": "VQ03",
+      "question": "What counts as a visual inconsistency?",
+      "draftAnswer": "Unknown. Needs owner input.",
+      "ownerAnswer": "Email me if text overlaps, the hero image is missing, the Get a Quote button is hidden or unreachable, there is horizontal scroll on mobile, a section is blank, navigation covers content, the form is cut off, or the page has console errors.",
+      "tag": "owner_confirmed",
+      "buildCritical": true,
+      "tagHistory": [
+        "open_gap",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Visual QA agent",
+      "gapReviewNote": "Build-critical. Owner provided the full inconsistency criteria list on call."
+    },
+    {
+      "questionId": "VQ04",
+      "question": "What should the email alert include?",
+      "draftAnswer": "Likely a screenshot and a description of the problem.",
+      "ownerAnswer": "Send screenshots, the page URL, viewport size, what changed, how severe it is, and a short plain-English fix suggestion. Put VISUAL QA ALERT in the subject.",
+      "tag": "owner_confirmed",
+      "buildCritical": true,
+      "tagHistory": [
+        "draft_from_research_unconfirmed",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Visual QA agent",
+      "gapReviewNote": "Build-critical. Owner confirmed alert contents and subject prefix on call."
+    },
+    {
+      "questionId": "VQ05",
+      "question": "Who should receive alerts?",
+      "draftAnswer": "Likely the owner email based on the lead record.",
+      "ownerAnswer": "Send alerts to dan@shiftworkstudio.ai. Do not email customers.",
+      "tag": "owner_confirmed",
+      "buildCritical": true,
+      "tagHistory": [
+        "draft_from_research_unconfirmed",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Visual QA agent",
+      "gapReviewNote": "Build-critical. Owner confirmed recipient and the do-not-email-customers rule on call."
+    },
+    {
+      "questionId": "VQ06",
+      "question": "How often should the agent run?",
+      "draftAnswer": "Unknown. Needs owner input.",
+      "ownerAnswer": "Run every weekday at 8:00 AM Central and also on demand when I ask for a check. For the first build, manual on-demand is acceptable if scheduling is not wired yet.",
+      "tag": "owner_confirmed",
+      "buildCritical": true,
+      "tagHistory": [
+        "open_gap",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Visual QA agent",
+      "gapReviewNote": "Build-critical. Owner confirmed schedule and manual fallback on call."
+    },
+    {
+      "questionId": "VQ07",
+      "question": "What should the first successful run prove?",
+      "draftAnswer": "Likely that screenshots are captured and an alert is produced when an issue is found.",
+      "ownerAnswer": "It should capture desktop and mobile screenshots of the landing page, compare them to the baseline, find no critical issue or describe the issue, and produce the exact alert email draft if anything is wrong.",
+      "tag": "owner_confirmed",
+      "buildCritical": true,
+      "tagHistory": [
+        "draft_from_research_unconfirmed",
+        "owner_confirmed"
+      ],
+      "feedsAgent": "Visual QA agent",
+      "gapReviewNote": "Build-critical. Owner confirmed acceptance test on call."
+    },
+    {
+      "questionId": "R01",
+      "question": "Which email connector should the agent use?",
+      "draftAnswer": "Likely Outlook or Gmail based on the owner email.",
+      "ownerAnswer": "I use Gmail for my business email. But I am not sure about giving an agent access to it. Can it just draft the email and I send it?",
+      "tag": "draft_from_research_unconfirmed",
+      "buildCritical": false,
+      "tagHistory": [
+        "draft_from_research_unconfirmed"
+      ],
+      "feedsAgent": "Visual QA agent (email connector)",
+      "gapReviewNote": "RESEARCH GAP. Owner mentioned Gmail but did not confirm connector access. Owner requested draft-only mode. This stays unconfirmed. Live email send requires explicit approval and connector setup."
+    }
+  ],
+  "gapReview": {
+    "reviewer": "shiftwork_crew",
+    "reviewDate": "2026-07-02",
+    "allAnswersTagged": true,
+    "buildCriticalAnswersOwnerConfirmed": true,
+    "researchGapsRemaining": [
+      "R01"
+    ],
+    "researchGapsFilledByResearch": [],
+    "humanSignOff": true,
+    "signOffNote": "All 8 build-critical questions are owner-confirmed. R01 (email connector) remains unconfirmed. Owner requested draft-only email mode. Build can proceed with draft-only email. Live send is a post-build wiring step.",
+    "openBuildCriticalGaps": []
+  },
+  "storageLocation": {
+    "documentHome": "shared_workspace",
+    "platformOptions": [
+      "native_document (document_create)",
+      "ai_drive (driveFiles)"
+    ],
+    "recordingHome": "shiftwork_owned",
+    "recordingOptions": [
+      "ai_drive (driveFiles)",
+      "convex_storage (messageAttachments)",
+      "external_storage"
+    ],
+    "note": "Training doc lives in the shared Opulent workspace. Build agent finds it by schema marker + leadId. Recording is ShiftWork-owned, not read by the build agent."
+  },
+  "intakeAnswerReference": {
+    "sourceArtifact": "frontend/qa/artifacts/shiftwork-intake-drive-anywhere-interop/fixtures/shiftwork-intake-answer.google-drive-sim.json",
+    "relationship": "The intake answer is the pre-call artifact. This training doc is the post-call artifact. The intake answer carries draft answers tagged draft_from_research_unconfirmed. This training doc carries the same answers updated to owner_confirmed or corrected_by_owner, plus the confirmed build target, plus the gap review sign-off.",
+    "markerMatch": "SHIFTWORK_INTAKE_DRIVE_ANYWHERE_TOKEN_20260701"
+  },
+  "pipelineState": {
+    "step5_research": "completed_by_shiftwork",
+    "step6_confirmTarget": "completed_by_shiftwork",
+    "step7_selectQuestionnaire": "completed_by_shiftwork",
+    "step8_buildQandA": "completed_by_shiftwork",
+    "step9_prepareCallScript": "completed_by_shiftwork",
+    "step10_onboardingCall": "completed_by_shiftwork",
+    "step11_gapReview": "completed_by_shiftwork",
+    "step12_buildAgent": "not_started_opulent_owns",
+    "step13_acceptanceTest": "not_started_opulent_owns",
+    "step14_deliverAndHost": "not_started_opulent_owns",
+    "step15_roiCapture": "not_started_shiftwork_owns"
+  }
+}

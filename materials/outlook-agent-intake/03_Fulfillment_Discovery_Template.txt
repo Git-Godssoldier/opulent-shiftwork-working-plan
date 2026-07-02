@@ -1,0 +1,46 @@
+SHIFTWORK.
+AI LABORER ONBOARDING TEMPLATE
+03  —  FULFILLMENT
+Discovery Questions
+AREA
+Fulfillment  —  the agents that deliver the work
+BUILDS
+New customer welcome, job updates, job tracking, paperwork & contracts
+HOW TO USE
+This is a template. The system fills the brackets, then a business owner answers in plain words.
+Answer in plain language. Bullet points are fine. The honest, messy parts make the agents smarter.
+HOW THE BRACKETS WORK
+[Business Name]  A capitalized item is a value the system drops in. Swap it for the real detail.
+[list the channels they use]  An instruction tells the system to write custom examples for this business. Replace it.
+Plain text with no brackets  stays the same for every business.
+A
+FROM SALE TO STARTED  —  feeds the New Customer Welcome agent
+F01   What happens the moment a deal closes and the work begins?
+Walk us through the first day. Who does what? This is where the Welcome agent picks up.
+F02   What does a new customer need to know or do first, and how do you tell them today?
+Forms to sign, info to send, what to expect. [name how they tell customers now, like a call, an email, or a packet]. The Welcome agent makes this happen every time.
+B
+STATUS UPDATES  —  feeds the Job Updates agent
+F03   How do customers find out where things stand while the work is underway?
+Do you tell them, or do they have to ask? [name what they deliver, like a job, a project, a policy, or an order].
+F04   How often do customers have to chase you for an update?
+Be honest. Every chase is a gap the Job Updates agent fills.
+C
+TRACKING THE WORK  —  feeds the Job Tracking agent
+F05   How do you keep track of every open job internally right now?
+[name the system they track work in, like a whiteboard, a spreadsheet, or software]. Be honest. A whiteboard is a useful answer.
+F06   What falls through the cracks between started and done?
+Missed steps, dropped handoffs, things that stall. This is exactly what we automate.
+D
+PAPERWORK & DOCUMENTS  —  feeds the Paperwork agent
+F07   What documents go out for every deal? List them.
+[list the documents common in their industry, like contracts, welcome letters, or invoices]. Name the ones you send most.
+F08   How are those documents made today, and what slows them down?
+Templates, copy-paste, manual typing? The Paperwork agent drafts these from your standards.
+E
+GETTING TO DONE
+F09   What has to happen for the work to count as done?
+Your finish line. Sign-off, payment, final delivery. Name the steps that close it out.
+F10   What is the most common reason delivery runs late or goes sideways?
+Waiting on the customer, missing info, a bottleneck on your side? Name it so the agents can catch it early.
+Every answer here trains a Fulfillment agent. The clearer the answer, the less guessing build day needs.

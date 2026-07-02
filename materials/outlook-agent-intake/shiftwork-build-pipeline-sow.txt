@@ -1,0 +1,170 @@
+--- Page 1 ---
+SHIFTWORK.× Opulent · build partnership
+Build pipelineCustomer-led intake to first agent delivered. One illustration, then a step-by-
+step spec. Mark any step clear , or flag it unclear .
+VERSION 0.1 STATUS DRAFT FOR REVIEW 11 STEPS
+OWNER SPLIT SHIFTWORK / OPULENT
+FIG. 01 PIPELINE AT A GLANCE
+PHASE A — SHIFTWORK INTAKE · CUSTOMER-LED, NO SALESPERSON
+01 Visit ShiftWork site
+Customer arrives on their own
+02 Select use case and agent task
+Picks what they want built
+03 Enter contact details
+Name, business, email
+04 Pay $29 application fee
+Membership, triggers the handoff
+HANDOFF Lead and form data pass to Opulent
+
+--- Page 2 ---
+PHASE B — OPULENT BUILD · AGENT PIPELINE
+05 Research agent
+Person, business, industry , use case
+06 Select questionnaire
+One of five, chosen by use case
+07 Create Q and A document
+Draft answers from research
+08 Prepare onboarding call script
+Example answers to aid the owner
+09 Onboarding call
+VAPI agent or crew on Meet, recorded
+10 Gap agents review
+Find gaps, research, fill them
+11 Build first agent
+Owner's most critical problem first
+IF ONE NEED
+Single agent
+One agent for the top problem
+IF MANY NEEDS
+Orchestrated agents
+Manager agent plus task agents
+
+--- Page 3 ---
+SPEC STEP DETAIL AND VALIDATION
+01 Visit ShiftWork site SHIFTWORK
+The customer arrives on their own. No salesperson is involved at any point. Traffic comes
+from ads, referral, or the network.
+INPUT
+Web visitor on the onboarding flow
+OUTPUT
+Active session, onboarding started
+DONE WHENThe onboarding flow loads and is reachable from the homepage.
+02 Select use case and agent task SHIFTWORK
+The customer picks the use case and the specific agent task they want built. These two
+choices drive the research and questionnaire downstream.
+INPUT
+Use-case menu, agent-task options
+OUTPUT
+Selected use case and agent task
+DONE WHENBoth selections are saved on the lead record.
+03 Enter contact details SHIFTWORK
+The customer enters their name, business name, and email. The business domain is
+read from the email or business name for research.
+INPUT
+Name, business name, email
+OUTPUT
+Contact and business identity , domain
+captured
+DONE WHENRequired fields validate and the domain is captured.
+
+--- Page 4 ---
+04 Pay $29 application fee SHIFTWORK
+The customer pays the $29 membership application fee. Payment is the trigger that
+closes intake and fires the handoff to Opulent.
+INPUT
+Payment via Stripe
+OUTPUT
+Paid lead record, handoff event fired
+DONE WHENPayment confirms and the lead is pushed to the Opulent pipeline.
+— Handoff CONTRACT
+The full lead record passes from ShiftWork to Opulent. Name, business, domain, use
+case, and agent task all travel with it. Opulent needs the form payload only . No GitHub or
+codebase access is required.
+INPUT
+Paid lead record
+OUTPUT
+Form payload delivered to Opulent intake
+DONE WHENOpulent confirms it receives every field needed to start research.
+05 Research agent OPULENT
+The agent researches the person, the business, and the industry , then reads the chosen
+use case and agent task. It flags the real felt need when it differs from what the customer
+picked. This is the same move run by hand on the partner contact card, now automatic
+on every lead.
+INPUT
+Lead record: name, business, domain, use
+case, agent task
+OUTPUT
+Research brief, recommended questionnaire
+DONE WHENA brief exists covering business, industry , and likely core problem, with a
+questionnaire pick.
+
+--- Page 5 ---
+06 Select questionnaire OPULENT
+The agent selects one of five onboarding questionnaires based on the use case and the
+research brief. Each questionnaire runs about 25 to 30 questions.
+INPUT
+Research brief, the five questionnaire sets
+OUTPUT
+One selected questionnaire, with a reason
+DONE WHENA single questionnaire is chosen and the choice is logged with a reason.
+07 Create Q and A document OPULENT
+The agent builds the Q and A document, seeding likely answers from research so the call
+moves fast. Open items are marked as gaps to confirm live.
+INPUT
+Selected questionnaire, research brief
+OUTPUT
+Draft Q and A training document
+DONE WHENEvery question has a draft answer or a marked gap.
+08 Prepare onboarding call script OPULENT
+The agent prepares the call script. The draft answers are examples to help the owner
+answer the questions. They are aids, not final answers, and must never be used as
+training input on their own.
+INPUT
+Q and A document
+OUTPUT
+Call script with example answers flagged as
+prompts
+DONE WHENThe script is ready and example answers are clearly marked as aids.
+
+--- Page 6 ---
+09 Onboarding call OPULENT
+The call runs by a VAPI voice agent or a ShiftWork crew member who joins a Google
+Meet. The call is recorded. The owner's real answers fill the training document.
+INPUT
+Call script, owner availability
+OUTPUT
+Completed training document, call recording
+DONE WHENThe owner's answers are captured in the document and the recording is saved.
+10 Gap agents review OPULENT
+A group of agents critically assesses the completed document for gaps. They research
+and fill those gaps so the training document is whole before any build starts.
+INPUT
+Completed training document
+OUTPUT
+Validated, gap-filled training document
+DONE WHENNo open gaps remain against the gap checklist.
+11 Build first agent OPULENT
+The build targets the owner's most critical problem, their greatest felt need. If one agent
+covers it, ship one. If the job needs several, a manager agent orchestrates more detailed
+task agents.
+INPUT
+Validated training document
+OUTPUT
+Working first agent, single or orchestrated
+DONE WHENThe agent runs against the owner's top problem and passes review .
+LOCK THESEOPEN DECISIONS
+Step 06
+
+--- Page 7 ---
+Questionnaire logic. How does the agent map a use case to one of five questionnaires? Define the
+rules so it is not a black box.
+Step 08 Example answers. Confirm in writing that example answers are aids only and never
+training input on their own.
+Step 09 Call routing. When is the call VAPI versus crew? Proposed: crew for the first 10 builds,
+VAPI once tuned.
+Step 10 Gap definition. What counts as a gap? Give the agents a checklist so the bar is the
+same on every build.
+Step 11 Scope decider . Who decides single versus orchestrated, the agent or a human gate
+before the build starts?
+Money The $29 fee. Is it a credit toward the build, or separate from build pricing?
+AI THAT WORKS FROM DAY 01ShiftWork × Opulent · build pipeline · v0.1 · draft for review

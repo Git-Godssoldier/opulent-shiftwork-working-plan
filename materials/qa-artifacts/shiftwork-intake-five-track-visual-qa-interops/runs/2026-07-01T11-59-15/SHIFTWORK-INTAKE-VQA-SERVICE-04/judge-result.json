@@ -1,0 +1,86 @@
+{
+  "scenarioId": "SHIFTWORK-INTAKE-VQA-SERVICE-04",
+  "shortId": "SW-VQA-SERVICE-04",
+  "name": "Service Visual QA",
+  "track": "Service",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelLock": {
+    "opulent-preferred-model-v32": "deepseek/deepseek-v4-flash",
+    "opulentia-coordinator-model-v7": "deepseek/deepseek-v4-flash",
+    "opulentia-worker-model-v6": "deepseek/deepseek-v4-flash",
+    "opulentia-active-role-v1": "coordinator"
+  },
+  "startTime": "2026-07-01T12:16:50.811Z",
+  "verdict": "INCONCLUSIVE",
+  "marker": "SHIFTWORK_INTAKE_VQA_SERVICE_COMPLETE",
+  "screenshots": [
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SERVICE-04/SW-VQA-SERVICE-04-prompt-typed.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SERVICE-04/SW-VQA-SERVICE-04-check-1.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SERVICE-04/SW-VQA-SERVICE-04-check-2.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SERVICE-04/SW-VQA-SERVICE-04-check-3.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SERVICE-04/SW-VQA-SERVICE-04-post-marker.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SERVICE-04/SW-VQA-SERVICE-04-final.png"
+  ],
+  "consoleErrors": [
+    {
+      "text": "[LONG_TASK] CRITICAL 1049 ms {count: 46, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57798e8205ngbjpgtkvf6xgj189pvea?bootstrap=1",
+      "time": "2026-07-01T12:19:25.820Z"
+    },
+    {
+      "text": "[LONG_TASK] CRITICAL 1444 ms {count: 63, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57798e8205ngbjpgtkvf6xgj189pvea?bootstrap=1",
+      "time": "2026-07-01T12:20:26.008Z"
+    },
+    {
+      "text": "[LONG_TASK] CRITICAL 1781 ms {count: 22, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57798e8205ngbjpgtkvf6xgj189pvea?bootstrap=1",
+      "time": "2026-07-01T12:22:12.164Z"
+    },
+    {
+      "text": "[LONG_TASK] CRITICAL 2174 ms {count: 50, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57798e8205ngbjpgtkvf6xgj189pvea?bootstrap=1",
+      "time": "2026-07-01T12:23:13.487Z"
+    }
+  ],
+  "verification": {
+    "bodyChars": 31284,
+    "promptBaselineChars": 16531,
+    "evidenceChars": 16353,
+    "markerOccurrencesTotal": 3,
+    "markerInPrompt": 2,
+    "markerOccurrencesAfterPrompt": 1,
+    "autosDoneInPrompt": 3,
+    "autosDoneOccurrencesAfterPrompt": 2,
+    "blockerMatches": [],
+    "evidenceBriefTerms": [
+      "claim checked",
+      "data/tool source",
+      "artifact",
+      "blockers",
+      "next action"
+    ],
+    "missingEvidenceBriefTerms": [],
+    "requiredTerms": [
+      "workspace",
+      "writer thread",
+      "reader thread",
+      "fileid",
+      "owner_confirmed",
+      "draft_from_research_unconfirmed",
+      "visual qa",
+      "acceptance inputs",
+      "build plan",
+      "validation_check"
+    ],
+    "missingRequiredTerms": [],
+    "evidenceSnippet": "PASSFive Acceptance Inputs\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nClaimSourceResult5 inputs (ACCEPT-01 through ACCEPT-05)acceptance_inputsPASSACCEPT-01: performance_latencyacceptance_inputs[0]PASSACCEPT-02: functional_uiacceptance_inputs[1]PASSACCEPT-03: functional_integrationacceptance_inputs[2]PASSACCEPT-04: accessibilityacceptance_inputs[3]PASSACCEPT-05: observability_alertingacceptance_inputs[4]PASSIsolated Reader Verification\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nClaimSourceResultSame marker verified from retrieved filereader thread (no writer context)PASSSame questionnaire verifiedreader threadPASSSame handoff fields verifiedreader threadPASSSame owner-confirmed fields verifiedreader threadPASSSame draft research fields verifiedreader threadPASSSame VQA target fields verifiedreader threadPASSSame acceptance inputs verifiedreader threadPASSBuild Plan\nArtifact: artifacts/shiftwork-vqa-service-04-build-plan.md\nSource: Retrieved intake (fileId: file-1782908371813-rvhl27657)\nPhases: A (Endpoint), B (Frontend), C (VQA Automation), D (Acceptance)\nBlockersNone identified.Next ActionComplete validation_check and emit SHIFTWORK_INTAKE_VQA_SERVICE_COMPLETE.OpulentDeepSeek V4 Flash"
+  },
+  "notes": "Completion marker found but structural proof missing (workspaceId=false, threadId=true, validationResult=true) — may be checklist text, not final evidence",
+  "threadUrl": "https://platform.opulentia.ai/dashboard/projects/default/thread/m57798e8205ngbjpgtkvf6xgj189pvea?bootstrap=1",
+  "pageTextSnippet": "ader threadPASSSame draft research fields verifiedreader threadPASSSame VQA target fields verifiedreader threadPASSSame acceptance inputs verifiedreader threadPASSBuild Plan\nArtifact: artifacts/shiftwork-vqa-service-04-build-plan.md\nSource: Retrieved intake (fileId: file-1782908371813-rvhl27657)\nPhases: A (Endpoint), B (Frontend), C (VQA Automation), D (Acceptance)\nBlockersNone identified.Next ActionComplete validation_check and emit SHIFTWORK_INTAKE_VQA_SERVICE_COMPLETE.OpulentDeepSeek V4 Flash",
+  "promptBaselineTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SERVICE-04/prompt-baseline-text.txt",
+  "markerFoundDuringWait": true,
+  "pageTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-SERVICE-04/page-text-retest.txt",
+  "endTime": "2026-07-01T12:23:52.633Z"
+}

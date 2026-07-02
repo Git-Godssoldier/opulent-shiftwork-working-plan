@@ -1,0 +1,293 @@
+{
+  "schema": "opulent.shiftwork.demo_pass_fail.v1",
+  "scenarioId": "SHIFTWORK-DEMO-SIMULATION-01",
+  "version": "2.0.0",
+  "description": "Pass/fail rubric for the ShiftWork doc-to-deploy demo simulation — human demoer browser drive with video recording. Each criterion is scored PASS, FAIL, or PARTIAL with evidence. Overall verdict is PASS only if all MUST-PASS criteria pass and at least 80% of all criteria pass.",
+
+  "verdictRules": {
+    "pass": "All MUST-PASS criteria pass AND at least 80% of all criteria pass",
+    "partial": "All MUST-PASS criteria pass AND 60-79% of all criteria pass",
+    "fail": "Any MUST-PASS criterion fails OR fewer than 60% of all criteria pass"
+  },
+
+  "criteria": [
+    {
+      "id": "C01",
+      "category": "setup",
+      "name": "Ostack discipline loaded",
+      "weight": "MUST-PASS",
+      "check": "skill_manage was called for opulentia-engineering-discipline and completed successfully",
+      "evidenceRequired": "Tool call log showing skill_manage with opulentia-engineering-discipline, status completed",
+      "passCondition": "skill_manage result includes 'opulentia-engineering-discipline' with status completed",
+      "failCondition": "skill_manage was not called, or failed, or wrong skill was loaded"
+    },
+    {
+      "id": "C02",
+      "category": "video",
+      "name": "Video recording started",
+      "weight": "MUST-PASS",
+      "check": "ffmpeg screen capture or cua-driver recording was started before navigating to the platform",
+      "evidenceRequired": "ffmpeg process running or cua-driver recording state enabled, confirmed before step 3",
+      "passCondition": "Recording was started before the browser navigated to the platform",
+      "failCondition": "Recording was not started or started after navigation"
+    },
+    {
+      "id": "C03",
+      "category": "login",
+      "name": "Platform login page loaded",
+      "weight": "MUST-PASS",
+      "check": "The Opulent platform login page loaded in the browser with email and password fields visible",
+      "evidenceRequired": "Screenshot of login page with form fields visible",
+      "passCondition": "Login page rendered with email and password fields",
+      "failCondition": "Page did not load or login form is not visible"
+    },
+    {
+      "id": "C04",
+      "category": "login",
+      "name": "Logged in with demo credentials",
+      "weight": "MUST-PASS",
+      "check": "Demo credentials were entered and login succeeded. Dashboard is visible.",
+      "evidenceRequired": "Screenshot of dashboard after login, no error messages",
+      "passCondition": "Dashboard rendered with workspace list, agent list, or main UI visible. No error messages.",
+      "failCondition": "Login failed, error message shown, or dashboard did not load"
+    },
+    {
+      "id": "C05",
+      "category": "workspace",
+      "name": "Demo workspace created through UI",
+      "weight": "MUST-PASS",
+      "check": "A workspace was created through the UI with the name 'ShiftWork Demo Simulation {{RUN_STAMP}}'",
+      "evidenceRequired": "Screenshot showing the workspace in the workspace list",
+      "passCondition": "Workspace is visible in the UI with the correct name",
+      "failCondition": "Workspace was not created or is not visible in the UI"
+    },
+    {
+      "id": "C06",
+      "category": "upload",
+      "name": "Training doc uploaded through UI",
+      "weight": "MUST-PASS",
+      "check": "The training doc fixture was uploaded to the workspace through the UI file upload feature",
+      "evidenceRequired": "Screenshot showing the file in the workspace file list",
+      "passCondition": "Training doc file is visible in the workspace file list in the UI",
+      "failCondition": "File upload failed or file is not visible in the UI"
+    },
+    {
+      "id": "C07",
+      "category": "composer",
+      "name": "Build instruction typed into chat composer",
+      "weight": "MUST-PASS",
+      "check": "The full build instruction was typed into the unified chat input and sent to a new thread",
+      "evidenceRequired": "Screenshot of the typed message in the composer before sending, and screenshot of the sent message in the thread",
+      "passCondition": "Message is visible in the thread and the build agent begins responding",
+      "failCondition": "Chat composer did not accept the message or the message was not sent"
+    },
+    {
+      "id": "C08",
+      "category": "build-visibility",
+      "name": "Build agent streaming visible in transcript",
+      "weight": "MUST-PASS",
+      "check": "The build agent's streaming text responses are visible in the thread transcript as they are generated",
+      "evidenceRequired": "Screenshot showing streaming text or agent response in the thread",
+      "passCondition": "Agent responses are visible and updating in real-time in the thread UI",
+      "failCondition": "No agent response visible or streaming is broken/stalled"
+    },
+    {
+      "id": "C09",
+      "category": "build-visibility",
+      "name": "Tool call chips visible in transcript",
+      "weight": "SHOULD-PASS",
+      "check": "Tool call chips (skill_manage, list_files, read_file, document_create, cron_manage, write_file) are visible in the transcript as the build agent works",
+      "evidenceRequired": "Screenshot showing tool call chips in the thread",
+      "passCondition": "At least 3 different tool call chips are visible in the transcript",
+      "failCondition": "No tool call chips visible",
+      "partialCondition": "1-2 tool call chips visible"
+    },
+    {
+      "id": "C10",
+      "category": "build-visibility",
+      "name": "Automation modeler skill invocation visible",
+      "weight": "MUST-PASS",
+      "check": "The skill_manage call for opulentia-automation-modeler is visible in the transcript",
+      "evidenceRequired": "Screenshot showing skill_manage tool chip or text mentioning opulentia-automation-modeler in the thread",
+      "passCondition": "Automation modeler invocation is visible in the transcript",
+      "failCondition": "No evidence of automation modeler in the transcript"
+    },
+    {
+      "id": "C11",
+      "category": "build-visibility",
+      "name": "Verified Automation Report visible in document panel",
+      "weight": "MUST-PASS",
+      "check": "The Verified Automation Report appears in the document panel or workspace as the build agent produces it",
+      "evidenceRequired": "Screenshot showing the report in the document panel or workspace file list",
+      "passCondition": "Report is visible in the UI with title containing 'Verified Automation Report'",
+      "failCondition": "Report was not produced or not visible in the UI"
+    },
+    {
+      "id": "C12",
+      "category": "build-visibility",
+      "name": "Cron schedule creation visible in transcript",
+      "weight": "SHOULD-PASS",
+      "check": "The cron_manage tool call is visible in the transcript with the schedule details",
+      "evidenceRequired": "Screenshot showing cron_manage tool chip or schedule creation text in the thread",
+      "passCondition": "Cron schedule creation is visible in the transcript",
+      "failCondition": "No evidence of cron schedule creation in the transcript"
+    },
+    {
+      "id": "C13",
+      "category": "acceptance-visibility",
+      "name": "Screenshots appearing in workspace during acceptance",
+      "weight": "MUST-PASS",
+      "check": "Screenshot artifacts appear in the workspace as the build agent runs the acceptance test",
+      "evidenceRequired": "Screenshot of the workspace file list showing screenshot files, or screenshot of the workspace with new image artifacts",
+      "passCondition": "At least 4 screenshot files are visible in the workspace",
+      "failCondition": "No screenshots visible in the workspace",
+      "partialCondition": "1-3 screenshots visible"
+    },
+    {
+      "id": "C14",
+      "category": "acceptance-visibility",
+      "name": "Run report visible in workspace",
+      "weight": "MUST-PASS",
+      "check": "A run report is visible in the workspace after the acceptance test",
+      "evidenceRequired": "Screenshot of the workspace file list showing the report file, or screenshot of the report opened in the UI",
+      "passCondition": "Report file is visible in the workspace UI",
+      "failCondition": "No report visible in the workspace"
+    },
+    {
+      "id": "C15",
+      "category": "completion-visibility",
+      "name": "autos_done visible in thread",
+      "weight": "MUST-PASS",
+      "check": "The build agent's autos_done call is visible in the thread transcript with the demo marker",
+      "evidenceRequired": "Screenshot of the thread showing autos_done completion with marker SHIFTWORK_DEMO_SIMULATION_TOKEN_{{RUN_STAMP}}",
+      "passCondition": "autos_done is visible in the thread with the marker",
+      "failCondition": "autos_done is not visible or marker is missing"
+    },
+    {
+      "id": "C16",
+      "category": "delivery-visibility",
+      "name": "How-to guide visible in workspace",
+      "weight": "SHOULD-PASS",
+      "check": "The how-to guide is visible in the workspace after acceptance passes",
+      "evidenceRequired": "Screenshot of the workspace file list showing the how-to guide, or screenshot of the guide opened in the UI",
+      "passCondition": "How-to guide is visible in the workspace UI with title containing 'How to use your Visual QA Agent'",
+      "failCondition": "No how-to guide visible in the workspace"
+    },
+    {
+      "id": "C17",
+      "category": "delivery-visibility",
+      "name": "Cron schedule visible in UI settings",
+      "weight": "SHOULD-PASS",
+      "check": "The cron schedule (weekday 8 AM Central) is visible in the agent's schedule or trigger management UI",
+      "evidenceRequired": "Screenshot of the schedule settings showing the cron expression or human-readable schedule",
+      "passCondition": "Schedule shows '0 8 * * 1-5' or 'Weekday 8:00 AM' in America/Chicago timezone in the UI",
+      "failCondition": "Schedule is not visible in the UI",
+      "partialCondition": "Schedule exists but timezone or expression is wrong in the UI"
+    },
+    {
+      "id": "C18",
+      "category": "demoer-experience",
+      "name": "No React #185 crash during session",
+      "weight": "MUST-PASS",
+      "check": "No React error #185 (Maximum update depth exceeded) occurred at any point during the browser session",
+      "evidenceRequired": "No 'Minified React error #185' or 'Maximum update depth exceeded' visible in any screenshot, page text, or browser console during the entire session",
+      "passCondition": "No React #185 crash occurred during the entire session",
+      "failCondition": "React #185 crash occurred at any point"
+    },
+    {
+      "id": "C19",
+      "category": "demoer-experience",
+      "name": "Streaming responsive (no long stalls)",
+      "weight": "SHOULD-PASS",
+      "check": "The build agent's streaming responses did not stall for more than 30 seconds at any point during the session",
+      "evidenceRequired": "Video evidence showing continuous streaming activity, or timestamps showing no gaps > 30s in agent responses",
+      "passCondition": "No streaming stalls longer than 30 seconds",
+      "failCondition": "Streaming stalled for more than 60 seconds at any point",
+      "partialCondition": "One stall of 30-60 seconds"
+    },
+    {
+      "id": "C20",
+      "category": "demoer-experience",
+      "name": "Document panel renders correctly",
+      "weight": "SHOULD-PASS",
+      "check": "The document panel renders the Verified Automation Report and how-to guide correctly — readable, no layout breakage, no missing content",
+      "evidenceRequired": "Screenshot of the document panel showing rendered content",
+      "passCondition": "Document panel renders content correctly with no layout issues",
+      "failCondition": "Document panel is broken, empty, or has layout issues",
+      "partialCondition": "Document panel renders but with minor visual issues"
+    },
+    {
+      "id": "C21",
+      "category": "demoer-experience",
+      "name": "No error messages visible to demoer",
+      "weight": "SHOULD-PASS",
+      "check": "No unhandled error messages, toast notifications, or error boundaries were visible to the demoer during the session",
+      "evidenceRequired": "No error toasts, error banners, or error pages in any screenshot or video frame",
+      "passCondition": "No error messages visible during the session",
+      "failCondition": "Error messages were visible to the demoer",
+      "partialCondition": "Minor warnings visible but no critical errors"
+    },
+    {
+      "id": "C22",
+      "category": "video",
+      "name": "Video recording valid and complete",
+      "weight": "MUST-PASS",
+      "check": "The video recording is a valid MP4 file, playable, with duration > 60 seconds, capturing the session from login to completion",
+      "evidenceRequired": "ffprobe output confirming valid H.264/AAC MP4 with yuv420p and +faststart, file size > 0, duration > 60s",
+      "passCondition": "Video is valid, playable, duration > 60s, captures login through completion",
+      "failCondition": "Video is missing, corrupt, or shorter than 60 seconds",
+      "partialCondition": "Video is valid but does not capture the full session (started late or stopped early)"
+    },
+    {
+      "id": "C23",
+      "category": "reporting",
+      "name": "Findings report produced with verdict",
+      "weight": "MUST-PASS",
+      "check": "A findings report JSON was produced with overall verdict, per-criterion results, evidence, video path, and demoer feedback",
+      "evidenceRequired": "Findings report JSON file at the expected path with all fields populated",
+      "passCondition": "Findings report is valid JSON with overall verdict, all criteria scored, evidence, video path, and feedback section",
+      "failCondition": "No findings report or it is missing required fields"
+    },
+    {
+      "id": "C24",
+      "category": "reporting",
+      "name": "Demoer feedback written",
+      "weight": "SHOULD-PASS",
+      "check": "A feedback section was written covering: what worked well, what was confusing or broken, performance issues, crashes, and suggestions for improvement",
+      "evidenceRequired": "Feedback section in the findings report with all 5 areas covered",
+      "passCondition": "Feedback covers all 5 areas with specific examples from the session",
+      "failCondition": "No feedback section or it is missing required areas",
+      "partialCondition": "Feedback covers some but not all 5 areas"
+    },
+    {
+      "id": "C25",
+      "category": "completion",
+      "name": "Completion marker emitted",
+      "weight": "MUST-PASS",
+      "check": "The demo simulation completed with the SHIFTWORK_DEMO_SIMULATION_COMPLETE marker",
+      "evidenceRequired": "autos_done call with result including SHIFTWORK_DEMO_SIMULATION_COMPLETE",
+      "passCondition": "Completion marker was emitted",
+      "failCondition": "Completion marker was not emitted"
+    },
+    {
+      "id": "C26",
+      "category": "resilience",
+      "name": "Fallback URL used if primary is down",
+      "weight": "SHOULD-PASS",
+      "check": "If shiftworkstudio.ai was unreachable during the acceptance test, the build agent used the fallback URL https://example.com",
+      "evidenceRequired": "Video or transcript evidence showing fallback URL usage if primary was down, or primary was reachable so fallback was not needed",
+      "passCondition": "Either primary URL worked, or fallback was used when primary was down",
+      "failCondition": "Primary was down and no fallback was used",
+      "skipCondition": "Primary URL was reachable (fallback not needed — mark as PASS with note)"
+    }
+  ],
+
+  "summary": {
+    "totalCriteria": 26,
+    "mustPassCount": 14,
+    "shouldPassCount": 12,
+    "passThreshold": "All 14 MUST-PASS pass AND at least 80% of all 26 pass (>= 21)",
+    "partialThreshold": "All 14 MUST-PASS pass AND 60-79% pass (16-20)",
+    "failThreshold": "Any MUST-PASS fails OR fewer than 16 criteria pass"
+  }
+}

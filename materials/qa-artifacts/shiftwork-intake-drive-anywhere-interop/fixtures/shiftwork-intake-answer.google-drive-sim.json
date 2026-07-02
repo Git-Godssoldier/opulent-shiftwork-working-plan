@@ -1,0 +1,236 @@
+{
+  "schema": "opulent.shiftwork.intake_answer.v1",
+  "scenarioId": "SHIFTWORK-INTAKE-DRIVE-ANYWHERE-INTEROP-01",
+  "marker": "SHIFTWORK_INTAKE_DRIVE_ANYWHERE_TOKEN_20260701",
+  "drive": {
+    "sourceSystem": "google_drive_simulated",
+    "driveFileId": "gdrive-sim-shiftwork-intake-SW-20260701-001",
+    "name": "ShiftWork Intake Answer - Northstar Renovations - Visual Quality Agent.json",
+    "mimeType": "application/json",
+    "shareMode": "anyone_with_link",
+    "webViewLink": "https://drive.google.com/file/d/gdrive-sim-shiftwork-intake-SW-20260701-001/view",
+    "createdTime": "2026-07-01T02:45:00.000Z",
+    "modifiedTime": "2026-07-01T02:45:00.000Z",
+    "note": "Simulated Google Drive metadata for interop design. Replace with a real connector file handle for live OAuth runs."
+  },
+  "handoffPayload": {
+    "leadId": "SW-20260701-001",
+    "timestamp": "2026-07-01T02:45:00.000Z",
+    "name": "Mara Ellison",
+    "businessName": "Northstar Renovations",
+    "email": "mara@northstarrenovations.com",
+    "businessDomain": "northstarrenovations.com",
+    "noDomainFlag": false,
+    "useCase": "Ops",
+    "agentTask": "Website visual quality monitoring and email alerts",
+    "buildRequest": "Build a visual quality agent that opens our landing page, captures desktop and mobile screenshots, checks for layout inconsistencies, and emails me when something visually breaks.",
+    "paymentStatus": "paid",
+    "paymentAmountUsd": 29,
+    "source": "supabase_webhook_simulated",
+    "hostedBy": "vercel_intake_simulated"
+  },
+  "researchBrief": {
+    "business": "Home renovation contractor using a public landing page to convert homeowners into estimate requests.",
+    "industry": "Blue-collar home services",
+    "likelyCoreProblem": "The owner changes landing page copy and photos frequently, but has no reliable way to catch broken mobile layout, missing hero images, or obscured quote buttons before leads stop converting.",
+    "confidence": "medium",
+    "assumedOrUnverified": [
+      "The real production URL should be confirmed during live onboarding.",
+      "Email delivery provider should be confirmed before final build.",
+      "Baseline screenshots in this fixture are simulated references, not real screenshots."
+    ]
+  },
+  "selectedQuestionnaire": {
+    "questionnaireId": "05_Ops_Discovery_Template",
+    "reason": "The lead selected an operational monitoring task: inspect a business-critical website, detect exceptions, and send email alerts without manual review."
+  },
+  "sourceSkillAdapted": {
+    "title": "Catch Visual Regressions Before Every PR",
+    "adaptation": "The repo PR visual-regression checklist is converted into a small-business website monitoring agent. Instead of running only before PRs, the agent runs on a schedule and on demand against the public landing page, captures screenshots, evaluates layout breakage, and emails the owner when an inconsistency is found."
+  },
+  "answers": [
+    {
+      "questionId": "OP09",
+      "question": "What admin task eats the most of your time each week?",
+      "answer": "Checking whether the landing page still looks right after edits. I usually notice problems only after a customer says the quote button is missing or a photo is broken.",
+      "tag": "owner_confirmed",
+      "buildCritical": true
+    },
+    {
+      "questionId": "VQ01",
+      "question": "What page should the visual quality agent monitor first?",
+      "answer": "Monitor https://northstarrenovations.com first. The highest priority route is the home landing page at / because that is where paid traffic lands.",
+      "tag": "owner_confirmed",
+      "buildCritical": true
+    },
+    {
+      "questionId": "VQ02",
+      "question": "Which viewports matter?",
+      "answer": "Check desktop at 1280 by 900 and mobile at 390 by 844. Mobile matters most because most leads come from phones.",
+      "tag": "owner_confirmed",
+      "buildCritical": true
+    },
+    {
+      "questionId": "VQ03",
+      "question": "What counts as a visual inconsistency?",
+      "answer": "Email me if text overlaps, the hero image is missing, the Get a Quote button is hidden or unreachable, there is horizontal scroll on mobile, a section is blank, navigation covers content, the form is cut off, or the page has console errors.",
+      "tag": "owner_confirmed",
+      "buildCritical": true
+    },
+    {
+      "questionId": "VQ04",
+      "question": "What should the email alert include?",
+      "answer": "Send screenshots, the page URL, viewport size, what changed, how severe it is, and a short plain-English fix suggestion. Put VISUAL QA ALERT in the subject.",
+      "tag": "owner_confirmed",
+      "buildCritical": true
+    },
+    {
+      "questionId": "VQ05",
+      "question": "Who should receive alerts?",
+      "answer": "Send alerts to mara@northstarrenovations.com and cc ops@northstarrenovations.com. Do not email customers.",
+      "tag": "owner_confirmed",
+      "buildCritical": true
+    },
+    {
+      "questionId": "VQ06",
+      "question": "How often should the agent run?",
+      "answer": "Run every weekday at 8:00 AM Central and also on demand when I ask for a check. For the first build, manual on-demand is acceptable if scheduling is not wired yet.",
+      "tag": "owner_confirmed",
+      "buildCritical": true
+    },
+    {
+      "questionId": "VQ07",
+      "question": "What should the first successful run prove?",
+      "answer": "It should capture desktop and mobile screenshots of the landing page, compare them to the baseline, find no critical issue or describe the issue, and produce the exact alert email draft if anything is wrong.",
+      "tag": "owner_confirmed",
+      "buildCritical": true
+    },
+    {
+      "questionId": "R01",
+      "question": "Which email connector should the agent use?",
+      "answer": "Likely Outlook or Gmail based on the owner email, but the email provider was not confirmed.",
+      "tag": "draft_from_research_unconfirmed",
+      "buildCritical": false
+    }
+  ],
+  "confirmedBuildTarget": {
+    "target": "Visual quality monitoring agent for the public landing page",
+    "ownerStatement": "I want an agent to screenshot our landing page on desktop and mobile and email me when something looks broken.",
+    "tag": "owner_confirmed"
+  },
+  "visualQualityAgentRequest": {
+    "landingPageUrl": "https://northstarrenovations.com/",
+    "routes": [
+      {
+        "path": "/",
+        "name": "Home landing page",
+        "priority": "critical",
+        "routeSpecificChecks": [
+          "Hero image is visible and not blank",
+          "Headline and subheadline do not overlap at desktop or mobile widths",
+          "Get a Quote button is visible without horizontal scroll",
+          "Lead form fields are fully visible and usable on mobile",
+          "Navigation does not cover page content",
+          "Phone number and primary call-to-action remain readable"
+        ]
+      }
+    ],
+    "viewports": [
+      {
+        "name": "desktop",
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "baseline": {
+      "source": "simulated_google_drive",
+      "desktopScreenshot": "drive://gdrive-sim-shiftwork-intake-SW-20260701-001/baseline/home-desktop.png",
+      "mobileScreenshot": "drive://gdrive-sim-shiftwork-intake-SW-20260701-001/baseline/home-mobile.png",
+      "acceptedVariance": "Minor copy changes and image crop differences are acceptable. Missing primary CTA, horizontal scroll, blank sections, overlap, console errors, and broken images are not acceptable."
+    },
+    "inconsistencyCriteria": [
+      "overlapping_text",
+      "missing_or_blank_image",
+      "hidden_primary_cta",
+      "horizontal_scroll",
+      "unreachable_button_or_link",
+      "form_cut_off",
+      "navigation_occludes_content",
+      "console_error",
+      "blank_section"
+    ],
+    "emailAlerts": {
+      "enabled": true,
+      "to": [
+        "mara@northstarrenovations.com"
+      ],
+      "cc": [
+        "ops@northstarrenovations.com"
+      ],
+      "subjectPrefix": "VISUAL QA ALERT",
+      "include": [
+        "page URL",
+        "viewport",
+        "severity",
+        "issue description",
+        "current screenshot",
+        "baseline screenshot reference",
+        "suggested fix"
+      ],
+      "sendOnlyWhen": "One or more inconsistency criteria are detected."
+    },
+    "schedule": {
+      "timezone": "America/Chicago",
+      "cron": "0 8 * * 1-5",
+      "manualRunAllowed": true,
+      "firstBuildFallback": "If scheduling is unavailable, create an on-demand agent run and document the schedule as the next wiring step."
+    }
+  },
+  "gapReview": {
+    "openBuildCriticalGaps": [],
+    "researchFilledUnconfirmed": [
+      "R01"
+    ],
+    "humanSpotCheckRequired": true
+  },
+  "expectedAgent": {
+    "mode": "single_agent",
+    "name": "Landing Page Visual QA Agent",
+    "responsibilities": [
+      "Open the public landing page",
+      "Capture desktop and mobile screenshots",
+      "Compare the current screenshots to baseline expectations",
+      "Detect layout inconsistencies using the owner-confirmed criteria",
+      "Draft or send an email alert with screenshots and fix guidance when an issue is found",
+      "Record every run with timestamp, URL, viewport, verdict, and screenshot paths"
+    ],
+    "toolsNeeded": [
+      "browser screenshot tool",
+      "image or visual comparison utility",
+      "email connector",
+      "scheduler or manual trigger",
+      "workspace file storage for screenshots and reports"
+    ],
+    "mustNotDo": [
+      "Email customers",
+      "Alert on minor copy-only changes unless layout breaks",
+      "Treat draft research answers as owner-confirmed",
+      "Claim the landing page passed without screenshots for both desktop and mobile"
+    ],
+    "acceptanceTest": {
+      "mustPass": [
+        "Desktop screenshot captured",
+        "Mobile screenshot captured",
+        "Primary CTA visibility checked",
+        "Horizontal scroll checked on mobile",
+        "Email alert draft produced when a seeded visual issue is present",
+        "No email sent when there is no inconsistency unless live-send mode is explicitly approved"
+      ]
+    }
+  }
+}

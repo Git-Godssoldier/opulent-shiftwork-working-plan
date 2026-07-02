@@ -1,0 +1,74 @@
+{
+  "scenarioId": "SHIFTWORK-INTAKE-VQA-OPS-05",
+  "shortId": "SW-VQA-OPS-05",
+  "name": "Ops Visual QA",
+  "track": "Ops",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelLock": {
+    "opulent-preferred-model-v32": "deepseek/deepseek-v4-flash",
+    "opulentia-coordinator-model-v7": "deepseek/deepseek-v4-flash",
+    "opulentia-worker-model-v6": "deepseek/deepseek-v4-flash",
+    "opulentia-active-role-v1": "coordinator"
+  },
+  "startTime": "2026-07-01T12:23:52.633Z",
+  "verdict": "PASS",
+  "marker": "SHIFTWORK_INTAKE_VQA_OPS_COMPLETE",
+  "screenshots": [
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-OPS-05/SW-VQA-OPS-05-prompt-typed.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-OPS-05/SW-VQA-OPS-05-check-1.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-OPS-05/SW-VQA-OPS-05-post-marker.png",
+    "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-OPS-05/SW-VQA-OPS-05-final.png"
+  ],
+  "consoleErrors": [
+    {
+      "text": "[LONG_TASK] CRITICAL 1305 ms {count: 59, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m576hr2z8x9ngghkxfe5ap6eed89q7ep?bootstrap=1",
+      "time": "2026-07-01T12:25:57.945Z"
+    },
+    {
+      "text": "[LONG_TASK] CRITICAL 1642 ms {count: 49, analysisDeferred: true, analysisSuppressed: true}",
+      "url": "https://platform.opulentia.ai/dashboard/projects/default/thread/m576hr2z8x9ngghkxfe5ap6eed89q7ep?bootstrap=1",
+      "time": "2026-07-01T12:26:58.755Z"
+    }
+  ],
+  "verification": {
+    "bodyChars": 21292,
+    "promptBaselineChars": 16512,
+    "evidenceChars": 6361,
+    "markerOccurrencesTotal": 4,
+    "markerInPrompt": 2,
+    "markerOccurrencesAfterPrompt": 2,
+    "autosDoneInPrompt": 3,
+    "autosDoneOccurrencesAfterPrompt": 2,
+    "blockerMatches": [],
+    "evidenceBriefTerms": [
+      "claim checked",
+      "data/tool source",
+      "artifact",
+      "blockers",
+      "next action"
+    ],
+    "missingEvidenceBriefTerms": [],
+    "requiredTerms": [
+      "workspace",
+      "writer thread",
+      "reader thread",
+      "fileid",
+      "owner_confirmed",
+      "draft_from_research_unconfirmed",
+      "visual qa",
+      "acceptance inputs",
+      "build plan",
+      "validation_check"
+    ],
+    "missingRequiredTerms": [],
+    "evidenceSnippet": "checkWrite evidence brief and autos_done with SHIFTWORK_INTAKE_VQA_OPS_COMPLETEDiscover workspace structure and locate shiftwork-five-track-intake-fixtures.jsonLoad and inspect the Ops fixture (shiftwork-five-track-intake-fixtures.json)Create workspace and writer threadPersist intake JSON to /opulent/workspace/uploads/drive and save/list workspace files, record fileIdVerify paid handoff payload, selected questionnaire, marker, owner_confirmed answers, draft_from_research_unconfirmed, visual QA details, email draft rules, five acceptance inputsCreate separate reader thread in same workspace, retrieve file by fileId, verify marker and fieldsProduce build plan from retrieved intake onlyRun validation_checkWrite evidence brief and autos_done with SHIFTWORK_INTAKE_VQA_OPS_COMPLETERan commandVerify all required intake fields programmaticallycd /opulent/workspace && python3 << 'PYEOF' import json with open('uploads/driv…Get concise verification results summaryls -la /opulent/workspace/.opulent/tool-outputs/call_e3f53d8f747c4757843b07be.m…Ran commandls -la /opulent/workspace/.opulent/tool-outputs/call_e3f53d8f747c4757843b07be.m…Running command3m 22sDeepSeek V4 FlashOpulentDeepSeek V4 Flash"
+  },
+  "notes": "Completion marker 'SHIFTWORK_INTAKE_VQA_OPS_COMPLETE' found after submitted prompt with required intake evidence, evidence brief, and structural proof (workspace ID, thread ID, validation result)",
+  "threadUrl": "https://platform.opulentia.ai/dashboard/projects/default/thread/m576hr2z8x9ngghkxfe5ap6eed89q7ep?bootstrap=1",
+  "pageTextSnippet": "dation_checkWrite evidence brief and autos_done with SHIFTWORK_INTAKE_VQA_OPS_COMPLETERan commandVerify all required intake fields programmaticallycd /opulent/workspace && python3 << 'PYEOF' import json with open('uploads/driv…Get concise verification results summaryls -la /opulent/workspace/.opulent/tool-outputs/call_e3f53d8f747c4757843b07be.m…Ran commandls -la /opulent/workspace/.opulent/tool-outputs/call_e3f53d8f747c4757843b07be.m…Running command3m 22sDeepSeek V4 FlashOpulentDeepSeek V4 Flash",
+  "promptBaselineTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-OPS-05/prompt-baseline-text.txt",
+  "markerFoundDuringWait": true,
+  "pageTextPath": "/Users/jeremyalston/Perfect/opulent-os-heavy/frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/runs/2026-07-01T11-59-15/SHIFTWORK-INTAKE-VQA-OPS-05/page-text-retest.txt",
+  "endTime": "2026-07-01T12:27:29.972Z"
+}

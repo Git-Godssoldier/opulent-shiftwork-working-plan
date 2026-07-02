@@ -1,0 +1,111 @@
+{
+  "schema": "opulent.shiftwork.intake_interop_report.v1",
+  "status": "POST_FIX_RERUN_STILL_CRASHING",
+  "modelLock": "openrouter/poolside/laguna-m.1:free",
+  "target": "platform.opulentia.ai",
+  "convex": "prod:confident-sheep-333",
+  "frontendCommit": "1a45e97fe",
+  "deployUrl": "https://frontend-kl12b3m7g-opulents-projects.vercel.app",
+  "writeMode": "handoff-only",
+  "artifactDir": "frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/",
+  "spec": "docs/testing/shiftwork-intake-five-track-visual-qa-interops-20260701.md",
+  "fixtures": "frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/fixtures/shiftwork-five-track-intake-fixtures.json",
+  "scenarios": "frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/scenarios/shiftwork_five_track_visual_qa.scenarios.json",
+  "redLoop": "Each of five ShiftWork questionnaire tracks must turn a paid intake form into a retrieved, build-ready visual QA agent request without relying on original thread context or unconfirmed research guesses.",
+  "sweepDate": "2026-07-01T08:42:47.000Z",
+  "testEmail": "shiftwork-test-1782894567062@example.com",
+  "hardenedRerunDate": "2026-07-01T08:42:47Z",
+  "summary": {
+    "total": 5,
+    "pass": 0,
+    "fail": 0,
+    "inconclusive": 1,
+    "blocked": 0,
+    "untested": 4,
+    "hardenedRerunPass": 0
+  },
+  "crossVerification": {
+    "status": "POST_FIX_RERUN_REACT_185_STILL_PRESENT",
+    "reviewDate": "2026-07-01",
+    "reason": "After deploying fix commit 1a45e97fe (replay delta guard: lastDelta.end > cursor) with prebuild patch-package guarantee, the first scenario (Marketing) still crashed with Minified React error #185 in runUpdateMessageJob in chunk 22b8f64a. The patch IS applied (Vercel build logs confirm patch-package ran in both postinstall and prebuild), but the crash persists. The chunk hash 22b8f64a is identical before and after the patch, suggesting the patched code is minified into the same chunk but the root cause is in the AI SDK's runUpdateMessageJob streaming transform, not solely in @convex-dev/agent's cursor/replay delta logic.",
+    "visualArtifactFinding": "Marketing final screenshot shows 'Something went wrong — Minified React error #185' error boundary. Same crash as pre-fix rerun.",
+    "consoleErrorFinding": "Marketing judge-result.json captured 4 console errors: 2x 'Error in stream Error: An error occurred.' at runUpdateMessageJob in 22b8f64a chunk, 1x 'Minified React error #185', 1x LONG_TASK CRITICAL 1254ms.",
+    "deployProof": "Vercel build logs confirm: postinstall ran patch-package (@convex-dev/agent@0.6.1 ✔), prebuild ran patch-package (@convex-dev/agent@0.6.1 ✔). Deploy aliased to platform.opulentia.ai. Chunk 22b8f64a-f0a812298ce830a3.js is identical (md5: d744162b034df1f0447f79921fb6e8ca) on both pre-alias and aliased URLs.",
+    "sentryFinding": "Sentry searches for is:unresolved environment:production, OPULENT-BE, and React error #185 all returned 0 results in 24h. The client-side crash is not being reported to Sentry (error boundary may be catching before Sentry reporter).",
+    "rootCauseAssessment": "The @convex-dev/agent patch (cursorsEqual, flushDeltas, cursor === undefined, lastDelta.end > cursor) is applied but insufficient. The React #185 infinite update loop originates in the AI SDK's runUpdateMessageJob streaming transform (chunk 22b8f64a), which calls write() -> enqueue(structuredClone(message)) in a loop. The patch addresses @convex-dev/agent's delta stream cursor logic but the actual infinite re-render is in the AI SDK layer that processes the stream parts. Further investigation needed in the interaction between Convex streaming subscriptions and the AI SDK's client-side stream processing.",
+    "requiredAction": "1. Investigate the AI SDK's runUpdateMessageJob transform in chunk 22b8f64a for the actual infinite loop trigger. 2. Check if the Convex streaming subscription is re-emitting stream parts that cause the transform to re-process them. 3. Consider adding a deduplication guard in the client-side stream processing. 4. Once the actual root cause is fixed, rerun the hardened ShiftWork interops."
+  },
+  "results": [
+    {
+      "scenarioId": "SHIFTWORK-INTAKE-VQA-MARKETING-01",
+      "track": "Marketing",
+      "verdict": "INCONCLUSIVE",
+      "marker": "SHIFTWORK_INTAKE_VQA_MARKETING_COMPLETE",
+      "model": "openrouter/poolside/laguna-m.1:free",
+      "threadUrl": "https://platform.opulentia.ai/dashboard/projects/default/thread/m577e9q7m5x4h1my2c36nxm88n89pay9",
+      "startTime": "2026-07-01T08:42:47.000Z",
+      "endTime": "2026-07-01T08:52:55.000Z",
+      "consoleErrors": 4,
+      "screenshots": 8,
+      "hasPromptBaseline": true,
+      "hasPageText": true,
+      "markerInPrompt": 2,
+      "markerAfterPrompt": 0,
+      "autosDoneAfterPrompt": 0,
+      "blockerMatches": [],
+      "missingRequiredTerms": ["writer thread", "reader thread", "fileid", "owner_confirmed", "draft_from_research_unconfirmed", "visual qa", "acceptance inputs", "build plan", "validation_check"],
+      "missingEvidenceBriefTerms": ["claim checked", "data/tool source", "artifact", "blockers", "next action"],
+      "platformCrash": "Minified React error #185 (Maximum update depth exceeded) — STILL PRESENT after fix deploy 1a45e97fe",
+      "consoleErrorDetails": [
+        "Error in stream Error: An error occurred. at runUpdateMessageJob in 22b8f64a-f0a812298ce830a3.js",
+        "Error in stream Error: An error occurred. at runUpdateMessageJob in 22b8f64a-f0a812298ce830a3.js",
+        "Error: Minified React error #185; visit https://react.dev/errors/185",
+        "[LONG_TASK] CRITICAL 1254 ms"
+      ],
+      "notes": "Post-fix rerun: platform still crashes with React error #185 after fix deploy 1a45e97fe. Patch IS applied (Vercel build logs confirm) but crash persists. Root cause appears to be in AI SDK runUpdateMessageJob, not solely in @convex-dev/agent cursor logic."
+    },
+    {
+      "scenarioId": "SHIFTWORK-INTAKE-VQA-SALES-02",
+      "track": "Sales",
+      "verdict": "UNTESTED",
+      "marker": "SHIFTWORK_INTAKE_VQA_SALES_COMPLETE",
+      "model": "openrouter/poolside/laguna-m.1:free",
+      "notes": "Runner was stopped after Marketing scenario confirmed React #185 still present. No need to run remaining scenarios — same crash will reproduce."
+    },
+    {
+      "scenarioId": "SHIFTWORK-INTAKE-VQA-FULFILLMENT-03",
+      "track": "Fulfillment",
+      "verdict": "UNTESTED",
+      "marker": "SHIFTWORK_INTAKE_VQA_FULFILLMENT_COMPLETE",
+      "model": "openrouter/poolside/laguna-m.1:free",
+      "notes": "Runner was stopped after Marketing scenario confirmed React #185 still present."
+    },
+    {
+      "scenarioId": "SHIFTWORK-INTAKE-VQA-SERVICE-04",
+      "track": "Service",
+      "verdict": "UNTESTED",
+      "marker": "SHIFTWORK_INTAKE_VQA_SERVICE_COMPLETE",
+      "model": "openrouter/poolside/laguna-m.1:free",
+      "notes": "Runner was stopped after Marketing scenario confirmed React #185 still present."
+    },
+    {
+      "scenarioId": "SHIFTWORK-INTAKE-VQA-OPS-05",
+      "track": "Ops",
+      "verdict": "UNTESTED",
+      "marker": "SHIFTWORK_INTAKE_VQA_OPS_COMPLETE",
+      "model": "openrouter/poolside/laguna-m.1:free",
+      "notes": "Runner was stopped after Marketing scenario confirmed React #185 still present."
+    }
+  ],
+  "sentry": {
+    "beforeQuery": "is:unresolved environment:production",
+    "beforeResult": "0 unresolved production issues",
+    "afterQuery": "is:unresolved environment:production",
+    "afterResult": "0 unresolved production issues (Sentry not capturing client-side React #185 — error boundary may be catching before Sentry reporter)",
+    "status": "CLEAN_BUT_CLIENT_CRASH_PERSISTS"
+  },
+  "linear": {
+    "writeMode": "handoff-only",
+    "handoff": "linear-handoff.md"
+  }
+}
