@@ -78,21 +78,22 @@ const slides: SlideData[] = [
   {
     type: "hero",
     page: 1,
-    label: "Investor Deck",
-    kicker: "Opulent cloud agents",
-    title: "Opulent, the first autonomous knowledge worker",
+    label: "Agent Factory",
+    kicker: "Opulent agent factory",
+    title: "Agent Factory",
+    body: "From natural language to production ready frontier agents.",
     theme: "light",
-    sideWord: "OPULENT",
+    sideWord: "FACTORY",
   },
   {
     type: "hero",
     page: 2,
-    label: "Introducing Opulent",
-    kicker: "Autonomous knowledge work",
-    title: "Introducing Opulent",
-    body: "Opulent is an autonomous knowledge worker for ambitious teams. It automates, improves, and designs the complex business processes that run across tools, teams, approvals, and institutional context.",
+    label: "Project Description",
+    kicker: "ShiftWork collaboration",
+    title: "Agent Factory turns ShiftWork intake into deployed agents.",
+    body: "ShiftWork captures the customer request, confirms the build target, and hands Opulent a refined training document. Opulent converts that document into a verified agent objective, builds the agent, tests it, and packages the delivery proof.",
     theme: "light",
-    sideWord: "OPULENT",
+    sideWord: "DELIVERY",
   },
   {
     type: "hero",
@@ -119,18 +120,8 @@ const slides: SlideData[] = [
     chips: ["Cloud runtime", "Async work", "Tools", "Review", "Trace"],
   },
   {
-    type: "hero",
-    page: 5,
-    label: "Agent Factory",
-    kicker: "Opulent agent factory",
-    title: "Agent Factory",
-    body: "From natural language to production ready frontier agents.",
-    theme: "light",
-    sideWord: "FACTORY",
-  },
-  {
     type: "process",
-    page: 6,
+    page: 5,
     label: "Agent Factory Operations",
     title: "Opulent turns a refined intake document into a verified agent objective.",
     intro:
@@ -164,7 +155,7 @@ const slides: SlideData[] = [
   },
   {
     type: "process",
-    page: 7,
+    page: 6,
     label: "Shared Delivery Model",
     title: "ShiftWork and Opulent share delivery through a clean source of truth.",
     intro:
@@ -198,7 +189,7 @@ const slides: SlideData[] = [
   },
   {
     type: "case",
-    page: 8,
+    page: 7,
     label: "ShiftWork Scope",
     title: "The statement of work is a controlled path from paid intake to first agent.",
     body: [
@@ -210,7 +201,7 @@ const slides: SlideData[] = [
   },
   {
     type: "stats",
-    page: 9,
+    page: 8,
     label: "Big Goal",
     title: "The first milestone is a repeatable build loop, not a one off demo.",
     body: "The first agent is the proof vehicle for the handoff, build path, evidence model, and customer delivery motion.",
@@ -223,7 +214,7 @@ const slides: SlideData[] = [
   },
   {
     type: "stories",
-    page: 10,
+    page: 9,
     label: "Our Read",
     title: "ShiftWork owns the front of the funnel and Opulent owns the build proof.",
     intro: "The handoff works when each team owns the part it controls and the training document carries enough truth to build without guessing.",
@@ -238,7 +229,7 @@ const slides: SlideData[] = [
   },
   {
     type: "stories",
-    page: 11,
+    page: 10,
     label: "Preparation",
     title: "We converted the source material into a project ready operating view.",
     intro: "The internal work turned Dan's documents, the draft SOW, the questionnaire tracks, and the demo requirements into a testable build path.",
@@ -253,7 +244,7 @@ const slides: SlideData[] = [
   },
   {
     type: "case",
-    page: 12,
+    page: 11,
     label: "Workflow",
     title: "The working path is intake, document, build, validation, delivery.",
     body: [
@@ -265,7 +256,7 @@ const slides: SlideData[] = [
   },
   {
     type: "stats",
-    page: 13,
+    page: 12,
     label: "Validation",
     title: "The simulations test whether the handoff survives outside the original conversation.",
     body: "The core question is whether a later build context can retrieve the same intake record and create the right agent plan without relying on the earlier writer thread.",
@@ -273,12 +264,93 @@ const slides: SlideData[] = [
       { value: "1", description: "A populated intake answer is stored as if it came from a shared workspace source." },
       { value: "5", description: "Marketing, sales, fulfillment, service, and operations tracks are covered." },
       { value: "2", description: "One context writes the artifact and another retrieves it to prove durability." },
-      { value: "Pass", description: "Verdicts require required fields, owner confirmed answers, artifacts, and acceptance evidence." },
+      { value: "Proof", description: "The evidence packet binds required fields, owner confirmed answers, artifacts, and acceptance evidence to the simulation record." },
+    ],
+  },
+  {
+    type: "process",
+    page: 13,
+    label: "Simulation Timeline",
+    title: "The recorded simulation shows the Agent Factory path completing end to end.",
+    intro:
+      "The accompanying merged 4x video documents the ShiftWork doc-to-deploy run from account creation through artifact validation. The useful proof is the sequence: training doc, modeler report, agent spec, schedule, screenshots, acceptance, guide, and final evidence review.",
+    steps: [
+      { name: "Start", body: "0:00 to 2:30 real time. Platform loads, demo account is created, and the doc-to-deploy task is submitted." },
+      { name: "Build", body: "3:00 to 7:00. The agent creates the training doc, validates required fields, runs the modeler, builds the visual QA spec, and creates the cron." },
+      { name: "Run", body: "5:30 to 7:00. The visual QA agent captures desktop and mobile screenshots across five pages and runs acceptance." },
+      { name: "Package", body: "6:30 to 8:00. The how-to guide, autos_done summary, and durable goal completion are produced." },
+      { name: "Verify", body: "10:00 to 39:52. The validation contract checks artifacts, retakes true mobile screenshots, and confirms the workspace evidence." },
+    ],
+    details: [
+      {
+        title: "Skill execution",
+        body: "All nine steps of the ShiftWork doc-to-deploy skill completed: document creation, validation, modeler report, build spec, schedule, run, acceptance, guide, and closeout.",
+      },
+      {
+        title: "Evidence created",
+        body: "The run produced screenshots, a visual QA report, schedule record, alert-draft behavior, workspace guide, and validation artifacts.",
+      },
+      {
+        title: "Validation method",
+        body: "The tail of the video shows the platform checking the produced artifacts and re-capturing mobile screenshots with the intended 390 by 844 viewport.",
+      },
+      {
+        title: "Video reference",
+        body: "Merged 4x demo video: heavy-production PR 460, `demos/platform-demo-4x-shiftwork-doc-to-deploy.mp4`.",
+      },
+    ],
+    outputs: ["4x demo video", "Timeline annotations", "9-step execution", "Artifact validation", "Mobile retest", "Workspace proof"],
+  },
+  {
+    type: "process",
+    page: 14,
+    label: "Verification Artifacts",
+    title: "Every run produces signals Opulent can learn from.",
+    intro:
+      "During Agent Factory delivery, Opulent records the artifacts that explain what ran, what evidence was created, what changed, and what should improve next. Those signals become production monitoring, runbook updates, memory, and goal-state refinements.",
+    steps: [
+      { name: "Capture", body: "Record the training document, modeler report, agent spec, schedule, screenshots, reports, alert drafts, and guide." },
+      { name: "Bind", body: "Link each claim to a concrete artifact path, workspace object, run ID, prompt baseline, screenshot, or report." },
+      { name: "Review", body: "Use the evidence packet to confirm customer objectives, acceptance inputs, and operational readiness." },
+      { name: "Learn", body: "Convert observations into runbook updates, memory curation, test harness changes, and next-run guidance." },
+      { name: "Monitor", body: "Carry the same signals into production through schedules, logs, alerts, and customer review." },
+    ],
+    details: [
+      {
+        title: "Artifact set",
+        body: "Training doc, Verified Automation Report, agent-build-spec.yaml, cron-schedule.yaml, screenshot set, run report, alert draft, and how-to guide.",
+      },
+      {
+        title: "Learning loop",
+        body: "Accepted work, reviewer corrections, tool traces, artifact gaps, and customer notes update memory, runbooks, evals, and workspace rules.",
+      },
+      {
+        title: "Goal state",
+        body: "The target state is a stable agent workflow that runs on schedule, explains its evidence, routes exceptions, and improves between runs.",
+      },
+      {
+        title: "Production monitoring",
+        body: "Schedules, logs, run reports, alert drafts, and platform checks show whether the workflow is operating as expected after handoff.",
+      },
+    ],
+    outputs: ["Artifact index", "Run report", "Evidence links", "Runbook updates", "Memory curation", "Production monitor"],
+  },
+  {
+    type: "stats",
+    page: 15,
+    label: "Operating Cost",
+    title: "Simulation and agent operations have low infrastructure COGS relative to managed delivery.",
+    body: "The cost model separates model and platform usage from the human operating work around verification, support, reviews, and customer-ready proof.",
+    stats: [
+      { value: "$15", description: "Estimated monthly infrastructure COGS for a recurring visual QA or marketing agent at 22 scheduled runs per month on DeepSeek V4 Flash." },
+      { value: "$46", description: "Estimated monthly infrastructure COGS for a weekly deep analytical or simulation process on GPT-5.5 at roughly 4.33 runs per month." },
+      { value: "$399+", description: "Recommended monthly floor for recurring monitored agents because the customer buys verified workflow operation, not only model tokens." },
+      { value: "Usage", description: "Runtime, model, browser, storage, and connected-service costs are tracked separately and issued to the customer as platform usage." },
     ],
   },
   {
     type: "case",
-    page: 14,
+    page: 16,
     label: "Demo",
     title: "The demo agent makes the build path easy to judge.",
     body: [
@@ -290,15 +362,15 @@ const slides: SlideData[] = [
   },
   {
     type: "stats",
-    page: 15,
-    label: "Start Conditions",
-    title: "The remaining decisions are practical project start items.",
-    body: "The path is ready to discuss as a working plan. The open items affect launch responsibility, customer handling, and the first delivery sequence.",
+    page: 17,
+    label: "Pricing",
+    title: "Pricing separates Agent Factory delivery, seats, and platform usage.",
+    body: "This structure keeps build work, ongoing advisory support, workspace access, and customer-borne runtime costs clear before the first live customer delivery.",
     stats: [
-      { value: "Scope", description: "Confirm the visual QA agent as the first proof and lock the URLs and customer context." },
-      { value: "Owners", description: "Lock responsibility for intake, call handling, training document completion, walkthrough scheduling, and delivery review." },
-      { value: "Evidence", description: "Confirm the screenshots, report, schedule, run log, and how to guide required before walkthrough." },
-      { value: "Launch", description: "Approve the source document, close the decisions, and run the first build path against agreed inputs." },
+      { value: "$5k", description: "Workflow development fee per Agent Factory delivery. This covers turning the refined intake into a built, verified, customer-ready agent workflow." },
+      { value: "Retainer", description: "Ongoing Opulent support for delivery management, review cycles, workflow expansion, and operating improvements after launch." },
+      { value: "$40", description: "Opulent license fee per seat. Waived for Dan during the scaling phase so ShiftWork can prove the motion without seat friction." },
+      { value: "Usage", description: "Platform usage fees are issued to the customer, including runtime, model, browser, storage, and connected-service costs created by their agent." },
     ],
   },
 ];

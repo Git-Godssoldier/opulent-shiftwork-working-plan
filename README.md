@@ -22,8 +22,11 @@ The deck keeps the opening Opulent overview slides from the investor deck, then 
 - ShiftWork SOW summary
 - Build loop and workflow map
 - Simulation and validation overview
+- Annotated simulation timeline
+- Verification artifacts and continual learning loop
+- Operating cost model
 - Demo plan
-- Practical start conditions
+- Pricing structure
 
 ## Image Remap
 
