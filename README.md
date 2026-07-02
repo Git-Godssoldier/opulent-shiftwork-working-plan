@@ -27,6 +27,7 @@ The deck keeps the opening Opulent overview slides from the investor deck, then 
 - Operating cost model
 - Demo plan
 - Pricing structure
+- Outstanding exploration areas
 
 ## Image Remap
 

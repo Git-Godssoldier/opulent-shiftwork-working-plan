@@ -373,6 +373,40 @@ const slides: SlideData[] = [
       { value: "Usage", description: "Platform usage fees are issued to the customer, including runtime, model, browser, storage, and connected-service costs created by their agent." },
     ],
   },
+  {
+    type: "process",
+    page: 18,
+    label: "Exploration Areas",
+    title: "Open questions for project design.",
+    intro:
+      "These areas stay open for joint planning. They are exploration topics for agreement, launch planning, and first customer delivery, not final judgments.",
+    steps: [
+      { name: "Intake", body: "Confirm the final intake process, owner handoff, required inputs, and ready-to-build threshold." },
+      { name: "Ramp", body: "Estimate how long a new workflow needs to reach dependable performance with customer review." },
+      { name: "Cost", body: "Track cost per customer delivery as workflows move from simulation to live runs." },
+      { name: "Support", body: "Define review cycles, production monitoring, customer communication, and escalation handling." },
+      { name: "Go live", body: "Complete contract terms, approval paths, launch sequencing, and target timelines." },
+    ],
+    details: [
+      {
+        title: "Final intake process",
+        body: "Clarify what ShiftWork collects, what the customer confirms, what Opulent receives, and when the request is complete enough to build.",
+      },
+      {
+        title: "Performance and delivery cost",
+        body: "Use early customer deliveries to understand ramp time, review effort, platform usage, and repeatable cost per delivered workflow.",
+      },
+      {
+        title: "Ongoing support needs",
+        body: "Decide how Opulent and ShiftWork handle reviews, customer questions, monitoring, improvements, and production escalations after launch.",
+      },
+      {
+        title: "Contracts and timelines",
+        body: "Finalize commercial terms, approval ownership, first go-live window, and the path from first workflow to repeatable customer delivery.",
+      },
+    ],
+    outputs: ["Intake process", "Performance ramp", "Delivery cost", "Support model", "Contract path", "Go-live timeline"],
+  },
 ];
 
 function DeckMark({ dark }: { dark: boolean }) {
