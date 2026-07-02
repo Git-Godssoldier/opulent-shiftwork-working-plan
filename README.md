@@ -11,6 +11,7 @@ This repository packages the Opulent x ShiftWork working-plan deck.
 - `materials/outlook-agent-intake/` - ShiftWork SOW, pipeline notes, runbook, meeting notes, and discovery templates
 - `materials/opulent-docs/` - Opulent PRD, interop specs, testing summary, rerun instructions, and ShiftWork narrative docs
 - `materials/qa-artifacts/` - ShiftWork demo simulations, visual QA interop fixtures, reports, screenshots, and runner scripts
+- `DECISIONING_AND_SOURCES.md` - decision tree, source inventory, structural evolution, and evidence trail for the deck
 
 ## Deck Scope
 

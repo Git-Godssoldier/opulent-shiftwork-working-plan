@@ -1,8 +1,8 @@
 # OPU-125 ShiftWork Hardened Rerun Instructions
 
-**Issue:** OPU-125 — OPULENT-BE React error #185 regression  
-**Target:** `https://platform.opulentia.ai`  
-**Convex:** `prod:confident-sheep-333`  
+**Issue:** OPU-125 — OPULENT-BE React error #185 regression
+**Target:** `https://platform.opulentia.ai`
+**Convex:** `prod:confident-sheep-333`
 **Fix commit:** `1a45e97fe` — fixed replay/zero-length delta streaming loop after hardened rerun still reproduced React #185
 **Production deploy:** `https://frontend-kl12b3m7g-opulents-projects.vercel.app` aliased to `https://platform.opulentia.ai`
 **Runner:** `frontend/qa/artifacts/shiftwork-intake-five-track-visual-qa-interops/run-all-shiftwork-interops.mjs`

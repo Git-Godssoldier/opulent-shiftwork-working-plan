@@ -2,7 +2,7 @@
 Dan Cruden - Shiftwork <> Opulent AI(Morgan Abraham)
 Invited morgantabraham@gmail.com Dan Cruden braden@producteyes.co Dillon Schade john@humxnscreative.com mc3digital@gmail.com silcottbraden8@gmail.com sshaccess@gmail.com Morgan Abraham Frank Vertolli
 Attachments Dan Cruden - Shiftwork <> Opulent AI(Morgan Abraham)
-Meeting records Transcript 
+Meeting records Transcript
 
 Summary
 Participants discussed partnership strategies and technical integration for scaling automated agent production and agency workflows.Opulent platform technical capabilitiesThe platform utilizes a hierarchical agent model to optimize compute costs and enable scalable, automated workflow orchestration for complex environments. This architecture supports dynamic sub-agent creation for tasks.Scaling and infrastructure securitySecurity protocols involving granular access controls and ephemeral computing effectively address infrastructure monitoring requirements during high-volume scaling operations. These measures support a vision of reaching 1,000 agents monthly.Partnership and business strategyThe group decided to formalize a partnership for automating customer intake processes through a proof of concept pilot. This collaboration focuses on leveraging cost-plus models for sustainable revenue.
