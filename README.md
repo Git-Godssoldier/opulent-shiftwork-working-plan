@@ -11,15 +11,14 @@ This repository packages the Opulent x ShiftWork working-plan deck.
 - `materials/outlook-agent-intake/` - ShiftWork SOW, pipeline notes, runbook, meeting notes, and discovery templates
 - `materials/opulent-docs/` - Opulent PRD, interop specs, testing summary, rerun instructions, and ShiftWork narrative docs
 - `materials/qa-artifacts/` - ShiftWork demo simulations, visual QA interop fixtures, reports, screenshots, and runner scripts
-- `materials/source-skills/` - referenced source skill notes used for Background Triage and Event Prospecting framing
 
 ## Deck Scope
 
 The deck keeps the opening Opulent overview slides from the investor deck, then adds the ShiftWork pre-kickoff working plan, including:
 
 - Agent Factory framing
-- Background Triage capability
-- Event Prospecting capability
+- Agent Factory operating process
+- Shared ShiftWork and Opulent delivery model
 - ShiftWork SOW summary
 - Build loop and workflow map
 - Simulation and validation overview
