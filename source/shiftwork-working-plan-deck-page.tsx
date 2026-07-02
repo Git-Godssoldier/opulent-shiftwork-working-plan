@@ -58,9 +58,21 @@ type CaseSlideData = {
   lightGraphic?: boolean;
 };
 
-type SlideData = HeroSlideData | StatsSlideData | PortfolioSlideData | StoriesSlideData | CaseSlideData;
+type ProcessSlideData = {
+  type: "process";
+  page: number;
+  label: string;
+  title: string;
+  intro: string;
+  steps: { name: string; body: string }[];
+  details: { title: string; body: string }[];
+  outputs: string[];
+};
+
+type SlideData = HeroSlideData | StatsSlideData | PortfolioSlideData | StoriesSlideData | CaseSlideData | ProcessSlideData;
 
 const img = (name: string) => `/opulent-investor-assets/${name}`;
+const customer = (name: string) => `/opulent-customer-assets/${name}`;
 
 const slides: SlideData[] = [
   {
@@ -117,20 +129,88 @@ const slides: SlideData[] = [
     sideWord: "FACTORY",
   },
   {
-    type: "case",
+    type: "process",
     page: 6,
+    label: "Background Triage",
+    title: "Background Triage turns a market question into scored company intelligence.",
+    intro:
+      "Opulent uses Background Triage when a team needs to understand a company, discover who matches a target market, score fit, and produce a clean research packet for sales, diligence, or partnership work.",
+    steps: [
+      { name: "Profile", body: "Research the user's company, product, customers, competitors, and use cases." },
+      { name: "Confirm", body: "Lock target segments, company stage, geography, depth, and scoring priorities." },
+      { name: "Discover", body: "Generate diverse searches across industry, stage, stack, competitor adjacency, and pain." },
+      { name: "Research", body: "Run Plan, Research, Synthesize loops for each candidate with evidence and confidence." },
+      { name: "Score", body: "Rank ICP fit, explain the reasoning, and cap weak evidence instead of guessing." },
+    ],
+    details: [
+      {
+        title: "Evidence discipline",
+        body: "Product descriptions, industries, and target audiences come from readable source text, not design cues or pattern matching.",
+      },
+      {
+        title: "Depth control",
+        body: "Quick, deep, and deeper modes trade scale for intelligence so a team can scan a market or build a high confidence target list.",
+      },
+      {
+        title: "Parallel execution",
+        body: "Discovery and enrichment run in batches, with deduplication, homepage filtering, and one structured file per researched company.",
+      },
+      {
+        title: "Sales output",
+        body: "The deliverable is a scored report, CSV, fit reasoning, product summary, and clear approach angle for top accounts.",
+      },
+    ],
+    outputs: ["Company profile", "Target segments", "Discovery queries", "Scored account list", "HTML report", "CSV export"],
+  },
+  {
+    type: "process",
+    page: 7,
+    label: "Event Prospecting",
+    title: "Event Prospecting turns an event page into a ranked meeting list.",
+    intro:
+      "Opulent uses Event Prospecting when a team needs to decide who to meet at a conference, speaker page, sponsor list, or exhibitor directory before an account team spends time on outreach.",
+    steps: [
+      { name: "Recon", body: "Detect the event platform and choose the right extraction route for speaker or sponsor data." },
+      { name: "Extract", body: "Capture people, roles, companies, sessions, public links, and deduped seed companies." },
+      { name: "Triage", body: "Score every company against the ICP with a fast one-pass fit check." },
+      { name: "Research", body: "Deep research only the ICP-fit companies and enrich the people attached to them." },
+      { name: "Activate", body: "Compile person-first cards with why-talk rationale, public links, and message openers." },
+    ],
+    details: [
+      {
+        title: "Person first output",
+        body: "Each card answers why an AE should talk to this person, not merely why the company might fit.",
+      },
+      {
+        title: "ICP filter",
+        body: "Companies below the threshold stay as triage stubs while strong fits receive deeper research and speaker enrichment.",
+      },
+      {
+        title: "Signal quality",
+        body: "Hooks use concrete public signals such as talk titles, podcasts, posts, GitHub work, or event context when no recent signal exists.",
+      },
+      {
+        title: "Outbound ready",
+        body: "The output includes grouped HTML views, filterable people and company pages, and CSV rows ready for CRM or cold outbound.",
+      },
+    ],
+    outputs: ["Speaker extraction", "Company grouping", "ICP triage", "Deep research", "DM openers", "CSV export"],
+  },
+  {
+    type: "case",
+    page: 8,
     label: "ShiftWork Scope",
     title: "The statement of work is a controlled path from paid intake to first agent.",
     body: [
       "ShiftWork captures the customer request, selected use case, agent task, business context, and owner confirmed answers that make the build possible.",
       "Opulent starts when the completed training document lands. From there, Opulent owns the build, workspace execution, validation evidence, schedule, artifacts, and delivery proof.",
     ],
-    image: img("operational-metrics.png"),
+    image: customer("002_case-studies-hippo-cover.webp"),
     chips: ["Paid intake", "Training document", "Agent build", "Delivery proof"],
   },
   {
     type: "stats",
-    page: 7,
+    page: 9,
     label: "Big Goal",
     title: "The first milestone is a repeatable build loop, not a one off demo.",
     body: "The first agent is the proof vehicle for the handoff, build path, evidence model, and customer delivery motion.",
@@ -143,49 +223,49 @@ const slides: SlideData[] = [
   },
   {
     type: "stories",
-    page: 8,
+    page: 10,
     label: "Our Read",
     title: "ShiftWork owns the front of the funnel and Opulent owns the build proof.",
     intro: "The handoff works when each team owns the part it controls and the training document carries enough truth to build without guessing.",
     items: [
-      { title: "Customer request", body: "ShiftWork captures the use case, agent task, contact details, and payment trigger.", tags: ["ShiftWork"], image: img("operational-metrics.png") },
-      { title: "Owner confirmation", body: "Build critical answers need customer confirmation before Opulent starts.", tags: ["Shared"], image: img("capability-lanes.png") },
-      { title: "Training document", body: "The completed document becomes the handoff record and build source.", tags: ["Shared"], image: img("cloud-agent-runtime.png") },
-      { title: "Agent build", body: "Opulent turns the document into a runnable agent with workspace evidence.", tags: ["Opulent"], image: img("cloud-agent-runtime.png") },
-      { title: "Acceptance", body: "The build is checked against visible outputs and pass or fail evidence.", tags: ["Opulent"], image: img("operational-metrics.png") },
-      { title: "Walkthrough", body: "ShiftWork schedules the customer moment and Opulent provides the proof.", tags: ["Shared"], image: img("capability-lanes.png") },
+      { title: "Customer request", body: "ShiftWork captures the use case, agent task, contact details, and payment trigger.", tags: ["ShiftWork"], image: customer("003_case-studies-ahead-ogimage.jpg") },
+      { title: "Owner confirmation", body: "Build critical answers need customer confirmation before Opulent starts.", tags: ["Shared"], image: customer("004_case-studies-angellist-cover.webp") },
+      { title: "Training document", body: "The completed document becomes the handoff record and build source.", tags: ["Shared"], image: customer("005_case-studies-evinova-cover.webp") },
+      { title: "Agent build", body: "Opulent turns the document into a runnable agent with workspace evidence.", tags: ["Opulent"], image: customer("006_case-studies-mercedes-cover.webp") },
+      { title: "Acceptance", body: "The build is checked against visible outputs and pass or fail evidence.", tags: ["Opulent"], image: customer("007_case-studies-rvtech-cover.webp") },
+      { title: "Walkthrough", body: "ShiftWork schedules the customer moment and Opulent provides the proof.", tags: ["Shared"], image: customer("008_case-studies-cognizant-cover.webp") },
     ],
   },
   {
     type: "stories",
-    page: 9,
+    page: 11,
     label: "Preparation",
     title: "We converted the source material into a project ready operating view.",
     intro: "The internal work turned Dan's documents, the draft SOW, the questionnaire tracks, and the demo requirements into a testable build path.",
     items: [
-      { title: "SOW review", body: "Mapped the customer led intake path, handoff, and eleven step build pipeline.", tags: ["Scope"], image: img("operational-metrics.png") },
-      { title: "Questionnaire tracks", body: "Reviewed the five discovery templates and how they support different requests.", tags: ["Intake"], image: img("capability-lanes.png") },
-      { title: "Training rules", body: "Separated owner confirmed answers from research prompts.", tags: ["Control"], image: img("cloud-agent-runtime.png") },
-      { title: "Workflow specs", body: "Documented how intake becomes a build request, validation path, and packet.", tags: ["Process"], image: img("capability-lanes.png") },
-      { title: "Simulation fixtures", body: "Prepared visual quality scenarios that test retrieval, planning, and acceptance.", tags: ["Testing"], image: img("operational-metrics.png") },
-      { title: "Demo framing", body: "Selected visual QA because it produces outputs everyone can inspect quickly.", tags: ["Demo"], image: img("cloud-agent-runtime.png") },
+      { title: "SOW review", body: "Mapped the customer led intake path, handoff, and eleven step build pipeline.", tags: ["Scope"], image: customer("009_case-studies-fefundinfo-cover.webp") },
+      { title: "Questionnaire tracks", body: "Reviewed the five discovery templates and how they support different requests.", tags: ["Intake"], image: customer("010_case-studies-infosys-cover.webp") },
+      { title: "Training rules", body: "Separated owner confirmed answers from research prompts.", tags: ["Control"], image: customer("011_case-studies-itau-cover.webp") },
+      { title: "Workflow specs", body: "Documented how intake becomes a build request, validation path, and packet.", tags: ["Process"], image: customer("012_case-studies-thecitationgroup-cover.webp") },
+      { title: "Simulation fixtures", body: "Prepared visual quality scenarios that test retrieval, planning, and acceptance.", tags: ["Testing"], image: customer("013_case-studies-litera-cover.webp") },
+      { title: "Demo framing", body: "Selected visual QA because it produces outputs everyone can inspect quickly.", tags: ["Demo"], image: customer("014_case-studies-hamming-hamming-vertical.png") },
     ],
   },
   {
     type: "case",
-    page: 10,
+    page: 12,
     label: "Workflow",
     title: "The working path is intake, document, build, validation, delivery.",
     body: [
       "The customer starts in ShiftWork. The output of that motion is a completed training document with the request, acceptance inputs, and customer confirmed details.",
       "Opulent uses that document to create the build plan, execute the work in a workspace, collect proof, and hand back an agent that can be reviewed and run again.",
     ],
-    image: img("capability-lanes.png"),
+    image: customer("015_case-studies-bilt-cover.webp"),
     chips: ["Receive", "Model", "Run", "Check", "Hand off"],
   },
   {
     type: "stats",
-    page: 11,
+    page: 13,
     label: "Validation",
     title: "The simulations test whether the handoff survives outside the original conversation.",
     body: "The core question is whether a later build context can retrieve the same intake record and create the right agent plan without relying on the earlier writer thread.",
@@ -198,19 +278,19 @@ const slides: SlideData[] = [
   },
   {
     type: "case",
-    page: 12,
+    page: 14,
     label: "Demo",
     title: "The demo agent makes the build path easy to judge.",
     body: [
       "The first demonstration is a visual quality agent. It starts from a completed intake, screenshots provided URLs, checks for visible inconsistencies, writes a report, and prepares alert copy for review.",
       "This is a good first proof because the evidence is concrete. The team can see the screenshot, finding, report, schedule, and draft alert without needing to inspect code.",
     ],
-    image: img("cloud-agent-runtime.png"),
+    image: customer("019_case-studies-ramp-cover.webp"),
     chips: ["Screenshots", "Report", "Alert draft", "Schedule"],
   },
   {
     type: "stats",
-    page: 13,
+    page: 15,
     label: "Start Conditions",
     title: "The remaining decisions are practical project start items.",
     body: "The path is ready to discuss as a working plan. The open items affect launch responsibility, customer handling, and the first delivery sequence.",
@@ -452,6 +532,55 @@ function CustomerCaseStudies({ slide }: { slide: StoriesSlideData }) {
   );
 }
 
+function ProcessMapSection({ slide }: { slide: ProcessSlideData }) {
+  return (
+    <SlideFrame page={slide.page} label={slide.label} source="ProcessMapSection">
+      <div className="h-full px-[56px] pb-[48px] pt-[68px]">
+        <div className="grid grid-cols-[390px_1fr] gap-10">
+          <div>
+            <h2 className="text-[31px] font-light leading-[1.06]">{slide.title}</h2>
+            <p className="mt-5 text-[13px] font-light leading-[1.34] text-black/58">{slide.intro}</p>
+          </div>
+          <div className="pt-1">
+            <div className="grid grid-cols-5 gap-2">
+              {slide.steps.map((step, index) => (
+                <div key={step.name} className="relative border-t border-black/18 pt-3">
+                  {index < slide.steps.length - 1 ? (
+                    <div className="absolute right-[-10px] top-[-4px] h-px w-4 bg-black/18" />
+                  ) : null}
+                  <div className="mb-2 text-[19px] font-light leading-none text-black/82">{String(index + 1).padStart(2, "0")}</div>
+                  <h3 className="text-[12px] font-semibold uppercase tracking-[0.06em] text-black">{step.name}</h3>
+                  <p className="mt-2 text-[9.5px] font-light leading-[1.25] text-black/55">{step.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="mt-8 grid grid-cols-[1fr_230px] gap-8">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+            {slide.details.map((detail) => (
+              <div key={detail.title} className="border-t border-black/10 pt-3">
+                <h3 className="text-[12px] font-semibold uppercase tracking-[0.06em] text-black">{detail.title}</h3>
+                <p className="mt-2 text-[10.5px] font-light leading-[1.32] text-black/58">{detail.body}</p>
+              </div>
+            ))}
+          </div>
+          <div className="rounded-[18px] border border-black/8 bg-black/[0.025] p-4">
+            <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-black/45">Outputs</div>
+            <div className="flex flex-wrap gap-2">
+              {slide.outputs.map((output) => (
+                <span key={output} className="rounded-full border border-black/10 bg-white/70 px-2.5 py-1.5 text-[9px] font-medium text-black/58">
+                  {output}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </SlideFrame>
+  );
+}
+
 function CaseStudyRowSection({ slide }: { slide: CaseSlideData }) {
   const dark = slide.theme === "dark";
   const lightGraphicClass = slide.lightGraphic
@@ -497,6 +626,7 @@ function RenderSlide({ slide }: { slide: SlideData }) {
   if (slide.type === "stats") return <StatsSection slide={slide} />;
   if (slide.type === "portfolio") return <InteractivePortfolioList slide={slide} />;
   if (slide.type === "stories") return <CustomerCaseStudies slide={slide} />;
+  if (slide.type === "process") return <ProcessMapSection slide={slide} />;
   return <CaseStudyRowSection slide={slide} />;
 }
 
